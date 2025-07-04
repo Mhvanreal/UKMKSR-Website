@@ -15,38 +15,30 @@
 <body class="flex flex-col min-h-screen bg-gray-100">
     @include('partials.navbar')
     <section class="relative flex items-center justify-center w-full h-screen text-white">
-        <video id="myVideo" class="absolute top-0 left-0 object-cover w-full h-full" autoplay loop muted playsinline>
-            <source src="{{asset('img/vt2.mp4')}}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+        <div id="slideshow-container" class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div class="absolute w-full h-full bg-center bg-cover opacity-0 slideshow-image"></div>
+            <div class="absolute w-full h-full bg-center bg-cover opacity-0 slideshow-image"></div>
+        </div>
+
         <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
+
         <div class="relative z-10 text-center">
             <h1 class="font-bold text-white text-7xl" style="font-family: 'Kanit', sans-serif;">UKM KSR PMI UNIT</h1>
             <h1 class="font-bold text-white text-7xl" style="font-family: 'Kanit', sans-serif;">POLITEKNIK NEGERI JEMBER</h1>
             <hr class="w-1/3 mx-auto my-4 border-t-2 border-white opacity-80">
             <p class="mt-4 text-lg text-white">Unit Kegiatan Mahasiswa Korps Sukarela Palang Merah Indonesia Unit Politeknik Negeri Jember</p>
         </div>
-        <a href="#konten-berikutnya" class="absolute z-20 transform -translate-x-1/2 bottom-10 left-1/2 animate-bounce">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-        </a>
-        <div class="absolute z-20 bottom-5 right-5">
-            <button onclick="toggleVideo()" class="px-4 py-2 font-bold text-black rounded bg-white/70 hover:bg-white">
-                ▶️ / ⏸️
-            </button>
-        </div>
     </section>
 
     <main class="flex-1 w-full mx-auto" id="konten-berikutnya">
         <section class="p-6 transition-all duration-700 delay-500 translate-y-10 bg-white opacity-0 scroll-animate">
 
-            <h2 class="mb-4 text-3xl font-bold text-center">KAMI ADALAH ORGANISASI UKM KSR POLIJE.</h2>
+            <h2 class="mb-4 text-3xl font-bold text-center">KAMI ADALAH ORGANISASI UKM KSR POLIJE</h2>
             <p class="text-center text-gray-700">
               KSR PMI Unit POLIJE merupakan salah satu UKM di Politeknik Negeri Jember yang bergerak di bidang kemanusiaan dan kepalangmerahan.
             </p>
             <div class="mt-4 text-center p-9">
-                <a href=""
+                <a href="{{route('visimisi')}}"
                    class="px-6 py-3 font-bold text-gray-700 transition bg-transparent border-2 border-gray-400 rounded-lg hover:border-sky-400 hover:text-sky-400">
                     TENTANG KAMI
                 </a>
@@ -73,7 +65,7 @@
                         </div>
                     </div>
                     <div class="absolute p-8 transform -translate-x-1/2 bottom-4 left-1/2">
-                        <a href="#"
+                        <a href="{{ route('service.detail', $layanan->id_layanan) }}"
                             class="px-6 py-3 font-bold text-center text-white transition border border-red-600 rounded-lg hover:bg-red-600 hover:text-white whitespace-nowrap">
                             LEARN MORE
                         </a>
@@ -288,6 +280,14 @@
     transform: translateY(0);
 }
 
+.slideshow-image {
+        transition: opacity 1.5s ease-in-out;
+    }
+    .slideshow-image.visible {
+        opacity: 1;
+    }
+
+
 </style>
 
 <script>
@@ -311,25 +311,20 @@
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Gabungan semua elemen target
       const scrollAnimateElements = document.querySelectorAll('.scroll-animate');
       const scrollTextElements = document.querySelectorAll('.scroll-text');
       const scrollFadeElements = document.querySelectorAll('.scroll-fade');
-
-      // Buat satu observer untuk scroll-animate
       const animateObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.remove('opacity-0', 'translate-y-10');
             entry.target.classList.add('opacity-100', 'translate-y-0');
-            animateObserver.unobserve(entry.target); // hanya animasi sekali
+            animateObserver.unobserve(entry.target);
           }
         });
       }, { threshold: 0.1 });
 
       scrollAnimateElements.forEach(el => animateObserver.observe(el));
-
-      // Observer untuk scroll-text
       const textObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -340,8 +335,6 @@
       }, { threshold: 0.2 });
 
       scrollTextElements.forEach(el => textObserver.observe(el));
-
-      // Observer untuk scroll-fade
       const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -361,7 +354,6 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("show");
-                    // Jika hanya ingin animasi sekali:
                     observer.unobserve(entry.target);
                 }
             });
@@ -371,6 +363,40 @@
 
         elements.forEach(el => observer.observe(el));
     });
+</script>
+<script>
+    const images = [
+        "{{ asset('img/bg6.jpg') }}",
+        "{{ asset('img/bg4.jpg') }}",
+        "{{ asset('img/bg3.jpg') }}",
+        "{{ asset('img/bg7.jpg') }}",
+        "{{ asset('img/bg8.jpg') }}",
+        "{{ asset('img/bg9.jpg') }}",
+    ];
+
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slideshow-image');
+
+    function showNextImage() {
+        const nextIndex = (currentIndex + 1) % images.length;
+
+        // Current slide
+        const currentSlide = slides[currentIndex % 2];
+        // Next slide
+        const nextSlide = slides[(currentIndex + 1) % 2];
+
+        nextSlide.style.backgroundImage = `url('${images[nextIndex]}')`;
+        nextSlide.classList.add('visible');
+
+        // Hide the old slide after fade duration
+        setTimeout(() => {
+            currentSlide.classList.remove('visible');
+            currentIndex = nextIndex;
+        }, 1500);
+    }
+    slides[0].style.backgroundImage = `url('${images[0]}')`;
+    slides[0].classList.add('visible');
+    setInterval(showNextImage, 5000);
 </script>
 
 

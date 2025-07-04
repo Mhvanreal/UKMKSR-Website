@@ -18,8 +18,6 @@
                     <li><a href="{{route('struktur')}}" class="block px-4 py-2 hover:bg-gray-200">Kepengurusan</a></li>
                     <li><a href="{{route('lambang')}}" class="block px-4 py-2 hover:bg-gray-200">Lambang PMI</a></li>
                     <li><a href="{{route('dataAnggota')}}" class="block px-4 py-2 hover:bg-gray-200">Anggota </a></li>
-
-
                 </ul>
             </li>
             <li class="relative group">
@@ -28,14 +26,8 @@
 
             <li class="relative group">
                 <a href="{{ route('aktifitas') }}" class="font-bold hover:text-gray-300">Kegiatan</a>
-                {{-- <ul class="absolute left-0 hidden w-40 text-gray-700 bg-white shadow-lg group-hover:block">
-                    <li><a href="{{ route('doras') }}" class="block px-4 py-2 hover:bg-gray-200">Donor Darah</a></li>
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Bakti Sosial</a></li>
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Dies Natalis</a></li>
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Diklatsar dan Pelantikan Anggota</a></li>
-                    <li><a href="#" class="block px-4 py-2 hover:bg-gray-200">Rencana Kerja Tindak Lanjut</a></li>
-                </ul> --}}
             </li>
+            <li><a href="" class="font-bold hover:text-gray-300">Pendaftaran</a></li>
             <li><a href="{{route('bloging')}}" class="font-bold hover:text-gray-300">Blog</a></li>
             <li><a href="{{ url('login') }}" class="font-bold hover:text-gray-300">Login</a></li>
 
@@ -88,9 +80,11 @@
             </ul> --}}
         </li>
         <li><a href="{{route('bloging')}}" class="block hover:text-gray-300">BLOG</a></li>
+        <li><a href="" class="block hover:text-gray-300">Pendaftaran</a></li>
         <button id="navAction" type="button" class="px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"  onclick="window.location='{{ url('login') }}'">
             Login
         </button>
+
         <li class="mt-5">
             <h3 class="text-lg font-bold">TENTANG KAMI</h3>
             <p class="text-sm text-gray-400">Organisasi kepalangmerahan di kampus pendidikan, Politeknik Negeri Jember</p>

@@ -19,13 +19,13 @@ class AnggotaController extends Controller
         $angkatanList = Anggota::select('angkatan')->distinct()->orderBy('angkatan', 'asc')->pluck('angkatan');
         $query = Anggota::query();
         $query->whereIn('status', ['aktif', 'inaktif']);
-        
+
         if (!empty($angkatan)) {
             $query->where('angkatan', $angkatan);
         }
-        
+
         $anggotas = $query->orderBy('angkatan', 'desc')->paginate(10);
-        
+
         return view('admin.anggota.index', compact('anggotas', 'angkatanList'));
     }
 
@@ -137,24 +137,29 @@ class AnggotaController extends Controller
         ]);
     }
 
-    public function search(Request $request){
-   
-        $query = $request->input('query');
-        $angkatan = $request->input('angkatan');
-        $angkatanList = Anggota::select('angkatan')->distinct()->orderBy('angkatan', 'asc')->pluck('angkatan');
-        $anggotas = Anggota::query()
-            ->when($query, function ($q) use ($query) {
-                $q->where('nama', 'like', "%$query%")
-                ->orWhere('nim', 'like', "%$query%")->paginate(10);
-            })
-            ->when($angkatan, function ($q) use ($angkatan) {
-                $q->where('angkatan', $angkatan)->paginate(10);
-            })
-            ->orderBy('angkatan', 'desc')
-            ->paginate(10);
+    public function search(Request $request)
+{
+    $query = $request->input('query');
+    $angkatan = $request->input('angkatan');
 
-        return view('admin.anggota.index', compact('anggotas', 'angkatanList'));
-    }
+    $angkatanList = Anggota::select('angkatan')->distinct()->orderBy('angkatan', 'asc')->pluck('angkatan');
+
+    $anggotas = Anggota::query()
+        ->when($query, function ($q) use ($query) {
+            $q->where(function ($subQuery) use ($query) {
+                $subQuery->where('nama', 'like', "%$query%")
+                         ->orWhere('nim', 'like', "%$query%");
+            });
+        })
+        ->when($angkatan, function ($q) use ($angkatan) {
+            $q->where('angkatan', $angkatan);
+        })
+        ->orderBy('angkatan', 'desc')
+        ->paginate(10)
+        ->withQueryString();
+
+    return view('admin.anggota.index', compact('anggotas', 'angkatanList'));
+}
 
     public function dataAnggota(Request $request){
         $filterAngkatan = $request->query('angkatan');

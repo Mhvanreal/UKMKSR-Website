@@ -5,22 +5,25 @@
     <h1 class="mb-4 text-2xl font-bold">Anggota KSR</h1>
     <div class="container py-8 mx-auto">
         <div class="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:space-x-2">
+
+            <!-- KIRI: Filter + Search -->
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:gap-4">
                 <select id="filter"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 sm:w-auto">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
                     <option value="">Semua Angkatan</option>
                     @foreach ($angkatanList as $tahun)
-                    <option value="{{ $tahun }}" {{ request('angkatan') == $tahun ? 'selected' : '' }}>
-                        {{ $tahun }}
-                    </option>
+                        <option value="{{ $tahun }}" {{ request('angkatan') == $tahun ? 'selected' : '' }}>
+                            {{ $tahun }}
+                        </option>
                     @endforeach
                 </select>
 
-                <form action="{{ route('anggota.search') }}" method="GET" class="flex flex-col w-full gap-2 sm:flex-row sm:items-center">
+                <form action="{{ route('anggota.search') }}" method="GET"
+                    class="flex flex-col w-full gap-2 sm:flex-row sm:items-center sm:w-auto">
                     <input type="hidden" name="angkatan" value="{{ request('angkatan') }}">
 
                     <input type="text" name="query" placeholder="Cari Anggota..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 sm:w-auto"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg sm:w-64 focus:outline-none focus:ring-2 focus:ring-blue-400"
                         value="{{ request('query') }}">
 
                     <button type="submit"
@@ -28,29 +31,23 @@
                         Cari
                     </button>
                 </form>
-
-                <script>
-                    document.getElementById('filter').addEventListener('change', function () {
-                        let filterValue = this.value;
-                        window.location.href = `?angkatan=${filterValue}`;
-                    });
-                </script>
             </div>
-            <div class="flex gap-2">
-                <!-- Form Import Excel -->
+            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-4">
+                <!-- Import Excel -->
                 <form action="{{ route('anggota.import') }}" method="POST" enctype="multipart/form-data"
-                    class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-md" id="import-form">
+                    class="flex flex-col items-start w-full gap-2 px-4 py-2 bg-white rounded-lg shadow-md sm:flex-row sm:items-center sm:w-auto"
+                    id="import-form">
                     @csrf
                     <input type="file" name="file" accept=".xlsx,.xls" class="text-sm text-gray-500" required>
 
-                    <button type="button" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600" id="import-btn">
+                    <button type="button"
+                        class="w-full px-4 py-2 text-white bg-green-500 rounded sm:w-auto hover:bg-green-600"
+                        id="import-btn">
                         Import Excel
                     </button>
                 </form>
-
-                <!-- Tombol Tambah -->
                 <a href="{{ route('anggota.create') }}"
-                    class="flex items-center justify-center px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600">
+                    class="flex items-center justify-center w-full px-4 py-2 text-white bg-green-500 rounded sm:w-auto hover:bg-green-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -60,16 +57,17 @@
             </div>
         </div>
 
+
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-black rtl:text-right">
             <thead class="text-xs text-black uppercase bg-white border-b border-gray-200">
                 <tr>
-                    <th scope="col" class="px-6 py-3">NIM</th>
+                    {{-- <th scope="col" class="px-6 py-3">NIM</th> --}}
                     <th scope="col" class="px-6 py-3">Nama</th>
-                    <th scope="col" class="px-6 py-3">Angkatan</th>
-                    <th scope="col" class="px-6 py-3">Jenis Kelamin</th>
-                    <th scope="col" class="px-6 py-3">Alamat</th>
-                    <th scope="col" class="px-6 py-3">Jurusan</th>
+                    {{-- <th scope="col" class="px-6 py-3">Angkatan</th> --}}
+                    {{-- <th scope="col" class="px-6 py-3">Jenis Kelamin</th> --}}
+                    {{-- <th scope="col" class="px-6 py-3">Alamat</th> --}}
+                    {{-- <th scope="col" class="px-6 py-3">Jurusan</th> --}}
                     <th scope="col" class="px-6 py-3">Prodi</th>
                     <th scope="col" class="px-6 py-3">Status</th>
                     <th scope="col" class="px-6 py-3">Foto</th>
@@ -79,12 +77,12 @@
             <tbody>
                 @foreach ($anggotas as $key => $anggota)
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="px-4 py-2 border-r">{{ $anggota->nim }}</td>
+                        {{-- <td class="px-4 py-2 border-r">{{ $anggota->nim }}</td> --}}
                         <td class="px-4 py-2 border-r truncate max-w-[80px] overflow-hidden">{{ $anggota->nama }}</td>
-                        <td class="px-4 py-2 border-r">{{ $anggota->angkatan }}</td>
-                        <td class="px-4 py-2 border-r">{{ $anggota->jenis_kelamin }}</td>
-                        <td class="px-4 py-2 border-r">{{ $anggota->alamat }}</td>
-                        <td class="px-4 py-2 border-r truncate max-w-[80px] overflow-hidden">{{ $anggota->jurusan }}</td>
+                        {{-- <td class="px-4 py-2 border-r">{{ $anggota->angkatan }}</td> --}}
+                        {{-- <td class="px-4 py-2 border-r">{{ $anggota->jenis_kelamin }}</td> --}}
+                        {{-- <td class="px-4 py-2 border-r">{{ $anggota->alamat }}</td> --}}
+                        {{-- <td class="px-4 py-2 border-r truncate max-w-[80px] overflow-hidden">{{ $anggota->jurusan }}</td> --}}
                         <td class="px-4 py-2 border-r">{{ $anggota->prodi }}</td>
                         <td class="px-4 py-2 border-r">{{ $anggota->status }}</td>
                         <td class="px-4 py-2 text-center border-r">
@@ -127,7 +125,7 @@
         </div>
     </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         @if (session('success'))
@@ -185,6 +183,14 @@
             });
         });
     </script>
+    {{-- //filter// --}}
+    <script>
+        document.getElementById('filter').addEventListener('change', function () {
+            let filterValue = this.value;
+            window.location.href = `?angkatan=${filterValue}`;
+        });
+    </script>
+
 
     <script>
     @if ($errors->any())

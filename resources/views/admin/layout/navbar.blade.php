@@ -1,87 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" rel="stylesheet">
-    {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"> --}}
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Admin Dashboard</title>
+
+    <!-- CDN Tailwind -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-    </style>
 </head>
+<body class="font-sans bg-gray-100">
 
-<body class="bg-gray-100">
-    <div class="flex flex-col h-screen">
-        <!-- Navbar -->
-        <header class="sticky top-0 z-50 flex items-center justify-between h-16 px-4 bg-white shadow-md">
-            <div class="flex items-center w-full justify-between">
-                <!-- Logo -->
-                <img src="/img/Logo_solo.png" alt="Logo Humas Polije" class="object-contain w-auto h-12 md:h-16 lg:block" />
+    <!-- Overlay for mobile -->
+    <div id="mobileOverlay" class="fixed inset-0 z-30 hidden bg-black bg-opacity-50 lg:hidden"></div>
 
-                <!-- Hamburger button (only visible on mobile) -->
-                <button id="toggleSidebar" class="text-4xl text-gray-700 focus:outline-none md:hidden">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+    <div class="flex min-h-screen">
 
-            <!-- Profile (always visible on the right) -->
-            <div class="flex items-center mr-5 space-x-3">
-                <a href="{{ route('profile.edit') }}" class="text-3xl text-red-600">
-                    <i class="fas fa-user-circle"></i>
-                </a>
-            </div>
-        </header>
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed top-0 left-0 z-40 w-64 h-full transition-transform duration-300 transform -translate-x-full bg-white shadow lg:translate-x-0">
+            @include('admin.layout.sidebar')
+        </aside>
 
-        <div class="flex flex-grow">
+        <!-- Main content -->
+        <div class="flex flex-col flex-1 w-full min-h-screen lg:ml-64">
+            <header class="sticky top-0 z-20 flex items-center justify-between h-16 px-4 bg-white shadow">
+                <div class="flex items-center gap-3">
+                    <button id="sidebarToggle" class="text-gray-700 lg:hidden focus:outline-none">
+                        <i class="text-2xl fas fa-bars"></i>
+                    </button>
+                    <img src="/img/Logo_solo.png" class="h-10" alt="Logo">
+                </div>
 
-            <!-- Sidebar (Hidden on Mobile, initially) -->
-            {{-- <aside id="sidebar" class="sticky z-40 flex flex-col w-64 h-screen overflow-hidden transition-all duration-300 bg-white shadow-md top-16 lg:block hidden"> --}}
-<aside id="sidebar" class="fixed top-16 left-0 z-40 w-64 h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden bg-white shadow-md hidden lg:block">
-
-                @include('admin.layout.sidebar')
-            </aside>
-            
-            <!-- Main Content -->
-            {{-- <main class="flex-grow p-4 sm:p-6 md:p-8 overflow-auto"> --}}
-            <main class="flex-grow p-4 sm:p-6 md:p-8 overflow-auto lg:ml-64 mt-2">
+                <div class="text-red-600">
+                    <i class="text-2xl fas fa-user-circle"></i>
+                </div>
+            </header>
+            <main class="p-4 sm:p-6 md:p-8">
                 @yield('content')
             </main>
         </div>
     </div>
-
     <script>
-        const toggleSidebar = document.getElementById('toggleSidebar');
+        const toggleBtn = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobileOverlay');
 
-        toggleSidebar.addEventListener('click', () => {
-            // Toggle the visibility of sidebar on mobile
-            if (sidebar.classList.contains('hidden')) {
-                sidebar.classList.remove('hidden');
-                sidebar.classList.add('block');
-            } else {
-                sidebar.classList.remove('block');
-                sidebar.classList.add('hidden');
-            }
+        toggleBtn?.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        });
+
+        overlay?.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
         });
     </script>
 </body>
-
 </html>

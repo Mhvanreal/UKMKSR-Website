@@ -2,8 +2,6 @@
 
 @section('content')
 <div class="max-w-6xl px-4 py-5 mx-auto">
-
-    <!-- Judul Halaman -->
     <div class="mb-8 text-center">
         <div class="py-4 text-xl font-bold text-white shadow-lg bg-gradient-to-r from-red-600 to-red-300 rounded-2xl">
           Permohonan
@@ -24,8 +22,10 @@
                         <th class="px-6 py-3">Layanan</th>
                         <th class="px-6 py-3">Nama</th>
                         <th class="px-6 py-3">Asal</th>
+                        <th class="px-6 py-3">No Hp</th>
                         <th class="px-6 py-3">Nama Kegiatan</th>
                         <th class="px-6 py-3">Surat SPH</th>
+
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">

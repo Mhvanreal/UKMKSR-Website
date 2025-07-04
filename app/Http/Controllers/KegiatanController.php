@@ -80,8 +80,9 @@ class KegiatanController extends Controller
         return view('admin.kegiatan.edit', compact('kegiatan'));
     }
 
-    public function update(Request $request, $id)
-    {
+   public function update(Request $request, $id)
+{
+    try {
         $kegiatan = Kegiatan::findOrFail($id);
 
         $request->validate([
@@ -89,35 +90,48 @@ class KegiatanController extends Controller
             'deskripsi_kegiatan' => 'nullable|string',
             'start_kegiatan' => 'required|date',
             'end_kegiatan' => 'required|date|after_or_equal:start_kegiatan',
-            'foto_kegiatan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'poster_kegiatan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_kegiatan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'poster_kegiatan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+            'status' => 'required|in:aktif,tidak',
         ]);
 
         $kegiatan->nama_kegiatan = $request->nama_kegiatan;
         $kegiatan->deskripsi_kegiatan = $request->deskripsi_kegiatan;
         $kegiatan->start_kegiatan = $request->start_kegiatan;
         $kegiatan->end_kegiatan = $request->end_kegiatan;
+        $kegiatan->status = $request->status;
 
         if ($request->hasFile('foto_kegiatan')) {
-            if ($kegiatan->foto_kegiatan) {
+            if ($kegiatan->foto_kegiatan && Storage::exists('public/' . $kegiatan->foto_kegiatan)) {
                 Storage::delete('public/' . $kegiatan->foto_kegiatan);
             }
-            $fotoPath = $request->file('foto_kegiatan')->store('kegiatan/foto', 'public');
+
+            $fotoFile = $request->file('foto_kegiatan');
+            $fotoNama = time() . '_' . $fotoFile->getClientOriginalName();
+            $fotoPath = $fotoFile->storeAs('kegiatan/foto', $fotoNama, 'public');
             $kegiatan->foto_kegiatan = $fotoPath;
         }
 
         if ($request->hasFile('poster_kegiatan')) {
-            if ($kegiatan->poster_kegiatan) {
+            if ($kegiatan->poster_kegiatan && Storage::exists('public/' . $kegiatan->poster_kegiatan)) {
                 Storage::delete('public/' . $kegiatan->poster_kegiatan);
             }
-            $posterPath = $request->file('poster_kegiatan')->store('kegiatan/poster', 'public');
+
+            $posterFile = $request->file('poster_kegiatan');
+            $posterNama = time() . '_' . $posterFile->getClientOriginalName();
+            $posterPath = $posterFile->storeAs('kegiatan/poster', $posterNama, 'public');
             $kegiatan->poster_kegiatan = $posterPath;
         }
 
         $kegiatan->save();
 
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil diperbarui.');
+
+    } catch (\Exception $e) {
+        return back()->withInput()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
+}
+
 
     public function destroy($id)
     {

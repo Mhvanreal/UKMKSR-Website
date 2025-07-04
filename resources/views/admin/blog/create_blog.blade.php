@@ -52,6 +52,14 @@
     </form>
 </div>
 
+<<<<<<< HEAD
+@endsection
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 150,
+=======
+
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" rel="stylesheet">
@@ -68,9 +76,10 @@
                     ['view', ['fullscreen', 'codeview']]
                 ]
             });
+>>>>>>> c95d96e918cd0a611200ec1384bc91ce913d8088
         });
-    </script>
-@endpush
+    });
+</script>
 
     <!-- Tambahkan SweetAlert -->
     @push('scripts')

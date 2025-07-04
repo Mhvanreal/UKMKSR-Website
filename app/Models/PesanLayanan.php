@@ -13,6 +13,7 @@ class PesanLayanan extends Model
         'id_layanan',
         'nama',
         'asal',
+        'no_hp',
         'nama_kegiatan',
         'surat_sph',
     ];
