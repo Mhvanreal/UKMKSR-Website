@@ -24,11 +24,19 @@
 </section>
 <div class="w-full bg-red-600 h-7"></div>
 
+
+
     <main class="container flex-1 px-4 py-8 mx-auto">
-        @if(session('error'))
+
+    @if(session('error'))
         <div class="p-4 mb-4 text-sm text-red-800 bg-red-200 rounded-lg">{{ session('error') }}</div>
     @endif
-
+       <div class="p-4 mb-6 text-sm text-blue-900 bg-blue-100 border border-blue-300 rounded-lg">
+            <h2 class="mb-2 text-lg font-semibold">Informasi Pendaftaran</h2>
+             {{-- <h3>Berikut ini Alur Pendaftaran</h3> --}}
+            <p>Silakan Mengisi formulir pendaftaran ini dengan benar kemudian cetak bukti pendaftaran. Setelah itu segera kirim bukti pendaftaran tersebut ke Sekretaris UKM KSR PMI Polije sebagai syarat pendaftaran</p>
+            <p>Silakan masukkan <strong>NIM</strong> Anda untuk memeriksa status pendaftaran sebelumnya. Jika belum pernah mendaftar, lanjutkan dengan mengisi formulir di bawah ini.</p>
+        </div>
     <form action="{{ route('rekrutmen.cekNim') }}" method="POST" class="mb-6">
         @csrf
         <div class="flex flex-col items-center gap-4 md:flex-row">
@@ -38,6 +46,8 @@
                 class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Cek Bukti Pendaftaran</button>
         </div>
     </form>
+
+
     <section class="p-6 bg-white rounded-lg shadow-md">
         <form action="{{route('rekrutmen.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -101,11 +111,7 @@
                     <label class="block mb-2 font-bold">Tahun Masuk Kuliah</label>
                     <input type="number" name="tahun_masuk_kuliah" class="w-full px-4 py-2 border rounded">
                 </div>
-{{--
-                 <div class="md:col-span-2">
-                    <label class="block mb-2 font-bold">Tahun Masuk Kuliah</label>
-                    <input type="number" name="tahun_masuk_kuliah" class="w-full px-4 py-2 border rounded">
-                </div> --}}
+
                 <div class="md:col-span-2">
                     <label class="block mb-2 font-bold">Organisasi yang Pernah Diikuti</label>
                     <textarea name="organisasi_yg_pernah_diikuti" class="w-full px-4 py-2 border rounded"></textarea>
