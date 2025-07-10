@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Pengurus;
 use App\Models\Anggota;
 use App\Models\PeriodeKepengurusan;
@@ -8,9 +9,9 @@ use App\Models\Jabatan;
 use App\Models\Divisi;
 use Illuminate\Http\Request;
 
-class pengurusController extends Controller
+class PengurusController extends Controller
 {
-    public function index()
+     public function index()
     {
         $pengurus = Pengurus::with('anggota', 'jabatan.divisi', 'periode', 'programKerjas')->get();
         $anggota = Anggota::all();
@@ -100,9 +101,6 @@ class pengurusController extends Controller
 
         return view('LandingPage.kepengurusan', compact('dataPengurus', 'daftarPeriode'));
     }
-
-
-
 
 
 }

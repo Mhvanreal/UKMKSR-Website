@@ -28,16 +28,11 @@
                     </li>
                 </ul>
             </div>
-
-
             <div class="text-center md:text-centar">
                 <p class="mb-4 font-bold text-white uppercase">Informasi Kontak</p>
                 <div class="flex justify-center space-x-4 md:justify-center">
                     <a href="#" class="text-white hover:text-pink-500">
                         <i class="fab fa-facebook fa-2x"></i>
-                    </a>
-                    <a href="#" class="text-white hover:text-pink-500">
-                        <i class="fab fa-twitter fa-2x"></i>
                     </a>
                     <a href="https://www.instagram.com/ksrpmipolije?igsh=MW8yOHNvbnN1MjZxMg==" class="text-white hover:text-pink-500">
                         <i class="fab fa-instagram fa-2x"></i>

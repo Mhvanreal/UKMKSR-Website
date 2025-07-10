@@ -34,44 +34,63 @@ class AnggotaController extends Controller
         return view('admin.anggota.create_anggota');
     }
 
-    public function store(Request $request) {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'nim' => 'required',
-            'tanggal_lahir' => 'required|date',
-            'angkatan' => 'required',
-            'alasan_join' => 'required|string',
-            'jurusan' => 'required|string',
-            'prodi' => 'required|string',
-            'tahun_masuk_kuliah' => 'required',
-            'status' => 'required',
-            'jenis_kelamin' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'alamat' => 'required|string',
-        ]);
+        public function store(Request $request)
+    {
+        try {
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'nim' => 'required|unique:anggota,nim',
+                'Nama_panggilan' => 'nullable|string',
+                'tanggal_lahir' => 'required|date',
+                'tempat_lahir' => 'nullable|string',
+                'Agama' => 'nullable|string',
+                'email' => 'nullable|email',
+                'angkatan' => 'required|integer',
+                'alasan_join' => 'nullable|string',
+                'jurusan' => 'required|string',
+                'prodi' => 'required|string',
+                'tahun_masuk_kuliah' => 'required|digits:4',
+                'status' => 'required|in:Aktif,Tidak Aktif,Inaktif',
+                'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+                'Gol_darah' => 'nullable|string',
+                'organisasi_yg_pernah_diikuti' => 'nullable|string',
+                'No_tlpn' => 'nullable|string',
+                'alamat' => 'required|string',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
 
-        $imagePath = null;
-        if ($request->hasFile('foto')) {
-            $imagePath = $request->file('foto')->store('foto-anggota', 'public');
+            $imagePath = null;
+            if ($request->hasFile('foto')) {
+                $imagePath = $request->file('foto')->store('foto-anggota', 'public');
+            }
+
+            Anggota::create([
+                'nama' => $request->input('nama'),
+                'Nama_panggilan' => $request->input('Nama_panggilan'),
+                'nim' => $request->input('nim'),
+                'tanggal_lahir' => $request->input('tanggal_lahir'),
+                'tempat_lahir' => $request->input('tempat_lahir'),
+                'Agama' => $request->input('Agama'),
+                'email' => $request->input('email'),
+                'angkatan' => $request->input('angkatan'),
+                'alasan_join' => $request->input('alasan_join'),
+                'jurusan' => $request->input('jurusan'),
+                'prodi' => $request->input('prodi'),
+                'tahun_masuk_kuliah' => $request->input('tahun_masuk_kuliah'),
+                'status' => $request->input('status'),
+                'jenis_kelamin' => $request->input('jenis_kelamin'),
+                'Gol_darah' => $request->input('Gol_darah'),
+                'organisasi_yg_pernah_diikuti' => $request->input('organisasi_yg_pernah_diikuti'),
+                'No_tlpn' => $request->input('No_tlpn'),
+                'alamat' => $request->input('alamat'),
+                'foto' => $imagePath,
+                'created_at' => Carbon::now(),
+            ]);
+
+            return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil ditambahkan!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menyimpan data anggota. ' . $e->getMessage());
         }
-
-        Anggota::create([
-            'nama' => $request->input('nama'),
-            'nim' => $request->input('nim'),
-            'tanggal_lahir' => $request->input('tanggal_lahir'),
-            'angkatan' => $request->input('angkatan'),
-            'alasan_join' => $request->input('alasan_join'),
-            'jurusan' => $request->input('jurusan'),
-            'prodi' => $request->input('prodi'),
-            'tahun_masuk_kuliah' => $request->input('tahun_masuk_kuliah'),
-            'status' => $request->input('status'),
-            'jenis_kelamin' => $request->input('jenis_kelamin'),
-            'foto' => $imagePath,
-            'alamat' => $request->input('alamat'),
-            'created_at' => Carbon::now(),
-        ]);
-
-        return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil ditambahkan!');
     }
 
     public function destroy($id) {
@@ -88,45 +107,67 @@ class AnggotaController extends Controller
         return view ('admin.anggota.update_anggota', compact('anggota'));
     }
 
-    public function update(Request $request, $id){
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'nim' => 'required',
-            'tanggal_lahir' => 'required|date',
-            'angkatan' => 'required',
-            'alasan_join' => 'required|string',
-            'jurusan' => 'required|string',
-            'prodi' => 'required|string',
-            'tahun_masuk_kuliah' => 'required',
-            'jenis_kelamin' => 'required',
-            'status' => 'required',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'alamat' => 'required|string',
-        ]);
+        public function update(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'nama' => 'required|string|max:255',
+                'Nama_panggilan' => 'nullable|string',
+                'nim' => 'required|exists:anggota,nim',
+                'tanggal_lahir' => 'required|date',
+                'tempat_lahir' => 'nullable|string',
+                'Agama' => 'nullable|string',
+                'email' => 'nullable|email',
+                'angkatan' => 'required|integer',
+                'alasan_join' => 'nullable|string',
+                'jurusan' => 'required|string',
+                'prodi' => 'required|string',
+                'tahun_masuk_kuliah' => 'required|digits:4',
+                'status' => 'required|in:Aktif,Tidak Aktif,Inaktif',
+                'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+                'Gol_darah' => 'nullable|string',
+                'organisasi_yg_pernah_diikuti' => 'nullable|string',
+                'No_tlpn' => 'nullable|string',
+                'alamat' => 'required|string',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
 
-        $anggota = Anggota::findOrFail($id);
+            $anggota = Anggota::findOrFail($id);
 
-        if($request->hasFile('foto')){
-            if($anggota->foto){
-                Storage::disk('public')->delete($anggota->foto);
+            if ($request->hasFile('foto')) {
+                if ($anggota->foto) {
+                    Storage::disk('public')->delete($anggota->foto);
+                }
+                $anggota->foto = $request->file('foto')->store('foto-anggota', 'public');
             }
-            $anggota->foto = $request->file('foto')->store('foto-anggota', 'public');
-        }
-        $anggota->nama = $request->input('nama');
-        $anggota->nim = $request->input('nim');
-        $anggota->tanggal_lahir = $request->input('tanggal_lahir');
-        $anggota->angkatan = $request->input('angkatan');
-        $anggota->alasan_join = $request->input('alasan_join');
-        $anggota->jurusan = $request->input('jurusan');
-        $anggota->prodi = $request->input('prodi');
-        $anggota->tahun_masuk_kuliah = $request->input('tahun_masuk_kuliah');
-        $anggota->jenis_kelamin = $request->input('jenis_kelamin');
-        $anggota->status = $request ->input('status');
-        $anggota->alamat = $request->input('alamat');
-        $anggota->save();
 
-        return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil diperbarui');
+            $anggota->update([
+                'nama' => $request->input('nama'),
+                'Nama_panggilan' => $request->input('Nama_panggilan'),
+                'nim' => $request->input('nim'),
+                'tanggal_lahir' => $request->input('tanggal_lahir'),
+                'tempat_lahir' => $request->input('tempat_lahir'),
+                'Agama' => $request->input('Agama'),
+                'email' => $request->input('email'),
+                'angkatan' => $request->input('angkatan'),
+                'alasan_join' => $request->input('alasan_join'),
+                'jurusan' => $request->input('jurusan'),
+                'prodi' => $request->input('prodi'),
+                'tahun_masuk_kuliah' => $request->input('tahun_masuk_kuliah'),
+                'status' => $request->input('status'),
+                'jenis_kelamin' => $request->input('jenis_kelamin'),
+                'Gol_darah' => $request->input('Gol_darah'),
+                'organisasi_yg_pernah_diikuti' => $request->input('organisasi_yg_pernah_diikuti'),
+                'No_tlpn' => $request->input('No_tlpn'),
+                'alamat' => $request->input('alamat'),
+            ]);
+
+            return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal memperbarui data anggota. ' . $e->getMessage());
+        }
     }
+
 
     public function show($id){
 
@@ -195,62 +236,73 @@ class AnggotaController extends Controller
 
     public function importExcel(Request $request)
     {
-          // 1. Validasi file
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx,xls,csv|max:2048',
-        ]);
-
-        // 2. Baca file
-        $data = Excel::toArray([], $request->file('file'));
-        $rows = array_slice($data[0], 1);
-        $errors = [];
-
-        foreach ($rows as $index => $row) {
-            $rowNumber = $index + 1;
-            $nim = $row[0] ?? null;
-            $nama = $row[1] ?? null;
-            $tanggal_lahir = $row[2] ?? null;
-
-            // Cek kelengkapan data
-            if (!$nim || !$nama || !$tanggal_lahir) {
-                $errors[] = "Baris ke-{$rowNumber} tidak lengkap.";
-                continue;
-            }
-
-            // Cek duplikasi NIM
-            if (Anggota::where('nim', $nim)->exists()) {
-                $errors[] = "NIM '{$nim}' sudah terdaftar (baris ke-{$rowNumber}).";
-                continue;
-            }
-
-            // Cek format tanggal
-            try {
-                $parsedDate = Carbon::parse($tanggal_lahir)->format('Y-m-d');
-            } catch (\Exception $e) {
-                $errors[] = "Format tanggal tidak valid di baris ke-{$rowNumber}: '{$tanggal_lahir}'. Gunakan format YYYY-MM-DD.";
-                continue;
-            }
-
-            // Simpan data jika valid
-            Anggota::create([
-                'nim' => $nim,
-                'nama' => $nama,
-                'tanggal_lahir' => $parsedDate,
-                'alamat' => $row[3] ?? '',
-                'alasan_join' => $row[4] ?? '',
-                'angkatan' => $row[5] ?? '',
-                'jurusan' => $row[6] ?? '',
-                'prodi' => $row[7] ?? '',
-                'status' => $row[8] ?? '',
-                'tahun_masuk_kuliah' => $row[9] ?? '',
-                'jenis_kelamin' => $row[10] ?? '',
+        try {
+            // Validasi file
+            $request->validate([
+                'file' => 'required|file|mimes:xlsx,xls,csv|max:2048',
             ]);
-        }
 
-        if ($errors) {
-            return back()->withErrors($errors);
-        }
+            $data = Excel::toArray([], $request->file('file'));
+            $rows = array_slice($data[0], 1); // lewati baris header
+            $errors = [];
 
-        return back()->with('success', 'Data berhasil diimpor.');
+            foreach ($rows as $index => $row) {
+                $rowNumber = $index + 2; // baris asli Excel (karena baris 1 header)
+
+                $nim = $row[0] ?? null;
+                $nama = $row[1] ?? null;
+                $tanggal_lahir = $row[2] ?? null;
+
+                if (!$nim || !$nama || !$tanggal_lahir) {
+                    $errors[] = "Baris {$rowNumber}: Data wajib (NIM, Nama, Tanggal Lahir) kosong.";
+                    continue;
+                }
+
+                // Skip jika NIM sudah ada
+                if (Anggota::where('nim', $nim)->exists()) {
+                    $errors[] = "Baris {$rowNumber}: NIM '{$nim}' sudah terdaftar.";
+                    continue;
+                }
+
+                // Format tanggal
+                try {
+                    $parsedDate = Carbon::parse($tanggal_lahir)->format('Y-m-d');
+                } catch (\Exception $e) {
+                    $errors[] = "Baris {$rowNumber}: Format tanggal tidak valid: '{$tanggal_lahir}'. Gunakan YYYY-MM-DD.";
+                    continue;
+                }
+
+                // Simpan data
+                Anggota::create([
+                    'nim' => $nim,
+                    'nama' => $nama,
+                    'tanggal_lahir' => $parsedDate,
+                    'alamat' => $row[3] ?? null,
+                    'alasan_join' => $row[4] ?? null,
+                    'angkatan' => $row[5] ?? null,
+                    'jurusan' => $row[6] ?? null,
+                    'prodi' => $row[7] ?? null,
+                    'status' => $row[8] ?? 'Aktif',
+                    'tahun_masuk_kuliah' => $row[9] ?? null,
+                    'jenis_kelamin' => $row[10] ?? null,
+                    'email' => $row[11] ?? null,
+                    'Nama_panggilan' => $row[12] ?? null,
+                    'tempat_lahir' => $row[13] ?? null,
+                    'Agama' => $row[14] ?? null,
+                    'Gol_darah' => $row[15] ?? null,
+                    'organisasi_yg_pernah_diikuti' => $row[16] ?? null,
+                    'No_tlpn' => $row[17] ?? null,
+                ]);
+            }
+
+            if ($errors) {
+                return back()->withErrors($errors);
+            }
+
+            return back()->with('success', 'Data anggota berhasil diimpor.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal mengimpor data Excel. ' . $e->getMessage());
+        }
     }
+
 }

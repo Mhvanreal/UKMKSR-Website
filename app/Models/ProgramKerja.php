@@ -12,10 +12,10 @@ class ProgramKerja extends Model
 
     protected $fillable = ['nama_program', 'deskripsi', 'jabatan_id', 'pengurus_id'];
 
-    public function jabatan()
-    {
-        return $this->belongsTo(Jabatan::class);
-    }
+    // public function jabatan()
+    // {
+    //     return $this->belongsTo(Jabatan::class);
+    // }
     public function pengurus()
     {
         return $this->belongsTo(Pengurus::class);

@@ -14,5 +14,5 @@
         <a href="{{ route('blogadmin.edit', $blog->id) }}" class="px-4 py-2 text-white bg-yellow-500 rounded">Edit</a>
     </div>
 </div>
-x
+
 @endsection

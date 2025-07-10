@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Layanan</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -31,12 +28,12 @@
     <form action="{{ route('Program_kerja.store') }}" method="POST">
         @csrf
         <div class="mb-4">
-            <select name="jabatan_id" required
+           <select name="pengurus_id" required
                 class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm">
-                <option disabled selected>Pilih Jabatan</option>
+                <option disabled selected>Pilih Pengurus</option>
                 @foreach($pengurus as $p)
-                    <option value="{{ $p->jabatan->id }}">
-                        {{ $p->anggota->nama }} - {{ $p->jabatan->nama_jabatan }} - {{$p->periode->nama_periode}}
+                    <option value="{{ $p->id }}">
+                        {{ $p->anggota->nama }} - {{ $p->jabatan->nama_jabatan }} - {{ $p->periode->nama_periode }}
                     </option>
                 @endforeach
             </select>

@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -175,20 +176,21 @@
         </div>
         </section>
 
-        <div class="grid gap-8 pb-8 mt-12 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
+       <div class="grid gap-8 pb-8 mt-12 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
             @foreach ($galeri as $item)
-            <div class="bg-gray-800 rounded-md w-full aspect-[2/1] overflow-hidden   shadow-lg">
+            <div class="bg-gray-800 rounded-md w-full aspect-[2/1] overflow-hidden shadow-lg cursor-pointer"
+                onclick="showMedia('{{ $item->foto_galeri ? asset('storage/' . $item->foto_galeri) : asset('storage/' . $item->video_galeri) }}', {{ $item->video_galeri ? 'true' : 'false' }})">
                 @if ($item->foto_galeri)
                 <img src="{{ asset('storage/' . $item->foto_galeri) }}" class="object-cover w-full h-full" alt="Foto Galeri">
                 @elseif ($item->video_galeri)
-                <video controls class="object-cover w-full h-full">
+                <video muted class="object-cover w-full h-full">
                     <source src="{{ asset('storage/' . $item->video_galeri) }}" type="video/mp4">
-                    Browser tidak mendukung tag video.
                 </video>
                 @endif
             </div>
             @endforeach
         </div>
+
 
         @if ($galeri->isEmpty())
         <p class="mt-10 text-center text-gray-400">Tidak ada galeri yang tersedia.</p>
@@ -198,6 +200,7 @@
                 {{ $galeri->appends(request()->query())->fragment('galeri')->links() }}
             </div>
     </main>
+
 
     <div class="w-full bg-red-600 h-7"></div>
     <main class="flex-1 w-full p-4 bg-gray-100">
@@ -239,11 +242,6 @@
         </div>
       </main>
     <div class="w-full bg-red-600 h-7"></div>
-
-
-
-
-
 
 
 @include('partials.footer')
@@ -364,6 +362,39 @@
         elements.forEach(el => observer.observe(el));
     });
 </script>
+<script>
+    function showMedia(mediaUrl, isVideo) {
+        if (isVideo) {
+            Swal.fire({
+                html: `
+                    <video controls style="width: 100%; border-radius: 8px;">
+                        <source src="${mediaUrl}" type="video/mp4">
+                        Browser tidak mendukung tag video.
+                    </video>
+                `,
+                showConfirmButton: false,
+                width: '60%',
+                background: '#000',
+                customClass: {
+                    popup: 'rounded-xl'
+                }
+            });
+        } else {
+            Swal.fire({
+                imageUrl: mediaUrl,
+                imageAlt: 'Foto Galeri',
+                showConfirmButton: false,
+                background: '#000',
+                width: '60%',
+                imageHeightAuto: true,
+                customClass: {
+                    image: 'rounded-xl'
+                }
+            });
+        }
+    }
+</script>
+
 <script>
     const images = [
         "{{ asset('img/bg6.jpg') }}",

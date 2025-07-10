@@ -12,28 +12,22 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\ClusteringController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataNilaiController;
-use App\Http\Controllers\pengurusController;
-use App\Http\Controllers\devisiController;
+use App\Http\Controllers\PengurusController;
+use App\Http\Controllers\DevisiController;
 use App\Http\Controllers\ProgramKerjaController;
 use App\Http\Controllers\PesanLayananController;
-
+use App\Http\Controllers\RekrutmentController;
 
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-
 Route::middleware(['auth', 'humas_ksr'])->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
 });
-
-// Route::get('/dashboard', function () {
-//     return view('admin.dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::middleware(['auth', 'humas_ksr'])->group(function () {
     Route::get('/akun', [NavigateController::class, 'akun'])->middleware(['auth', 'verified'])->name('akun');
@@ -55,16 +49,23 @@ Route::middleware(['auth', 'humas_ksr'])->group(function () {
     Route::resource('/tentang', TentangController::class);
     Route::resource('/service', LayananPageController::class);
     Route::post('/service/toggle/{id}', [LayananPageController::class, 'toggle'])->name('service.toggle');
-    Route::resource('/Kepengurusan', pengurusController::class);
-    Route::resource('/devisi', devisiController::class);
-    Route::post('/jabatan_create', [devisiController::class, 'storeJabatan'])->name('jabatan.store');
-    Route::post('/Periode_create', [devisiController::class, 'storePeriode'])->name('Periode.store');
+    Route::resource('/Kepengurusan', PengurusController::class);
+    Route::resource('/devisi', DevisiController::class);
+    Route::post('/jabatan_create', [DevisiController::class, 'storeJabatan'])->name('jabatan.store');
+    Route::post('/Periode_create', [DevisiController::class, 'storePeriode'])->name('Periode.store');
     Route::resource('/Program_kerja', ProgramKerjaController::class);
+    Route::get('/Program_kerja/detail/{pengurus}', [ProgramKerjaController::class, 'showDetail'])->name('Program_kerja.detail');
     Route::resource('/pesan-layanan', PesanLayananController::class);
     Route::post('/kegiatan/toggle/{id}', [KegiatanController::class, 'toggle'])->name('kegiatan.toggle');
+    Route::post('/pesan-layanan/accept/{id}', [PesanLayananController::class, 'accept'])->name('pesan-layanan.accept');
+    Route::post('/pesan-layanan/reject/{id}', [PesanLayananController::class, 'reject'])->name('pesan-layanan.reject');
+
+    Route::resource('/Rekrutment-anggota', RekrutmentController::class);
+    Route::post('/Rekrutment-anggota/{id}/terima', [RekrutmentController::class, 'terima'])->name('Rekrutment-anggota.terima');
+    
+    // Route::get('/rekrutmen', [RekrutmenController::class, 'index'])->name('rekrutmen.index');
+
 });
-
-
 
 
 Route::middleware('auth')->group(function () {
@@ -76,6 +77,7 @@ Route::middleware('auth')->group(function () {
 ////////////landing Page////////////
 Route::get('/LayananKami', [LayananPageController::class, 'layananPage'])->name('layananksr');
 Route::get('/lambangPMI', [TentangController::class, 'lambang'])->name('lambang');
+Route::get('/rekrutment', [RekrutmentController::class, 'ViewPage'])->name('rekrutment');
 Route::get('/SejarahKsr', [TentangController::class, 'sejarah'])->name('sejarah');
 Route::get('/Visi_misi', [TentangController::class, 'visimisi'])->name('visimisi');
 Route::get('/SerVice' , [LayananPageController::class, 'wellayanan'])->name('serviceksr');
@@ -83,9 +85,9 @@ Route::get('/serVice/{id}', [LayananPageController::class, 'detail'])->name('ser
 Route::get('/SerVice', [LayananPageController::class, 'wellayanan'])->name('serviceksr');
 Route::get('/KegiatanKami', [KegiatanController::class, 'viewPage'])->name('aktifitas');
 Route::get('/calendar-events', [KegiatanController::class, 'getKegiatan']);
-Route::get('/struktur', [pengurusController::class, 'tampilanblade'])->name('struktur');
-Route::get('/kepengurusan/periode', [pengurusController::class, 'pengurusPerPeriode'])->name('kepengurusan.periode');
-Route::get('/pengurus', [pengurusController::class, 'dataPengurus'])->name('pengurus');
+Route::get('/struktur', [PengurusController::class, 'tampilanblade'])->name('struktur');
+Route::get('/kepengurusan/periode', [PengurusController::class, 'pengurusPerPeriode'])->name('kepengurusan.periode');
+Route::get('/pengurus', [PengurusController::class, 'dataPengurus'])->name('pengurus');
 Route::get('/program-kerja', [ProgramKerjaController::class, 'viewpage'])->name('proker');
 Route::get('/pesan-layanan/create', [PesanLayananController::class, 'create'])->name('pesan_layanan.create');
 Route::post('/pesan-layanan', [PesanLayananController::class, 'store'])->name('pesan_layanan.store');
@@ -96,13 +98,11 @@ Route::get('/blog/{id}', [BlogController::class, 'detail'])->name('blog.detail')
 Route::get('/blog/search', [BlogController::class, 'search'])->name('blog.search');
 Route::get('/kegiatan-detail/{id}', [KegiatanController::class, 'detailshow'])->name('kegiatanshow.detail');
 
-
+Route::post('/rekrutmen/store', [RekrutmentController::class, 'store'])->name('rekrutmen.store');
+Route::get('/rekrutmen/cetak/{No_pendaftaran}', [RekrutmentController::class, 'cetak'])->name('rekrutmen.cetak');
+Route::post('/rekrutmen/cek-nim', [RekrutmentController::class, 'cekNim'])->name('rekrutmen.cekNim');
 
 
 
 Route::get('/doras', [KegiatanController::class, 'doras'])->name('doras');
-
-
-
-
 require __DIR__ . '/auth.php';

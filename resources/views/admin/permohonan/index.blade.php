@@ -25,31 +25,83 @@
                         <th class="px-6 py-3">No Hp</th>
                         <th class="px-6 py-3">Nama Kegiatan</th>
                         <th class="px-6 py-3">Surat SPH</th>
-
+                        <th class="px-6 py-3">AKSI</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  @foreach ($pesanan as $index => $item)
-                        <tr>
-                            <td class="px-6 py-3">{{ $index + 1 }}</td>
-                            <td class="px-6 py-3">{{ $item->layanan->nama_layanan }}</td>
-                            <td class="px-6 py-3">{{ $item->nama }}</td>
-                            <td class="px-6 py-3">{{ $item->asal }}</td>
-                            <td class="px-6 py-3">{{ $item->nama_kegiatan }}</td>
-                            <td class="px-6 py-3">
-                                @if($item->surat_sph)
-                                    <a href="{{ asset('storage/' . $item->surat_sph) }}" target="_blank">
-                                        <img src="/img/icon/file.png" alt="Surat Icon" class="inline w-6 h-6">
-                                    </a>
-                                @else
-                                    <span class="text-gray-400">Tidak ada file</span>
-                                @endif
-                            </td>
+               @php use Illuminate\Support\Str; @endphp
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @foreach ($pesanan as $index => $item)
+                            <tr>
+                                <td class="px-6 py-3">{{ $index + 1 }}</td>
+                                <td class="px-6 py-3">{{ $item->layanan->nama_layanan }}</td>
+                                <td class="px-6 py-3">{{ $item->nama }}</td>
+                                <td class="px-6 py-3">{{ $item->asal }}</td>
+                                <td class="px-6 py-3">{{ $item->no_hp}}</td>
+                                <td class="px-6 py-3">{{ $item->nama_kegiatan }}</td>
+                                <td class="px-6 py-3">
+                                    @if($item->surat_sph)
+                                        <a href="{{ asset('storage/' . $item->surat_sph) }}" target="_blank">
+                                            <img src="/img/icon/file.png" alt="Surat Icon" class="inline w-6 h-6">
+                                        </a>
+                                    @else
+                                        <span class="text-gray-400">Tidak ada file</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-3 space-y-1">
+                                    @if($item->status === 'menunggu')
+                                        <!-- Tombol Accept -->
+                                        <form action="{{ route('pesan-layanan.accept', $item->id) }}" method="POST" onsubmit="return confirm('Terima layanan ini?')">
+                                            @csrf
+                                            <button type="submit" class="w-full px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700">
+                                                Accept
+                                            </button>
+                                        </form>
 
-                        </tr>
-                    @endforeach
+                                        <!-- Tombol Tolak -->
+                                        <form action="{{ route('pesan-layanan.reject', $item->id) }}" method="POST" onsubmit="return confirm('Tolak layanan ini?')">
+                                            @csrf
+                                            <button type="submit" class="w-full px-3 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700">
+                                                Tolak
+                                            </button>
+                                        </form>
 
-                </tbody>
+                                    @elseif($item->status === 'disetujui')
+                                        <span class="block text-sm font-semibold text-green-600">Disetujui</span>
+
+                                        @php
+                                            $nomor = preg_replace('/[^0-9]/', '', $item->no_hp);
+                                            if (Str::startsWith($nomor, '0')) {
+                                                $nomor = '62' . substr($nomor, 1);
+                                            }
+                                        @endphp
+
+                                        <a href="https://wa.me/{{ $nomor }}?text={{ urlencode('Halo ' . $item->nama . ', permohonan Anda telah *disetujui* oleh Pihak UKM KSR. Silakan cek detail kegiatan Anda.') }}"
+                                            target="_blank"
+                                            class="inline-block w-full px-3 py-1 text-sm text-center text-white bg-blue-500 rounded hover:bg-blue-600">
+                                            Hubungi WA
+                                        </a>
+
+                                    @elseif($item->status === 'ditolak')
+                                        <span class="block text-sm font-semibold text-red-600">Ditolak</span>
+
+                                        @php
+                                            $nomor = preg_replace('/[^0-9]/', '', $item->no_hp);
+                                            if (Str::startsWith($nomor, '0')) {
+                                                $nomor = '62' . substr($nomor, 1);
+                                            }
+                                        @endphp
+
+                                        <a href="https://wa.me/{{ $nomor }}?text={{ urlencode('Halo ' . $item->nama . ', mohon maaf permohonan Anda *ditolak* oleh pihak UKM KSR Kami.') }}"
+                                            target="_blank"
+                                            class="inline-block w-full px-3 py-1 text-sm text-center text-white bg-blue-500 rounded hover:bg-blue-600">
+                                            Hubungi WA
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
             </table>
         </div>
     </div>
@@ -65,5 +117,4 @@
         });
         @endif
     </script>
-
 @endsection

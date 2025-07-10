@@ -22,9 +22,9 @@ class Jabatan extends Model
         return $this->hasMany(Pengurus::class);
     }
 
-    public function programKerja()
-    {
-        return $this->hasMany(ProgramKerja::class);
-    }
+    // public function programKerja()
+    // {
+    //     return $this->hasMany(ProgramKerja::class);
+    // }
 }
 

@@ -1,5 +1,3 @@
-
-
 @extends('admin.layout.navbar')
 
 @section('content')
@@ -52,49 +50,21 @@
     </form>
 </div>
 
-<<<<<<< HEAD
 @endsection
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            height: 150,
-=======
 
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote/dist/summernote-lite.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                height: 200,
-                placeholder: 'Tulis deskripsi blog di sini...',
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link', 'picture']],
-                    ['view', ['fullscreen', 'codeview']]
-                ]
-            });
->>>>>>> c95d96e918cd0a611200ec1384bc91ce913d8088
-        });
-    });
-</script>
-
-    <!-- Tambahkan SweetAlert -->
-    @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        @if (session('success'))
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session("success") }}',
-                confirmButtonText: 'OK'
-            });
-        @endif
-    </script>
-@endpush
-@endsection
 
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 150,
+            });
+        });
+    </script>
+    @push('scripts')
+@endpush
 

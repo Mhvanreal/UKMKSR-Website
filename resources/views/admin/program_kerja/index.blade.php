@@ -43,7 +43,7 @@
                                     <td class="px-6 py-4">{{ $pengurus->periode->nama_periode }}</td>
                                     <td class="px-6 py-4">{{ $pengurus->programKerjas->count() }} Program</td>
                                     <td class="px-6 py-4">
-                                        <a href="{{ route('Program_kerja.show', $jabatan->id) }}" class="text-blue-500 hover:underline">
+                                        <a href="{{ route('Program_kerja.detail', $pengurus->id) }}" class="text-blue-500 hover:underline">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
                                     </td>
@@ -67,5 +67,5 @@
         });
         @endif
     </script>
-    
+
 @endsection

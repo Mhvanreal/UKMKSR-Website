@@ -21,6 +21,9 @@ return new class extends Migration{
         $table->string('asal');
         $table->string('no_hp');
         $table->string('nama_kegiatan');
+        // $table->text('deskripsi_kegiatan')->nullable(); // ✅ Tambahan baru
+        $table->date('start_kegiatan')->nullable();
+        $table->date('end_kegiatan')->nullable();
         $table->string('surat_sph')->nullable();
         $table->enum('status', ['menunggu', 'disetujui', 'ditolak'])->default('menunggu');
         $table->timestamps();
@@ -32,8 +35,12 @@ return new class extends Migration{
      * Reverse the migrations.
      */
 
-    public function down(): void
-    {
-        Schema::dropIfExists('pesan_layanan');
-    }
+
+
+public function down()
+{
+    Schema::table('pesan_layanan', function (Blueprint $table) {
+        $table->string('deskripsi_kegiatan')->nullable();
+    });
+}
 };

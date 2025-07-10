@@ -7,6 +7,8 @@ use App\Models\Layanan;
 use Illuminate\Support\Str;
 use Illuminate\Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use App\Models\PesanLayanan;
+use App\Models\Kegiatan;
 
 class LayananPageController extends Controller
 {
@@ -90,7 +92,6 @@ class LayananPageController extends Controller
     public function update(Request $request, $id)
     {
         $layanan = Layanan::findOrFail($id);
-
         $request->validate([
             'nama_layanan' => 'required|string|max:255',
             'deskripsi_layanan' => 'nullable|string',
@@ -145,4 +146,23 @@ class LayananPageController extends Controller
         return view('LandingPage.show_layanan', compact('layanan', 'layanans'));
     }
 
+//     public function accept($id) {
+//     $pesan = PesanLayanan::findOrFail($id);
+
+//     if ($pesan->status !== 'menunggu') {
+//         return back()->with('error', 'Layanan sudah diproses.');
+//     }
+//     $pesan->status = 'disetujui';
+//     $pesan->save();
+//     Kegiatan::create([
+//         'id_layanan' => $pesan->id_layanan,
+//         'nama_kegiatan' => $pesan->nama_kegiatan,
+//         'deskripsi_kegiatan' => 'Kegiatan otomatis dari layanan',
+//         'status' => 'aktif',
+//         'start_kegiatan' => now(),
+//         'end_kegiatan' => now()->addDays(1),
+//     ]);
+
+//     return back()->with('success', 'Layanan berhasil disetujui dan kegiatan telah dibuat.');
+// }
 }

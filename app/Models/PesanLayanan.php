@@ -15,6 +15,9 @@ class PesanLayanan extends Model
         'asal',
         'no_hp',
         'nama_kegiatan',
+        // 'deskripsi_kegiatan',
+        'start_kegiatan',
+        'end_kegiatan',
         'surat_sph',
     ];
 

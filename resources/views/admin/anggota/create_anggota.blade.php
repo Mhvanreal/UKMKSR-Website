@@ -6,7 +6,7 @@
         <form action="{{ route('anggota.store') }}" method="POST" class="p-6 space-y-6 bg-white rounded-lg shadow-md" enctype="multipart/form-data">
             @csrf
             <div class="flex flex-col space-y-2">
-                <label for="nama" class="font-medium text-gray-700">Nama</label>
+                <label for="nama" class="font-medium text-gray-700">Nama Lengkap</label>
                 <input
                     type="text"
                     id="nama"
@@ -14,6 +14,15 @@
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Masukkan nama"
                     required>
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="Nama_panggilan" class="font-medium text-gray-700">Nama Panggilan</label>
+                <input
+                    type="text"
+                    id="Nama_panggilan"
+                    name="Nama_panggilan"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Masukkan nama panggilan">
             </div>
             <div class="flex flex-col space-y-2">
                 <label for="nim" class="font-medium text-gray-700">NIM</label>
@@ -26,6 +35,15 @@
                     required>
             </div>
             <div class="flex flex-col space-y-2">
+                <label for="tempat_lahir" class="font-medium text-gray-700">Tempat Lahir</label>
+                <input
+                    type="text"
+                    id="tempat_lahir"
+                    name="tempat_lahir"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Masukkan tempat lahir">
+            </div>
+            <div class="flex flex-col space-y-2">
                 <label for="tanggal_lahir" class="font-medium text-gray-700">Tanggal Lahir</label>
                 <input
                     type="date"
@@ -35,6 +53,57 @@
                     placeholder="Tanggal Lahir"
                     required>
             </div>
+            {{-- ... (sebelum baris Angkatan) --}}
+
+            <div class="flex flex-col space-y-2">
+                <label for="email" class="font-medium text-gray-700">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Masukkan email">
+            </div>
+            <div class="flex flex-col space-y-2">
+                <label for="Agama" class="font-medium text-gray-700">Agama</label>
+                <input
+                    type="text"
+                    id="Agama"
+                    name="Agama"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Masukkan agama">
+            </div>
+
+            <div class="flex flex-col space-y-2">
+                <label for="Gol_darah" class="font-medium text-gray-700">Golongan Darah</label>
+                <input
+                    type="text"
+                    id="Gol_darah"
+                    name="Gol_darah"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Masukkan golongan darah">
+            </div>
+
+            <div class="flex flex-col space-y-2">
+                <label for="organisasi_yg_pernah_diikuti" class="font-medium text-gray-700">Organisasi yang Pernah Diikuti</label>
+                <textarea
+                    id="organisasi_yg_pernah_diikuti"
+                    name="organisasi_yg_pernah_diikuti"
+                    rows="3"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Tulis organisasi yang pernah diikuti"></textarea>
+            </div>
+
+            <div class="flex flex-col space-y-2">
+                <label for="No_tlpn" class="font-medium text-gray-700">No. Telepon</label>
+                <input
+                    type="text"
+                    id="No_tlpn"
+                    name="No_tlpn"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Masukkan nomor telepon aktif">
+            </div>
+
             <div class="flex flex-col space-y-2">
                 <label for="angkatan" class="font-medium text-gray-700">Angkatan</label>
                 <input

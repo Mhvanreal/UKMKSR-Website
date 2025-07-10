@@ -7,14 +7,9 @@ use App\Models\Divisi;
 use App\Models\Jabatan;
 use App\Models\PeriodeKepengurusan;
 
-
-
-
-
-
-class devisiController extends Controller
+class DevisiController extends Controller
 {
-    public function store(Request $request){
+     public function store(Request $request){
         $request->validate([
             'nama_divisi' => 'required',
             'deskripsi' => 'required',
@@ -58,7 +53,5 @@ class devisiController extends Controller
         return redirect()->route('Kepengurusan.index')->with('success', 'Periode berhasil ditambahkan');
 
     }
-
-
 
 }

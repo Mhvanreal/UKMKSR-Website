@@ -8,10 +8,10 @@
         <ul class="hidden space-x-6 lg:flex">
             <li><a href="{{route('welcome')}}" class="font-bold hover:text-gray-300">Beranda</a></li>
             <li class="relative group">
-                <a href="" class="font-bold hover:text-gray-300">
+                <a href="#" class="font-bold hover:text-gray-300">
                     Tentang
                 </a>
-                <ul class="absolute left-0 hidden w-40 text-gray-700 bg-white shadow-lg group-hover:block">
+                <ul class="absolute left-0 z-50 hidden w-40 text-gray-700 bg-white shadow-lg group-hover:block">
                     <li><a href="{{route('sejarah')}}" class="block px-4 py-2 hover:bg-gray-200">Sejarah</a></li>
                     <li><a href="{{route('visimisi')}}" class="block px-4 py-2 hover:bg-gray-200">Visi Misi</a></li>
                     <li><a href="{{route('proker')}}" class="block px-4 py-2 hover:bg-gray-200">Program Kerja</a></li>
@@ -27,7 +27,7 @@
             <li class="relative group">
                 <a href="{{ route('aktifitas') }}" class="font-bold hover:text-gray-300">Kegiatan</a>
             </li>
-            <li><a href="" class="font-bold hover:text-gray-300">Pendaftaran</a></li>
+            <li><a href="{{route('rekrutment')}}" class="font-bold hover:text-gray-300">Pendaftaran</a></li>
             <li><a href="{{route('bloging')}}" class="font-bold hover:text-gray-300">Blog</a></li>
             <li><a href="{{ url('login') }}" class="font-bold hover:text-gray-300">Login</a></li>
 
@@ -41,16 +41,16 @@
         <button id="closeSidebar" class="text-3xl text-gray-300 hover:text-red-500">&times;</button>
     </div>
     <ul class="p-5 space-y-4">
-        <li><a href="{{route('welcome')}}" class="block font-bold text-green-400">BERANDA</a></li>
+        <li><a href="{{route('welcome')}}" class="block font-bold ">BERANDA</a></li>
 
-        <!-- Dropdown Menu -->
         <li>
-            <button class="flex items-center justify-between w-full text-left hover:text-gray-300 dropdown-btn">TENTANG
+            <button class="flex items-center justify-between w-full text-left hover:text-gray-300 dropdown-btn">
+                TENTANG
                 <svg class="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            <ul class="hidden pl-4 space-y-2 overflow-hidden transition-all duration-300 ease-in-out opacity-0 max-h-0 dropdown-content">
+            <ul class="pl-4 space-y-2 overflow-hidden transition-all duration-300 ease-in-out opacity-0 dropdown-content max-h-0">
                 <li><a href="{{route('sejarah')}}" class="block hover:text-gray-300">Sejarah</a></li>
                 <li><a href="{{route('visimisi')}}" class="block hover:text-gray-300">Visi Misi</a></li>
                 <li><a href="{{route('proker')}}" class="block hover:text-gray-300">Program Kerja</a></li>
@@ -59,6 +59,7 @@
                 <li><a href="{{route('lambang')}}" class="block hover:text-gray-300">Lambang PMI</a></li>
             </ul>
         </li>
+
 
         <li>
             <a href="{{route('layananksr')}}" class="block hover:text-gray-300">LAYANAN</a>
@@ -70,17 +71,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </button>
-            {{-- <ul class="hidden pl-4 space-y-2 overflow-hidden transition-all duration-300 ease-in-out opacity-0 max-h-0 dropdown-content">
-                <li><a href="#" class="block hover:text-gray-300">Donor Darah</a></li>
-                <li><a href="#" class="block hover:text-gray-300">Bakti Sosial</a></li>
-                <li><a href="#" class="block hover:text-gray-300">Dies Natalis</a></li>
-                <li><a href="#" class="block hover:text-gray-300">Rencara Kerja Tindak Lanjut</a></li>
-                <li><a href="#" class="block hover:text-gray-300">Diklatsar dan Pelantikan Anggota</a></li>
-        </li>
-            </ul> --}}
         </li>
         <li><a href="{{route('bloging')}}" class="block hover:text-gray-300">BLOG</a></li>
-        <li><a href="" class="block hover:text-gray-300">Pendaftaran</a></li>
+        <li><a href="{{route('rekrutment')}}" class="block hover:text-gray-300">Pendaftaran</a></li>
         <button id="navAction" type="button" class="px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"  onclick="window.location='{{ url('login') }}'">
             Login
         </button>
@@ -114,28 +107,26 @@
     });
 
     document.querySelectorAll('.dropdown-btn').forEach(button => {
-        button.addEventListener("click", function () {
-            const dropdown = this.nextElementSibling;
-            const icon = this.querySelector(".dropdown-icon");
+    button.addEventListener("click", function () {
+        const dropdown = this.nextElementSibling;
+        const icon = this.querySelector(".dropdown-icon");
 
-            dropdown.classList.toggle("hidden");
+        const isOpen = dropdown.classList.contains("max-h-64");
 
-            if (!dropdown.classList.contains("hidden")) {
-                setTimeout(() => {
-                    dropdown.classList.add("opacity-100", "max-h-64");
-                    dropdown.classList.remove("opacity-0", "max-h-0");
-                }, 10);
-            } else {
-                dropdown.classList.add("opacity-0", "max-h-0");
-                dropdown.classList.remove("opacity-100", "max-h-64");
-                setTimeout(() => {
-                    dropdown.classList.add("hidden");
-                }, 300);
-            }
+        if (isOpen) {
+            // Tutup
+            dropdown.classList.remove("max-h-64", "opacity-100");
+            dropdown.classList.add("max-h-0", "opacity-0");
+        } else {
+            // Buka
+            dropdown.classList.remove("max-h-0", "opacity-0");
+            dropdown.classList.add("max-h-64", "opacity-100");
+        }
 
-            icon.classList.toggle("rotate-180");
-        });
+        icon.classList.toggle("rotate-180");
     });
+});
+
     window.addEventListener("scroll", function() {
     var navbar = document.getElementById("navbar");
     if (window.scrollY > 50) {

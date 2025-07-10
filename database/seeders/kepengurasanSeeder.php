@@ -201,14 +201,22 @@ class kepengurasanSeeder extends Seeder
         $anggota = Anggota::create([
             'nim' => 'E41221544',
             'nama' => 'Muhammad Khilmi',
+            'email' => 'skuy@gmail.com',
+            'tempat_lahir' => 'Jakarta',
             'tanggal_lahir' => '2003-11-29',
+            'Nama_panggilan'=> 'hilmy',
+            'Agama' => 'Kristen',
             'alamat' => 'Jember',
             'alasan_join' => 'Nyari temen',
+            'email'=> 'huhu@gmail.com',
             'angkatan' => '14',
             'foto' => 'foto-anggota/hilmi.jpg',
             'jurusan' => 'Teknologi Informasi',
+            'No_tlpn' => '08123912700',
             'prodi' => 'Teknik Informatika',
+            'Gol_darah' => 'O',
             'status' => 'aktif',
+            'organisasi_yg_pernah_diikuti' => 'PMR',
             'tahun_masuk_kuliah' => '2022',
             'jenis_kelamin' => 'laki-laki',
         ]);
@@ -227,14 +235,13 @@ class kepengurasanSeeder extends Seeder
             'Pelatihan Soft Skill'
         ];
 
-        $programKerjas = [];
         foreach ($programs as $prog) {
-            $programKerjas[] = ProgramKerja::create([
+            ProgramKerja::create([
                 'nama_program' => $prog,
                 'deskripsi' => 'Deskripsi untuk ' . $prog,
-                'jabatan_id' => $jabatan->id,
-                // 'pengurus_id' => $pengurus->id
+                'pengurus_id' => $pengurus->id
             ]);
         }
+
     }
 }

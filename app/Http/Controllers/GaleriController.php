@@ -32,45 +32,50 @@ class GaleriController extends Controller
         return view('admin.galeri.create', ['tipe' => 'foto', 'jenisGaleri' => $jenisGaleri]);
     }
 
-    // Menambahkan video ke galeri
+
     public function tambahVideo()
     {
         $jenisGaleri = JenisGaleri::all();
         return view('admin.galeri.create', ['tipe' => 'video', 'jenisGaleri' => $jenisGaleri]);
     }
 
-    // Menyimpan data galeri (foto atau video)
     public function store(Request $request)
-    {
-        // Validasi input
+{
+    try {
         $request->validate([
-            'id_jenis_galeri' => 'required|in:1,2', // Validasi nilai 1 atau 2 untuk jenis galeri
-            'foto_galeri' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'video_galeri' => 'nullable|mimes:mp4,mkv,avi',
-            'status' => 'required|in:aktif,tidak',
+            'id_jenis_galeri' => 'required|in:1,2',
+            'foto_galeri'     => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'video_galeri'    => 'nullable|mimes:mp4,mkv,avi',
+            'status'          => 'required|in:aktif,tidak',
         ]);
 
-        // Ambil data selain foto dan video
         $data = $request->only(['id_jenis_galeri', 'status']);
-
-        // Menyimpan foto jika ada
         if ($request->hasFile('foto_galeri')) {
             $fotoPath = $request->file('foto_galeri')->store('galeri/foto', 'public');
-            $data['foto_galeri'] = $fotoPath;  // Simpan path relatif
+            $data['foto_galeri'] = $fotoPath;
         }
 
-        // Menyimpan video jika ada
         if ($request->hasFile('video_galeri')) {
-            $videoPath = $request->file('video_galeri')->store('galeri/video', 'public');
-            $data['video_galeri'] = $videoPath;  // Simpan path relatif
+            $video = $request->file('video_galeri');
+
+            $videoPath = $video->storeAs(
+                'galeri/video',
+                time() . '_' . $video->getClientOriginalName(),
+                'local'
+            );
+
+            $data['video_galeri'] = $videoPath;
         }
 
-        // Simpan data galeri ke database
         Galeri::create($data);
+        return redirect()->route('galeri.index')->with('success', 'Data galeri berhasil ditambahkan.');
 
-        // Redirect ke halaman galeri dengan pesan sukses
-        return redirect()->route('galeri.index')->with('success', 'Data galeri berhasil ditambahkan');
+    } catch (\Exception $e) {
+        \Log::error('Gagal menyimpan data galeri: ' . $e->getMessage());
+        return back()->with('error', 'Terjadi kesalahan saat menyimpan data.')->withInput();
     }
+}
+
 
 
 }

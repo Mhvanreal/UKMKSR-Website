@@ -15,13 +15,14 @@
     </head>
     <body class="flex flex-col min-h-screen bg-gray-100">
         @include('partials.navbar')
-        <section class="relative flex items-center justify-center w-full h-screen text-white ">
-            <img class="absolute top-0 left-0 object-cover w-full h-full filter "
-                 src="{{ asset('img/kegiatan1.png') }}"alt="Kegiatan 1">
-            <div class="relative z-10 text-center">
-                <h1 class="font-bold text-white text-7xl animate__animated animate__fadeInUp" style="font-family: 'Kanit', sans-serif;">KEPENGURUSAN</h1>
+        <section class="relative flex items-center justify-center w-full min-h-[60vh] text-white bg-black">
+            <img class="absolute inset-0 object-cover w-full h-full opacity-70" src="{{ asset('img/kegiatan1.png') }}" alt="Kegiatan 1">
+            <div class="relative z-10 px-4 text-center">
+                <h1 class="text-5xl font-bold text-white md:text-6xl lg:text-7xl animate__animated animate__fadeInUp" style="font-family: 'Kanit', sans-serif;">
+                    KEPENGURUSAN
+                </h1>
                 <hr class="w-1/2 mx-auto my-4 border-t-2 border-white opacity-80">
-                <p class="mt-4 text-lg text-white">Unit Kegiatan Mahasiswa Korps Sukarela Palang Merah Indonesia Unit Politeknik Negeri Jember</p>
+                <p class="mt-2 text-sm text-white md:text-lg">Unit Kegiatan Mahasiswa Korps Sukarela Palang Merah Indonesia Unit Politeknik Negeri Jember</p>
             </div>
         </section>
         <div class="w-full bg-red-600 h-7"></div>
@@ -42,18 +43,6 @@
                 </div>
 
                 <div class="flex justify-start mb-6">
-                    {{-- <select id="filterPeriode"
-                        class="w-full max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                        <option value="">Semua Periode</option>
-                        {{-- @foreach($daftarPeriode as $periode)
-                            @php
-                                $tahun = $periode->tahun_mulai;
-                            @endphp
-                            <option value="{{ $tahun }}" {{ request('periode') == $tahun ? 'selected' : '' }}>
-                                {{ $periode->tahun_mulai }} - {{ $periode->tahun_selesai }}
-                            </option>
-                        @endforeach --}}
-                    {{-- </select> --}}
                     <form method="GET" action="{{ route('pengurus') }}">
                         <select name="periode" onchange="this.form.submit()"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 sm:w-auto">
@@ -109,29 +98,29 @@
             </div>
         </div>
 
-@php
-    $pengurusLain = $dataPengurus->filter(function ($item) {
-        $jabatan = strtolower($item->jabatan->nama_jabatan);
-        return $jabatan !== 'ketua umum' && $jabatan !== 'wakil ketua';
-    });
-@endphp
+        @php
+            $pengurusLain = $dataPengurus->filter(function ($item) {
+                $jabatan = strtolower($item->jabatan->nama_jabatan);
+                return $jabatan !== 'ketua umum' && $jabatan !== 'wakil ketua';
+            });
+        @endphp
 
-<div class="container py-10 mx-auto">
-    <div class="{{ count($pengurusLain) <= 3 ? 'flex flex-wrap justify-center gap-8' : 'grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center' }}">
-        @foreach($pengurusLain as $item)
-            <div class="flex flex-col items-center max-w-sm p-5 overflow-hidden bg-white rounded-lg shadow scroll-animate">
-                <img src="{{ asset('storage/'.$item->anggota->foto) }}"
-                    alt="{{ $item->anggota->nama }}"
-                    class="object-cover max-w-[240px] h-auto rounded-md"/>
-                <div class="pt-6 text-center">
-                    <h3 class="mb-2 text-xl font-bold text-black">{{ $item->anggota->nama }}</h3>
-                    <p class="mb-2 text-gray-800">{{ $item->jabatan->divisi->nama_divisi }} - {{ $item->jabatan->nama_jabatan }}</p>
-                    <p class="text-gray-600">Periode: {{ $item->periode->tahun_mulai }} - {{ $item->periode->tahun_selesai ?? 'Sekarang' }}</p>
-                </div>
+        <div class="container py-10 mx-auto">
+            <div class="{{ count($pengurusLain) <= 3 ? 'flex flex-wrap justify-center gap-8' : 'grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center' }}">
+                @foreach($pengurusLain as $item)
+                    <div class="flex flex-col items-center max-w-sm p-5 overflow-hidden bg-white rounded-lg shadow scroll-animate">
+                        <img src="{{ asset('storage/'.$item->anggota->foto) }}"
+                            alt="{{ $item->anggota->nama }}"
+                            class="object-cover max-w-[240px] h-auto rounded-md"/>
+                        <div class="pt-6 text-center">
+                            <h3 class="mb-2 text-xl font-bold text-black">{{ $item->anggota->nama }}</h3>
+                            <p class="mb-2 text-gray-800">{{ $item->jabatan->divisi->nama_divisi }} - {{ $item->jabatan->nama_jabatan }}</p>
+                            <p class="text-gray-600">Periode: {{ $item->periode->tahun_mulai }} - {{ $item->periode->tahun_selesai ?? 'Sekarang' }}</p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        @endforeach
-    </div>
-</div>
+        </div>
 
 
             </section>
