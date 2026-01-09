@@ -34,7 +34,7 @@
                         type="text"
                         id="Nama_panggilan"
                         name="Nama_panggilan"
-                        value="{{$data_anggota->Nama_panggilan}}"
+                        value="{{$data_anggota->nama_panggilan}}"
                         class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
@@ -110,7 +110,7 @@
                         type="text"
                         id="Agama"
                         name="Agama"
-                        value="{{$data_anggota->Agama}}"
+                        value="{{$data_anggota->agama}}"
                         class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
@@ -167,7 +167,7 @@
                         type="text"
                         id="Gol_darah"
                         name="Gol_darah"
-                        value="{{$data_anggota->Gol_darah}}"
+                        value="{{$data_anggota->gol_darah}}"
                         class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>

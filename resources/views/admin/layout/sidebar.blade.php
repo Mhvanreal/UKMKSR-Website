@@ -14,15 +14,13 @@
             $navItems = [
                 ['name' => 'Beranda', 'route' => '/dashboard', 'icon' => 'home.png', 'match' => 'dashboard'],
                 ['name' => 'Anggota', 'route' => route('anggota.index'), 'icon' => 'multi.png', 'match' => 'anggota*'],
-                ['name' => 'Data Nilai Anggota', 'route' => route('nilai.index'), 'icon' => 'add.png', 'match' => 'nilai*'],
-                ['name' => 'Clustering', 'route' => route('clustering.index'), 'icon' => 'network.png', 'match' => 'clustering*'],
                 ['name' => 'Tentang', 'route' => route('tentang.index'), 'icon' => 'info.png', 'match' => 'tentang*'],
                 ['name' => 'Permohonan', 'route' => route('pesan-layanan.index'), 'icon' => 'file.png', 'match' => 'pesan-layanan*'],
                 ['name' => 'Kepengurusan', 'route' => route('Kepengurusan.index'), 'icon' => 'pengurus.png', 'match' => 'Kepengurusan*'],
                 ['name' => 'Program Kerja', 'route' => route('Program_kerja.index'), 'icon' => 'program.png', 'match' => 'Program_kerja*'],
                 ['name' => 'Kegiatan', 'route' => route('kegiatan.index'), 'icon' => 'calendar.png', 'match' => 'kegiatan*'],
                 ['name' => 'Layanan', 'route' => route('service.index'), 'icon' => 'heart.png', 'match' => 'service*'],
-                ['name' => 'Rekrutment', 'route' =>  route('Rekrutment-anggota.index'), 'icon' => 'add.png', 'match' => 'Rekrutment' ],
+                ['name' => 'Rekrutment', 'route' => route('Rekrutment-anggota.index'), 'icon' => 'add.png', 'match' => 'rekrutment-anggota*'],
                 ['name' => 'Blog', 'route' => route('blogadmin.index'), 'icon' => 'writing.png', 'match' => 'blogadmin'],
                 ['name' => 'Galeri', 'route' => route('galeri.index'), 'icon' => 'image-galery.png', 'match' => 'galeri*'],
             ];

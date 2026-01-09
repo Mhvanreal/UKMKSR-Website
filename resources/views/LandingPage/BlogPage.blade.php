@@ -26,22 +26,7 @@
                 </div>
 
                 <!-- Search Form -->
-                <form action="{{ route('blog.search') }}" method="GET" class="flex items-start justify-start mb-8">
-                    <input
-                        type="text"
-                        name="query"
-                        placeholder="Cari artikel..."
-                        class="px-4 py-2 text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        style="font-family: 'Kanit', sans-serif;"
-                        value="{{ request('query') }}">
-
-                    <button
-                        type="submit"
-                        class="px-4 py-2 ml-2 font-bold text-white transition duration-300 ease-in-out bg-red-600 rounded-lg hover:bg-orange-600"
-                        style="font-family: 'Kanit', sans-serif;">
-                        Cari
-                    </button>
-                </form>
+               
 
                 <!-- Blog Cards -->
                 <div class="grid gap-8 pb-8 mt-12 sm:grid-cols-2 lg:grid-cols-3">
@@ -88,6 +73,7 @@
         </section>
     </main>
     @include('partials.footer')
+    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const elements = document.querySelectorAll('.scroll-animate');

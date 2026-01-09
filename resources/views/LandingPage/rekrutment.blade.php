@@ -47,92 +47,167 @@
         </div>
     </form>
 
+    @if ($errors->any())
+    <div class="mb-4 p-4 text-sm text-red-700 bg-red-100 border border-red-400 rounded">
+        <strong>Terjadi kesalahan:</strong>
+        <ul class="mt-2 list-disc list-inside">
+            @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="mb-4 p-4 text-sm text-red-700 bg-red-100 border border-red-400 rounded">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="mb-4 p-4 text-sm text-green-700 bg-green-100 border border-green-400 rounded">
+            {{ session('success') }}
+        </div>
+    @endif
+
 
     <section class="p-6 bg-white rounded-lg shadow-md">
-        <form action="{{route('rekrutmen.store')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div>
-                    <label class="block mb-2 font-bold">NIM</label>
-                    <input type="text" name="nim" class="w-full px-4 py-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Nama Lengkap</label>
-                    <input type="text" name="Nama" class="w-full px-4 py-2 border rounded" required>
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Nama Panggilan</label>
-                    <input type="text" name="Nama_panggilan" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">tempat_lahir</label>
-                    <input type="text" name="tempat_lahir" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Tanggal Lahir</label>
-                    <input type="date" name="tanggal_lahir" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Agama</label>
-                    <input type="text" name="Agama" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Jurusan</label>
-                    <input type="text" name="jurusan" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Program Studi</label>
-                    <input type="text" name="prodi" class="w-full px-4 py-2 border rounded" placeholder = "D-IV Teknik Informatika">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Alamat</label>
-                    <input type="text" name="alamat" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Email</label>
-                    <input type="email" name="email" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">No. Telepon</label>
-                    <input type="text" name="No_tlpn" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Golongan Darah</label>
-                    <input type="text" name="Gol_darah" class="w-full px-4 py-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Jenis Kelamin</label>
-                    <select name="jenis_kelamin" class="w-full px-4 py-2 border rounded">
-                        <option value="laki-laki">Laki-laki</option>
-                        <option value="perempuan">Perempuan</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block mb-2 font-bold">Tahun Masuk Kuliah</label>
-                    <input type="number" name="tahun_masuk_kuliah" class="w-full px-4 py-2 border rounded">
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="block mb-2 font-bold">Organisasi yang Pernah Diikuti</label>
-                    <textarea name="organisasi_yg_pernah_diikuti" class="w-full px-4 py-2 border rounded"></textarea>
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="block mb-2 font-bold">Alasan Bergabung</label>
-                    <textarea name="alasan_join" class="w-full px-4 py-2 border rounded"></textarea>
-                </div>
-                <div class="md:col-span-2">
-                    <label class="block mb-2 font-bold">Foto</label>
-                    <input type="file" name="foto" class="w-full">
-                </div>
+        <form action="{{ route('rekrutmen.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            
+            {{-- NIM --}}
+            <div>
+                <label for="nim" class="block font-medium">NIM</label>
+                <input type="text" name="nim" id="nim" value="{{ old('nim') }}" 
+                    class="w-full border rounded px-3 py-2" required>
+                @error('nim') <small class="text-red-500">{{ $message }}</small> @enderror
             </div>
 
-            <div class="flex justify-end mt-6">
-                <button type="submit" class="px-6 py-2 text-white bg-green-600 rounded hover:bg-green-700">
-                    Submit
-                </button>
+            {{-- Nama Lengkap --}}
+            <div>
+                <label class="block mb-2 font-bold">Nama Lengkap</label>
+                <input type="text" name="Nama" value="{{ old('Nama') }}" class="w-full px-4 py-2 border rounded" required>
+                @error('Nama') <small class="text-red-500">{{ $message }}</small> @enderror
             </div>
-        </form>
+
+            {{-- Nama Panggilan --}}
+            <div>
+                <label class="block mb-2 font-bold">Nama Panggilan</label>
+                <input type="text" name="Nama_panggilan" value="{{ old('Nama_panggilan') }}" class="w-full px-4 py-2 border rounded">
+                @error('Nama_panggilan') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Tempat Lahir --}}
+            <div>
+                <label class="block mb-2 font-bold">Tempat lahir</label>
+                <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="w-full px-4 py-2 border rounded">
+                @error('tempat_lahir') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Tanggal Lahir --}}
+            <div>
+                <label class="block mb-2 font-bold">Tanggal Lahir</label>
+                <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="w-full px-4 py-2 border rounded">
+                @error('tanggal_lahir') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Agama --}}
+            <div>
+                <label class="block mb-2 font-bold">Agama</label>
+                <input type="text" name="Agama" value="{{ old('Agama') }}" class="w-full px-4 py-2 border rounded">
+                @error('Agama') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Jurusan --}}
+            <div>
+                <label class="block mb-2 font-bold">Jurusan</label>
+                <input type="text" name="jurusan" value="{{ old('jurusan') }}" class="w-full px-4 py-2 border rounded">
+                @error('jurusan') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Program Studi --}}
+            <div>
+                <label class="block mb-2 font-bold">Program Studi</label>
+                <input type="text" name="prodi" value="{{ old('prodi') }}" class="w-full px-4 py-2 border rounded" placeholder="D-IV Teknik Informatika">
+                @error('prodi') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Alamat --}}
+            <div>
+                <label class="block mb-2 font-bold">Alamat</label>
+                <input type="text" name="alamat" value="{{ old('alamat') }}" class="w-full px-4 py-2 border rounded">
+                @error('alamat') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Email --}}
+            <div>
+                <label class="block mb-2 font-bold">Email</label>
+                <input type="email" name="email" value="{{ old('email') }}" class="w-full px-4 py-2 border rounded">
+                @error('email') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- No Telepon --}}
+            <div>
+                <label class="block mb-2 font-bold">No. Telepon</label>
+                <input type="text" name="No_tlpn" value="{{ old('No_tlpn') }}" class="w-full px-4 py-2 border rounded">
+                @error('No_tlpn') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Golongan Darah --}}
+            <div>
+                <label class="block mb-2 font-bold">Golongan Darah</label>
+                <input type="text" name="Gol_darah" value="{{ old('Gol_darah') }}" class="w-full px-4 py-2 border rounded">
+                @error('Gol_darah') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Jenis Kelamin --}}
+            <div>
+                <label class="block mb-2 font-bold">Jenis Kelamin</label>
+                <select name="jenis_kelamin" class="w-full px-4 py-2 border rounded">
+                    <option value="">-- Pilih --</option>
+                    <option value="laki-laki" {{ old('jenis_kelamin') == 'laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                    <option value="perempuan" {{ old('jenis_kelamin') == 'perempuan' ? 'selected' : '' }}>Perempuan</option>
+                </select>
+                @error('jenis_kelamin') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Tahun Masuk --}}
+            <div>
+                <label class="block mb-2 font-bold">Tahun Masuk Kuliah</label>
+                <input type="number" name="tahun_masuk_kuliah" value="{{ old('tahun_masuk_kuliah') }}" class="w-full px-4 py-2 border rounded">
+                @error('tahun_masuk_kuliah') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Organisasi --}}
+            <div class="md:col-span-2">
+                <label class="block mb-2 font-bold">Organisasi yang Pernah Diikuti</label>
+                <textarea name="organisasi_yg_pernah_diikuti" class="w-full px-4 py-2 border rounded">{{ old('organisasi_yg_pernah_diikuti') }}</textarea>
+                @error('organisasi_yg_pernah_diikuti') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Alasan Join --}}
+            <div class="md:col-span-2">
+                <label class="block mb-2 font-bold">Alasan Bergabung</label>
+                <textarea name="alasan_join" class="w-full px-4 py-2 border rounded">{{ old('alasan_join') }}</textarea>
+                @error('alasan_join') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+
+            {{-- Foto --}}
+            <div class="md:col-span-2">
+                <label class="block mb-2 font-bold">Foto</label>
+                <input type="file" name="foto" class="w-full">
+                @error('foto') <small class="text-red-500">{{ $message }}</small> @enderror
+            </div>
+        </div>
+
+        <div class="flex justify-end mt-6">
+            <button type="submit" class="px-6 py-2 text-white bg-green-600 rounded hover:bg-green-700">
+                Submit
+            </button>
+        </div>
+    </form>
+
     </section>
 </main>
 

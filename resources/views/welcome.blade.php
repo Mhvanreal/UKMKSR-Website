@@ -15,21 +15,31 @@
 
 <body class="flex flex-col min-h-screen bg-gray-100">
     @include('partials.navbar')
-    <section class="relative flex items-center justify-center w-full h-screen text-white">
+    <section class="relative flex items-center justify-center w-full min-h-screen text-white px-4">
+        <!-- Slideshow -->
         <div id="slideshow-container" class="absolute top-0 left-0 w-full h-full overflow-hidden">
             <div class="absolute w-full h-full bg-center bg-cover opacity-0 slideshow-image"></div>
             <div class="absolute w-full h-full bg-center bg-cover opacity-0 slideshow-image"></div>
         </div>
 
+        <!-- Overlay -->
         <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
 
-        <div class="relative z-10 text-center">
-            <h1 class="font-bold text-white text-7xl" style="font-family: 'Kanit', sans-serif;">UKM KSR PMI UNIT</h1>
-            <h1 class="font-bold text-white text-7xl" style="font-family: 'Kanit', sans-serif;">POLITEKNIK NEGERI JEMBER</h1>
-            <hr class="w-1/3 mx-auto my-4 border-t-2 border-white opacity-80">
-            <p class="mt-4 text-lg text-white">Unit Kegiatan Mahasiswa Korps Sukarela Palang Merah Indonesia Unit Politeknik Negeri Jember</p>
+        <!-- Content -->
+        <div class="relative z-10 text-center max-w-4xl mx-auto">
+            <h1 class="font-bold text-white text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight" style="font-family: 'Kanit', sans-serif;">
+                UKM KSR PMI UNIT
+            </h1>
+            <h1 class="font-bold text-white text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-tight" style="font-family: 'Kanit', sans-serif;">
+                POLITEKNIK NEGERI JEMBER
+            </h1>
+            <hr class="w-2/3 sm:w-1/3 mx-auto my-4 border-t-2 border-white opacity-80">
+            <p class="mt-4 text-base sm:text-lg">
+                Unit Kegiatan Mahasiswa Korps Sukarela Palang Merah Indonesia Unit Politeknik Negeri Jember
+            </p>
         </div>
     </section>
+
 
     <main class="flex-1 w-full mx-auto" id="konten-berikutnya">
         <section class="p-6 transition-all duration-700 delay-500 translate-y-10 bg-white opacity-0 scroll-animate">

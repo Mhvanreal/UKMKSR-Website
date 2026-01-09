@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PesanLayanan;
 use App\Models\Layanan;
+use Illuminate\Support\Facades\Http;
 use App\Models\Kegiatan;
 use Illuminate\Support\Str;
 
@@ -108,6 +109,14 @@ public function reject($id)
     return back()->with('success', 'Permohonan layanan telah ditolak.');
 }
 
+
+public function sendWhatsapp($nomor, $pesan)
+{
+    // Contoh format nomor: "628123456789"
+    $url = "https://api.whatsapp.com/send?phone={$nomor}&text=" . urlencode($pesan);
+
+    return redirect()->away($url); // buka link WhatsApp web
+}
 
 
 }

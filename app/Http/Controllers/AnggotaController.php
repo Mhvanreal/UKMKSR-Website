@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use App\Imports\AnggotaImport;
 use App\Models\DataNilai;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -34,64 +35,69 @@ class AnggotaController extends Controller
         return view('admin.anggota.create_anggota');
     }
 
-        public function store(Request $request)
-    {
-        try {
-            $request->validate([
-                'nama' => 'required|string|max:255',
-                'nim' => 'required|unique:anggota,nim',
-                'Nama_panggilan' => 'nullable|string',
-                'tanggal_lahir' => 'required|date',
-                'tempat_lahir' => 'nullable|string',
-                'Agama' => 'nullable|string',
-                'email' => 'nullable|email',
-                'angkatan' => 'required|integer',
-                'alasan_join' => 'nullable|string',
-                'jurusan' => 'required|string',
-                'prodi' => 'required|string',
-                'tahun_masuk_kuliah' => 'required|digits:4',
-                'status' => 'required|in:Aktif,Tidak Aktif,Inaktif',
-                'jenis_kelamin' => 'required|in:laki-laki,perempuan',
-                'Gol_darah' => 'nullable|string',
-                'organisasi_yg_pernah_diikuti' => 'nullable|string',
-                'No_tlpn' => 'nullable|string',
-                'alamat' => 'required|string',
-                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
+       public function store(Request $request)
+{
+    try {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|unique:anggota,nim',
+            'nama_panggilan' => 'nullable|string',
+            'tanggal_lahir' => 'required|date',
+            'tempat_lahir' => 'nullable|string',
+            'agama' => 'nullable|string',
+            'email' => 'nullable|email',
+            'angkatan' => 'required|integer',
+            'alasan_join' => 'nullable|string',
+            'jurusan' => 'required|string',
+            'prodi' => 'required|string',
+            'tahun_masuk_kuliah' => 'required|digits:4',
+            'status' => 'required|in:Aktif,Tidak Aktif,Inaktif',
+            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+            'gol_darah' => 'nullable|string',
+            'organisasi_yg_pernah_diikuti' => 'nullable|string',
+            'No_tlpn' => 'nullable|string',
+            'alamat' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
 
-            $imagePath = null;
-            if ($request->hasFile('foto')) {
-                $imagePath = $request->file('foto')->store('foto-anggota', 'public');
-            }
-
-            Anggota::create([
-                'nama' => $request->input('nama'),
-                'Nama_panggilan' => $request->input('Nama_panggilan'),
-                'nim' => $request->input('nim'),
-                'tanggal_lahir' => $request->input('tanggal_lahir'),
-                'tempat_lahir' => $request->input('tempat_lahir'),
-                'Agama' => $request->input('Agama'),
-                'email' => $request->input('email'),
-                'angkatan' => $request->input('angkatan'),
-                'alasan_join' => $request->input('alasan_join'),
-                'jurusan' => $request->input('jurusan'),
-                'prodi' => $request->input('prodi'),
-                'tahun_masuk_kuliah' => $request->input('tahun_masuk_kuliah'),
-                'status' => $request->input('status'),
-                'jenis_kelamin' => $request->input('jenis_kelamin'),
-                'Gol_darah' => $request->input('Gol_darah'),
-                'organisasi_yg_pernah_diikuti' => $request->input('organisasi_yg_pernah_diikuti'),
-                'No_tlpn' => $request->input('No_tlpn'),
-                'alamat' => $request->input('alamat'),
-                'foto' => $imagePath,
-                'created_at' => Carbon::now(),
-            ]);
-
-            return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil ditambahkan!');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menyimpan data anggota. ' . $e->getMessage());
+        // Handling foto
+        $imagePath = null;
+        if ($request->hasFile('foto')) {
+            $fotoFile = $request->file('foto');
+            $namaFoto = time() . '_' . $fotoFile->getClientOriginalName();
+            $imagePath = $fotoFile->storeAs('foto-anggota', $namaFoto, 'public');
         }
+
+        // Simpan ke database
+        Anggota::create([
+            'nama' => $request->nama,
+            'nama_panggilan' => $request->nama_panggilan,
+            'nim' => $request->nim,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tempat_lahir' => $request->tempat_lahir,
+            'agama' => $request->agama,
+            'email' => $request->email,
+            'angkatan' => $request->angkatan,
+            'alasan_join' => $request->alasan_join,
+            'jurusan' => $request->jurusan,
+            'prodi' => $request->prodi,
+            'tahun_masuk_kuliah' => $request->tahun_masuk_kuliah,
+            'status' => $request->status,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'gol_darah' => $request->gol_darah,
+            'organisasi_yg_pernah_diikuti' => $request->organisasi_yg_pernah_diikuti,
+            'No_tlpn' => $request->No_tlpn,
+            'alamat' => $request->alamat,
+            'foto' => $imagePath,
+            'created_at' => Carbon::now(),
+        ]);
+
+        return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil ditambahkan!');
+    } catch (\Exception $e) {
+        Log::error('Gagal tambah anggota: ' . $e->getMessage());
+        return back()->withInput()->with('error', 'Gagal menyimpan data anggota: ' . $e->getMessage());
     }
+}
 
     public function destroy($id) {
         $anggota = Anggota::findOrFail($id);
@@ -112,11 +118,11 @@ class AnggotaController extends Controller
         try {
             $request->validate([
                 'nama' => 'required|string|max:255',
-                'Nama_panggilan' => 'nullable|string',
+                'nama_panggilan' => 'nullable|string',
                 'nim' => 'required|exists:anggota,nim',
                 'tanggal_lahir' => 'required|date',
                 'tempat_lahir' => 'nullable|string',
-                'Agama' => 'nullable|string',
+                'agama' => 'nullable|string',
                 'email' => 'nullable|email',
                 'angkatan' => 'required|integer',
                 'alasan_join' => 'nullable|string',
@@ -125,11 +131,11 @@ class AnggotaController extends Controller
                 'tahun_masuk_kuliah' => 'required|digits:4',
                 'status' => 'required|in:Aktif,Tidak Aktif,Inaktif',
                 'jenis_kelamin' => 'required|in:laki-laki,perempuan',
-                'Gol_darah' => 'nullable|string',
+                'gol_darah' => 'nullable|string',
                 'organisasi_yg_pernah_diikuti' => 'nullable|string',
                 'No_tlpn' => 'nullable|string',
                 'alamat' => 'required|string',
-                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             ]);
 
             $anggota = Anggota::findOrFail($id);
@@ -143,11 +149,11 @@ class AnggotaController extends Controller
 
             $anggota->update([
                 'nama' => $request->input('nama'),
-                'Nama_panggilan' => $request->input('Nama_panggilan'),
+                'nama_panggilan' => $request->input('nama_panggilan'),
                 'nim' => $request->input('nim'),
                 'tanggal_lahir' => $request->input('tanggal_lahir'),
                 'tempat_lahir' => $request->input('tempat_lahir'),
-                'Agama' => $request->input('Agama'),
+                'agama' => $request->input('agama'),
                 'email' => $request->input('email'),
                 'angkatan' => $request->input('angkatan'),
                 'alasan_join' => $request->input('alasan_join'),
@@ -156,7 +162,7 @@ class AnggotaController extends Controller
                 'tahun_masuk_kuliah' => $request->input('tahun_masuk_kuliah'),
                 'status' => $request->input('status'),
                 'jenis_kelamin' => $request->input('jenis_kelamin'),
-                'Gol_darah' => $request->input('Gol_darah'),
+                'gol_darah' => $request->input('gol_darah'),
                 'organisasi_yg_pernah_diikuti' => $request->input('organisasi_yg_pernah_diikuti'),
                 'No_tlpn' => $request->input('No_tlpn'),
                 'alamat' => $request->input('alamat'),

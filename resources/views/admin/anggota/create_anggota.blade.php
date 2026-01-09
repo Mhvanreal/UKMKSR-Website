@@ -16,11 +16,11 @@
                     required>
             </div>
             <div class="flex flex-col space-y-2">
-                <label for="Nama_panggilan" class="font-medium text-gray-700">Nama Panggilan</label>
+                <label for="nama_panggilan" class="font-medium text-gray-700">Nama Panggilan</label>
                 <input
                     type="text"
-                    id="Nama_panggilan"
-                    name="Nama_panggilan"
+                    id="nama_panggilan"
+                    name="nama_panggilan"
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Masukkan nama panggilan">
             </div>
@@ -65,21 +65,21 @@
                     placeholder="Masukkan email">
             </div>
             <div class="flex flex-col space-y-2">
-                <label for="Agama" class="font-medium text-gray-700">Agama</label>
+                <label for="agama" class="font-medium text-gray-700">Agama</label>
                 <input
                     type="text"
-                    id="Agama"
-                    name="Agama"
+                    id="agama"
+                    name="agama"
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Masukkan agama">
             </div>
 
             <div class="flex flex-col space-y-2">
-                <label for="Gol_darah" class="font-medium text-gray-700">Golongan Darah</label>
+                <label for="gol_darah" class="font-medium text-gray-700">Golongan Darah</label>
                 <input
                     type="text"
-                    id="Gol_darah"
-                    name="Gol_darah"
+                    id="gol_darah"
+                    name="gol_darah"
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Masukkan golongan darah">
             </div>
@@ -183,12 +183,12 @@
             <div class="flex flex-col space-y-2">
                 <label for="alasan_join" class="font-medium text-gray-700">Alasan Bergabung</label>
                 <textarea
-                    id="summernote"
                     name="alasan_join"
                     rows="4"
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Masukkan alasan Bergabung KSR"
                     required></textarea>
+
             </div>
             <div class="flex flex-col space-y-2">
                 <label for="foto" class="font-medium text-gray-700">Foto</label>
@@ -206,6 +206,22 @@
             </div>
         </form>
     </div>
+    @if ($errors->any())
+    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 border border-red-400 rounded">
+        <ul class="list-disc pl-5 space-y-1">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 border border-red-400 rounded">
+        {{ session('error') }}
+    </div>
+@endif
+
 
     <!-- Tambahkan SweetAlert -->
     @push('scripts')

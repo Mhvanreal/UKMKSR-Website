@@ -48,33 +48,39 @@ class BlogController extends Controller
         }
     }
 
-    public function update(Request $request, $id){
+        public function update(Request $request, $id) {
         try {
             $request->validate([
                 'judul' => 'required|string|max:255',
                 'tanggal' => 'required|date',
-                'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                 'deskripsi' => 'required|string',
             ]);
 
             $blog = Blog::findOrFail($id);
 
             if ($request->hasFile('gambar')) {
+                // Hapus gambar lama jika ada
                 if ($blog->images) {
                     Storage::disk('public')->delete($blog->images);
                 }
-                $blog->images = $request->file('gambar')->store('images', 'public');
+
+                // Simpan gambar baru dengan nama unik ke folder "images"
+                $image = $request->file('gambar');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imagePath = $image->storeAs('images', $imageName, 'public');
+                $blog->images = $imagePath;
             }
 
             $blog->title = $request->input('judul');
             $blog->description = $request->input('deskripsi');
-            $blog->created_at = $request->input('tanggal');
+            $blog->created_at = Carbon::createFromFormat('Y-m-d', $request->input('tanggal'));
             $blog->save();
 
             return redirect()->route('blogadmin.index')->with('success', 'Blog berhasil diperbarui!');
         } catch (\Exception $e) {
             Log::error("Error update blog ID $id: " . $e->getMessage());
-            return back()->withInput()->with('error', 'Gagal memperbarui blog.');
+            return back()->withInput()->with('error', 'Gagal memperbarui blog: ' . $e->getMessage());
         }
     }
 
@@ -87,31 +93,39 @@ class BlogController extends Controller
         }
     }
 
-    public function store(Request $request) {
+        public function store(Request $request)
+    {
         try {
+            // Validasi input
             $request->validate([
-                'judul' => 'required|string|max:255',
-                'tanggal' => 'required|date',
-                'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'judul'     => 'required|string|max:255',
+                'tanggal'   => 'required|date',
+                'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
                 'deskripsi' => 'required|string',
             ]);
 
+            // Proses upload gambar
             $imagePath = null;
             if ($request->hasFile('gambar')) {
                 $imagePath = $request->file('gambar')->store('images', 'public');
             }
 
+            // Pastikan format tanggal valid
+            $tanggal = $request->input('tanggal');
+            $formattedDate = date('Y-m-d', strtotime($tanggal));
+
+            // Simpan data
             Blog::create([
-                'title' => $request->input('judul'),
+                'title'       => $request->input('judul'),
                 'description' => $request->input('deskripsi'),
-                'images' => $imagePath,
-                'created_at' => Carbon::createFromFormat('Y-m-d', $request->input('tanggal')),
+                'images'      => $imagePath,
+                'created_at'  => $formattedDate,
             ]);
 
             return redirect()->route('blogadmin.index')->with('success', 'Blog berhasil ditambahkan!');
         } catch (\Exception $e) {
-            Log::error("Error store blog: " . $e->getMessage());
-            return back()->withInput()->with('error', 'Gagal menambahkan blog.');
+            Log::error("Error saat menyimpan blog: " . $e->getMessage());
+            return back()->withInput()->with('error', 'Gagal menambahkan blog. Silakan coba lagi.');
         }
     }
 
@@ -143,19 +157,19 @@ class BlogController extends Controller
     }
 
     public function search(Request $request) {
-        try {
-            $query = $request->input('query');
+    $query = $request->input('query');
 
-            $data = Blog::where('title', 'LIKE', "%$query%")
-                        ->latest()
-                        ->paginate(6);
-
-            return view('LandingPage.BlogPage', compact('data'));
-        } catch (\Exception $e) {
-            Log::error("Error search blog: " . $e->getMessage());
-            return back()->with('error', 'Gagal mencari blog.');
-        }
+    if (!$query) {
+        return redirect()->route('blogadmin.index')->with('error', 'Kata kunci pencarian kosong.');
     }
+
+    $data = Blog::where('title', 'LIKE', '%' . $query . '%')
+                ->orderByDesc('created_at')
+                ->paginate(6);
+
+    return view('LandingPage.BlogPage', compact('data', 'query'));
+}
+
 
     public function show($id){
         try {

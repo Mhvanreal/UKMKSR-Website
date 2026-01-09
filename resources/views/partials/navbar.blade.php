@@ -45,7 +45,7 @@
 
         <li>
             <button class="flex items-center justify-between w-full text-left hover:text-gray-300 dropdown-btn">
-                TENTANG
+                Tentang
                 <svg class="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
@@ -62,17 +62,10 @@
 
 
         <li>
-            <a href="{{route('layananksr')}}" class="block hover:text-gray-300">LAYANAN</a>
+            <a href="{{route('layananksr')}}" class="block hover:text-gray-300">layanan</a>
         </li>
-        <li>
-            <button class="flex items-center justify-between w-full text-left hover:text-gray-300 dropdown-btn">
-                KEGIATAN
-                <svg class="w-4 h-4 ml-2 transition-transform duration-300 ease-in-out dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </button>
-        </li>
-        <li><a href="{{route('bloging')}}" class="block hover:text-gray-300">BLOG</a></li>
+        <li><a href="{{ route('aktifitas') }}" class="block hover:text-gray-300"">Kegiatan</a></li>
+        <li><a href="{{route('bloging')}}" class="block hover:text-gray-300">Blog</a></li>
         <li><a href="{{route('rekrutment')}}" class="block hover:text-gray-300">Pendaftaran</a></li>
         <button id="navAction" type="button" class="px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"  onclick="window.location='{{ url('login') }}'">
             Login

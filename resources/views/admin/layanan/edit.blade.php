@@ -24,10 +24,10 @@
             @endif
 
             <label class="block mt-3 font-semibold">Poster:</label>
-            <input type="file" name="poster_kegiatan" class="w-full p-2 border rounded">
+            <input type="file" name="poster_layanan" class="w-full p-2 border rounded">
             @if ($layanan->poster_layanan)
                 <div class="mt-2">
-                    <img src="{{ asset('storage/' . $layanan->poster_layanan) }}" class="object-cover w-32 h-32 rounded" alt="Poster Kegiatan">
+                    <img src="{{ asset('storage/' . $layanan->poster_layanan) }}" class="object-cover w-32 h-32 rounded" alt="Poster Layanan">
                 </div>
             @endif
 

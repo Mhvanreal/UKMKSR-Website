@@ -89,31 +89,30 @@ class LayananPageController extends Controller
         return view('admin.layanan.edit', compact('layanan'));
     }
 
-    public function update(Request $request, $id)
+        public function update(Request $request, $id)
     {
         $layanan = Layanan::findOrFail($id);
         $request->validate([
             'nama_layanan' => 'required|string|max:255',
             'deskripsi_layanan' => 'nullable|string',
-            'foto_layanan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'poster_layanan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'foto_layanan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'poster_layanan' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $layanan->nama_layanan = $request->nama_layanan;
         $layanan->deskripsi_layanan = $request->deskripsi_layanan;
 
-        if ($request->hasFile('foto_kegiatan')) {
-
+        if ($request->hasFile('foto_layanan')) {
             if ($layanan->foto_layanan) {
-                Storage::delete('public/' . $layanan->foto_layanan);
+                Storage::disk('public')->delete($layanan->foto_layanan);
             }
             $fotoPath = $request->file('foto_layanan')->store('layanan/foto', 'public');
             $layanan->foto_layanan = $fotoPath;
         }
 
         if ($request->hasFile('poster_layanan')) {
-            if ($layanan->poster_kegiatan) {
-                Storage::delete('public/' . $layanan->poster_layanan);
+            if ($layanan->poster_layanan) {
+                Storage::disk('public')->delete($layanan->poster_layanan);
             }
             $posterPath = $request->file('poster_layanan')->store('layanan/poster', 'public');
             $layanan->poster_layanan = $posterPath;

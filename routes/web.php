@@ -101,6 +101,13 @@ Route::get('/kegiatan-detail/{id}', [KegiatanController::class, 'detailshow'])->
 Route::post('/rekrutmen/store', [RekrutmentController::class, 'store'])->name('rekrutmen.store');
 Route::get('/rekrutmen/cetak/{No_pendaftaran}', [RekrutmentController::class, 'cetak'])->name('rekrutmen.cetak');
 Route::post('/rekrutmen/cek-nim', [RekrutmentController::class, 'cekNim'])->name('rekrutmen.cekNim');
+Route::get('/rekrutmen/success', [RekrutmentController::class, 'success'])->name('rekrutmen.success');
+
+
+
+Route::get('/test', function () {
+    return view('LandingPage.surat2');
+});
 
 
 
