@@ -15,13 +15,13 @@
                 <p class="mb-4 font-bold text-white uppercase">Tautan Langsung</p>
                 <ul class="list-reset">
                     <li class="mt-2">
-                        <a href="https://wa.me/6281233151566" class="text-white no-underline hover:underline hover:text-pink-500">About Us</a>
+                        <a href="https://wa.me/6285725779903" class="text-white no-underline hover:underline hover:text-pink-500">About Us</a>
                     </li>
                     <li class="mt-2">
-                        <a href="https://wa.me/6281233151566" class="text-white no-underline hover:underline hover:text-pink-500">Contact Us</a>
+                        <a href="https://wa.me/6285725779903" class="text-white no-underline hover:underline hover:text-pink-500">Contact Us</a>
                     </li>
                     <li class="mt-2">
-                        <a href="https://wa.me/6281233151566" class="text-white no-underline hover:underline hover:text-pink-500">Support</a>
+                        <a href="https://wa.me/6285725779903" class="text-white no-underline hover:underline hover:text-pink-500">Support</a>
                     </li>
                     <li class="mt-2">
                         <a href="#" class="text-white no-underline hover:underline hover:text-pink-500">Privasi Policy</a>
@@ -31,7 +31,7 @@
             <div class="text-center md:text-centar">
                 <p class="mb-4 font-bold text-white uppercase">Informasi Kontak</p>
                 <div class="flex justify-center space-x-4 md:justify-center">
-                    <a href="#" class="text-white hover:text-pink-500">
+                    <a href="https://www.facebook.com/share/1GmLSAckAa/" class="text-white hover:text-pink-500">
                         <i class="fab fa-facebook fa-2x"></i>
                     </a>
                     <a href="https://www.instagram.com/ksrpmipolije?igsh=MW8yOHNvbnN1MjZxMg==" class="text-white hover:text-pink-500">

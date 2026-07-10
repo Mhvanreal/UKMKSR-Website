@@ -40,7 +40,7 @@
                                     class="text-blue-600 hover:text-blue-800">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ route('tentang.edit', $item->id_tentang_ksr) }}"
+				 <a href="{{ route('tentang.edit', ['tentang' => $item->id_tentang_ksr, 'type' => 'tentang']) }}"
                                     class="text-yellow-500 hover:text-yellow-700">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -97,7 +97,7 @@
                                     class="text-blue-600 hover:text-blue-800">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ route('tentang.edit', $item->id_info_ksr) }}"
+				 <a href="{{ route('tentang.edit', ['tentang' => $item->id_info_ksr, 'type' => 'info']) }}"
                                     class="text-yellow-500 hover:text-yellow-700">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -154,7 +154,7 @@
                                     class="text-blue-600 hover:text-blue-800">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ route('tentang.edit', $item->id_sejarah_ksr) }}"
+				<a href="{{ route('tentang.edit', ['tentang' => $item->id_sejarah_ksr, 'type' => 'sejarah']) }}"
                                     class="text-yellow-500 hover:text-yellow-700">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -211,7 +211,7 @@
                                     class="text-blue-600 hover:text-blue-800">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
-                                <a href="{{ route('tentang.edit', $item->id_visi_misi_ksr) }}"
+				 <a href="{{ route('tentang.edit', ['tentang' => $item->id_visi_misi_ksr, 'type' => 'visimisi']) }}"
                                     class="text-yellow-500 hover:text-yellow-700">
                                     <i class="fas fa-edit"></i>
                                 </a>

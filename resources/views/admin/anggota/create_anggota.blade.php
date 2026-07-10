@@ -166,8 +166,7 @@
                     required>
                     <option value="" disabled selected>Pilih status</option>
                     <option value="Aktif">Aktif</option>
-                    <option value="Tidak Aktif">Tidak Aktif</option>
-                    <option value="Inaktif">Inaktif</option>
+                    <option value="Alumni">Alumni</option>
                 </select>
             </div>
             <div class="flex flex-col space-y-2">

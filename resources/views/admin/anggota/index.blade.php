@@ -18,19 +18,6 @@
                     @endforeach
                 </select>
 
-                <form action="{{ route('anggota.search') }}" method="GET"
-                    class="flex flex-col w-full gap-2 sm:flex-row sm:items-center sm:w-auto">
-                    <input type="hidden" name="angkatan" value="{{ request('angkatan') }}">
-
-                    <input type="text" name="query" placeholder="Cari Anggota..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg sm:w-64 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                        value="{{ request('query') }}">
-
-                    <button type="submit"
-                        class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2.5 w-full sm:w-auto">
-                        Cari
-                    </button>
-                </form>
             </div>
             <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-4">
                 <!-- Import Excel -->
@@ -184,13 +171,21 @@
         });
     </script>
     {{-- //filter// --}}
-    <script>
-        document.getElementById('filter').addEventListener('change', function () {
+ <script>
+        document.getElementById('filter').addEventListener('change', function() {
             let filterValue = this.value;
-            window.location.href = `?angkatan=${filterValue}`;
+            let currentQuery = '{{ request('query') }}';
+            let url = '{{ route('anggota.index') }}';
+
+            // Jika ada query pencarian, gunakan route search
+            if (currentQuery) {
+                url = '{{ route('anggota.search') }}';
+                window.location.href = `${url}?angkatan=${filterValue}&query=${currentQuery}`;
+            } else {
+                window.location.href = `${url}?angkatan=${filterValue}`;
+            }
         });
     </script>
-
 
     <script>
     @if ($errors->any())

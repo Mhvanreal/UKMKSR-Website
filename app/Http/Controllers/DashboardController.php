@@ -26,14 +26,14 @@ class DashboardController extends Controller
         
         $data_grafik = collect($angkatan_grafik)->map(function ($angkatan) {
             return Anggota::where('angkatan', $angkatan)
-                ->whereIn('status', ['aktif', 'inaktif'])
+                ->whereIn('status', ['Aktif', 'Alumni'])
                 ->count();
         });
         
-        $angkatan_mulai = $angkatan_terakhir - 2;
-        $jumlah_seluruh_anggota = Anggota::whereBetween('angkatan', [$angkatan_mulai, $angkatan_terakhir])->count();
-        $jumlah_seluruh_anggota_aktif = Anggota::whereBetween('angkatan', [$angkatan_mulai, $angkatan_terakhir])->where('status', 'aktif')->count();
-        $jumlah_seluruh_anggota_in_aktif = Anggota::whereBetween('angkatan', [$angkatan_mulai, $angkatan_terakhir])->where('status', 'inaktif')->count();
+	$angkatan_mulai = $angkatan_terakhir - 2;
+        $jumlah_seluruh_anggota = Anggota::whereBetween('angkatan', [$angkatan_mulai, $angkatan_terakhir])->whereIn('status', ['Aktif', 'Alumni'])->count();
+        $jumlah_seluruh_anggota_aktif = Anggota::whereBetween('angkatan', [$angkatan_mulai, $angkatan_terakhir])->where('status', 'Aktif')->count();
+        $jumlah_seluruh_anggota_alumni = Anggota::whereBetween('angkatan', [$angkatan_mulai, $angkatan_terakhir])->where('status', 'Alumni')->count();
 
         $jumlah_kegiatan = Kegiatan::where('status', 'aktif')->count();
         $jumlah_layanan = Layanan::where('status', 'aktif')->count();
@@ -53,7 +53,7 @@ class DashboardController extends Controller
             'tahun_sekarang' => $tahun_sekarang, 
             'jumlah_seluruh_anggota' => $jumlah_seluruh_anggota,
             'jumlah_seluruh_anggota_aktif' => $jumlah_seluruh_anggota_aktif,
-            'jumlah_seluruh_anggota_in_aktif' => $jumlah_seluruh_anggota_in_aktif,
+  	    'jumlah_seluruh_anggota_alumni' => $jumlah_seluruh_anggota_alumni,
             'jumlah_kegiatan' => $jumlah_kegiatan,
             'jumlah_layanan' => $jumlah_layanan,
             'data_grafik' => $data_grafik->toArray(),

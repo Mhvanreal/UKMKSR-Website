@@ -15,8 +15,8 @@
         </div>
 
         <div class="flex flex-col justify-center h-48 p-6 transition bg-white shadow rounded-2xl hover:shadow-xl">
-            <h3 class="mb-2 text-center text-gray-500">Anggota In-Aktif {{$tahun_sekarang}}</h3>
-            <p class="text-6xl font-bold text-center text-gray-500" id="inactive-members"></p>
+	<h3 class="mb-2 text-center text-gray-500">Anggota Alumni {{ $tahun_sekarang }}</h3>
+                <p class="text-6xl font-bold text-center text-gray-500" id="alumni-members"></p>
         </div>
     </div>
 
@@ -121,12 +121,11 @@
     </script>
 
     <script>
-        const jumlah_seluruh_anggota = {{$jumlah_seluruh_anggota ?? 0}};
-        const jumlah_seluruh_anggota_aktif = {{$jumlah_seluruh_anggota_aktif ?? 0}};
-        const jumlah_seluruh_anggota_in_aktif = {{$jumlah_seluruh_anggota_in_aktif ?? 0}};
-        const jumlah_kegiatan = {{$jumlah_kegiatan ?? 0}};
-        const jumlah_layanan = {{$jumlah_layanan ?? 0}};
-
+ 	const jumlah_seluruh_anggota = {{ $jumlah_seluruh_anggota ?? 0 }};
+        const jumlah_seluruh_anggota_aktif = {{ $jumlah_seluruh_anggota_aktif ?? 0 }};
+        const jumlah_seluruh_anggota_alumni = {{ $jumlah_seluruh_anggota_alumni ?? 0 }};
+        const jumlah_kegiatan = {{ $jumlah_kegiatan ?? 0 }};
+        const jumlah_layanan = {{ $jumlah_layanan ?? 0 }};
         function animateValue(id, start, end, duration) {
             const obj = document.getElementById(id);
 
@@ -147,12 +146,15 @@
                 }
             }, stepTime);
         }
-
-        animateValue("total-members", 0, jumlah_seluruh_anggota ? jumlah_seluruh_anggota : 0, 1000);
-        animateValue("active-members", 0, jumlah_seluruh_anggota_aktif && jumlah_seluruh_anggota_aktif != null ? jumlah_seluruh_anggota_aktif : 0, 1000);
-        animateValue("inactive-members", 0, jumlah_seluruh_anggota_in_aktif && jumlah_seluruh_anggota_in_aktif != null ? jumlah_seluruh_anggota_in_aktif : 0, 1000);
+	
+	animateValue("total-members", 0, jumlah_seluruh_anggota ? jumlah_seluruh_anggota : 0, 1000);
+        animateValue("active-members", 0, jumlah_seluruh_anggota_aktif && jumlah_seluruh_anggota_aktif != null ?
+            jumlah_seluruh_anggota_aktif : 0, 1000);
+        animateValue("alumni-members", 0, jumlah_seluruh_anggota_alumni && jumlah_seluruh_anggota_alumni != null ?
+            jumlah_seluruh_anggota_alumni : 0, 1000);
         animateValue("event-count", 0, jumlah_kegiatan ? jumlah_kegiatan : 0, 1000);
         animateValue("service-count", 0, jumlah_layanan ? jumlah_layanan : 0, 1000);
+
     </script>
 
     @endsection

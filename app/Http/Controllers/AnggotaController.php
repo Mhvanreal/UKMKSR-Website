@@ -19,7 +19,7 @@ class AnggotaController extends Controller
         $angkatan = $request->query('angkatan');
         $angkatanList = Anggota::select('angkatan')->distinct()->orderBy('angkatan', 'asc')->pluck('angkatan');
         $query = Anggota::query();
-        $query->whereIn('status', ['aktif', 'inaktif']);
+        $query->whereIn('status', ['aktif', 'Alumni']);
 
         if (!empty($angkatan)) {
             $query->where('angkatan', $angkatan);
@@ -51,7 +51,7 @@ class AnggotaController extends Controller
             'jurusan' => 'required|string',
             'prodi' => 'required|string',
             'tahun_masuk_kuliah' => 'required|digits:4',
-            'status' => 'required|in:Aktif,Tidak Aktif,Inaktif',
+            'status' => 'required|in:Aktif,Alumni',
             'jenis_kelamin' => 'required|in:laki-laki,perempuan',
             'gol_darah' => 'nullable|string',
             'organisasi_yg_pernah_diikuti' => 'nullable|string',
@@ -129,7 +129,7 @@ class AnggotaController extends Controller
                 'jurusan' => 'required|string',
                 'prodi' => 'required|string',
                 'tahun_masuk_kuliah' => 'required|digits:4',
-                'status' => 'required|in:Aktif,Tidak Aktif,Inaktif',
+                'status' => 'required|in:Aktif,Alumni',
                 'jenis_kelamin' => 'required|in:laki-laki,perempuan',
                 'gol_darah' => 'nullable|string',
                 'organisasi_yg_pernah_diikuti' => 'nullable|string',
@@ -184,29 +184,30 @@ class AnggotaController extends Controller
         ]);
     }
 
-    public function search(Request $request)
-{
-    $query = $request->input('query');
-    $angkatan = $request->input('angkatan');
+public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $angkatan = $request->input('angkatan');
 
-    $angkatanList = Anggota::select('angkatan')->distinct()->orderBy('angkatan', 'asc')->pluck('angkatan');
+        $angkatanList = Anggota::select('angkatan')->distinct()->orderBy('angkatan', 'asc')->pluck('angkatan');
 
-    $anggotas = Anggota::query()
-        ->when($query, function ($q) use ($query) {
-            $q->where(function ($subQuery) use ($query) {
-                $subQuery->where('nama', 'like', "%$query%")
-                         ->orWhere('nim', 'like', "%$query%");
-            });
-        })
-        ->when($angkatan, function ($q) use ($angkatan) {
-            $q->where('angkatan', $angkatan);
-        })
-        ->orderBy('angkatan', 'desc')
-        ->paginate(10)
-        ->withQueryString();
+        $anggotas = Anggota::query()
+            ->whereIn('status', ['Aktif', 'Alumni'])
+            ->when($query, function ($q) use ($query) {
+                $q->where(function ($subQuery) use ($query) {
+                    $subQuery->where('nama', 'like', "%$query%")
+                        ->orWhere('nim', 'like', "%$query%");
+                });
+            })
+            ->when($angkatan, function ($q) use ($angkatan) {
+                $q->where('angkatan', $angkatan);
+            })
+            ->orderBy('angkatan', 'desc')
+            ->paginate(10)
+            ->withQueryString();
 
-    return view('admin.anggota.index', compact('anggotas', 'angkatanList'));
-}
+        return view('admin.anggota.index', compact('anggotas', 'angkatanList'));
+    }
 
     public function dataAnggota(Request $request){
         $filterAngkatan = $request->query('angkatan');
