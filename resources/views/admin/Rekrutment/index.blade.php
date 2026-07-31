@@ -44,12 +44,27 @@
                                             <button type="submit"
                                                 class="inline-flex items-center justify-center px-4 py-2 text-sm text-white bg-green-500 rounded-md hover:bg-green-600">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+
                                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L9 14.414 5.293 10.707a1 1 0 011.414-1.414L9 11.586l6.293-6.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                                                 </svg>
                                                 Terima
                                             </button>
                                         </form>
                                         @endif
+ <form action="{{ route('Rekrutment-anggota.destroy', $item->id) }}"
+        method="POST"
+        onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+
+        @csrf
+        @method('DELETE')
+
+        <button type="submit"
+            class="inline-flex items-center justify-center px-4 py-2 text-sm text-white bg-red-500 rounded-md hover:bg-red-600">
+            <i class="mr-2 fas fa-trash"></i>
+            Hapus
+        </button>
+    </form>
+
                                     </div>
                                 </td>
 

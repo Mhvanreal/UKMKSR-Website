@@ -148,5 +148,14 @@ class RekrutmentController extends Controller
         }
     }
 
+public function destroy($id)
+{
+    $rekrutmen = Rekrutmen::findOrFail($id);
 
+    $rekrutmen->delete();
+
+    return redirect()
+        ->route('Rekrutment-anggota.index')
+        ->with('success', 'Data pendaftaran berhasil dihapus.');
+}
 }
