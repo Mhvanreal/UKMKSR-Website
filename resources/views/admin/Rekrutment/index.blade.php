@@ -12,11 +12,21 @@
     <!-- Pengaturan Rekrutmen -->
     <div class="p-6 mb-6 bg-white shadow-xl rounded-2xl">
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div class="flex items-center gap-4">
-                <h3 class="text-lg font-semibold text-gray-700">Status Pendaftaran:</h3>
-                <span class="px-4 py-2 text-sm font-semibold rounded-full {{ $pengaturan->is_open ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                    {{ $pengaturan->is_open ? 'DIBUKA' : 'DITUTUP' }}
-                </span>
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center gap-4">
+                    <h3 class="text-lg font-semibold text-gray-700">Status Pendaftaran:</h3>
+                    <span class="px-4 py-2 text-sm font-semibold rounded-full {{ $pengaturan->is_open ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                        {{ $pengaturan->is_open ? 'DIBUKA' : 'DITUTUP' }}
+                    </span>
+                </div>
+                @if($pengaturan->manual_override && $pengaturan->is_auto)
+                    <div class="flex items-center gap-2 px-3 py-1 text-xs bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-800">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Mode Manual Override Aktif - Auto-check dinonaktifkan sementara</span>
+                    </div>
+                @endif
             </div>
             <form id="toggleForm" action="{{ route('Rekrutment-anggota.toggle-status') }}" method="POST">
                 @csrf

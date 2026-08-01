@@ -12,6 +12,7 @@ class PengaturanRekrutmen extends Model
     protected $fillable = [
         'is_open',
         'is_auto',
+        'manual_override',
         'pesan_tutup',
         'tanggal_buka',
         'tanggal_tutup',
@@ -20,6 +21,7 @@ class PengaturanRekrutmen extends Model
     protected $casts = [
         'is_open' => 'boolean',
         'is_auto' => 'boolean',
+        'manual_override' => 'boolean',
         'tanggal_buka' => 'datetime',
         'tanggal_tutup' => 'datetime',
     ];
@@ -65,10 +67,16 @@ class PengaturanRekrutmen extends Model
 
     /**
      * Auto check dan update status berdasarkan jadwal
+     * Skip jika ada manual override dari admin
      */
     public function autoCheckStatus()
     {
         if (!$this->is_auto) {
+            return;
+        }
+
+        // Skip auto-check jika admin sedang manual override
+        if ($this->manual_override) {
             return;
         }
 

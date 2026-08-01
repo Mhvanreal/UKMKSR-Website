@@ -19,11 +19,19 @@ class RekrutmentController extends Controller
 
     /**
      * Toggle status rekrutmen (buka/tutup)
+     * Set manual_override = true untuk mencegah auto-check override
      */
     public function toggleStatus(Request $request)
     {
         $pengaturan = PengaturanRekrutmen::getPengaturan();
         $pengaturan->is_open = !$pengaturan->is_open;
+        
+        // Set manual override jika mode auto aktif
+        // Ini mencegah auto-check langsung override status manual
+        if ($pengaturan->is_auto) {
+            $pengaturan->manual_override = true;
+        }
+        
         $pengaturan->save();
 
         $status = $pengaturan->is_open ? 'dibuka' : 'ditutup';
@@ -32,6 +40,7 @@ class RekrutmentController extends Controller
 
     /**
      * Update pengaturan rekrutmen
+     * Clear manual_override saat update pengaturan
      */
     public function updatePengaturan(Request $request)
     {
@@ -51,6 +60,10 @@ class RekrutmentController extends Controller
         $pengaturan->pesan_tutup = $request->pesan_tutup;
         $pengaturan->tanggal_buka = $request->tanggal_buka;
         $pengaturan->tanggal_tutup = $request->tanggal_tutup;
+        
+        // Clear manual override saat admin update pengaturan
+        // Artinya jadwal baru akan aktif dan tidak lagi di-override manual
+        $pengaturan->manual_override = false;
         
         $pengaturan->save();
 
