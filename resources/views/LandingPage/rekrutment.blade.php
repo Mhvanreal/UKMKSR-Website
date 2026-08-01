@@ -31,6 +31,44 @@
     @if(session('error'))
         <div class="p-4 mb-4 text-sm text-red-800 bg-red-200 rounded-lg">{{ session('error') }}</div>
     @endif
+
+    @if(!$pengaturan->is_open)
+        <!-- Pendaftaran Ditutup -->
+        <div class="p-8 text-center bg-white rounded-lg shadow-md">
+            <div class="flex justify-center mb-4">
+                <svg class="w-20 h-20 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <h2 class="mb-4 text-2xl font-bold text-red-600">Pendaftaran Ditutup</h2>
+            <p class="mb-4 text-gray-600">{{ $pengaturan->pesan_tutup ?? 'Pendaftaran anggota baru sedang ditutup. Silakan tunggu informasi selanjutnya.' }}</p>
+            
+            @if($pengaturan->tanggal_buka)
+                <p class="text-sm text-gray-500">
+                    Pendaftaran akan dibuka: <strong>{{ $pengaturan->tanggal_buka->format('d M Y H:i') }}</strong>
+                </p>
+            @endif
+
+            <div class="mt-6">
+                <a href="{{ route('welcome') }}" class="px-6 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700">
+                    Kembali ke Beranda
+                </a>
+            </div>
+
+            <!-- Form Cek Bukti Pendaftaran (tetap tersedia) -->
+            <div class="pt-6 mt-8 border-t border-gray-200">
+                <p class="mb-4 text-sm text-gray-600">Sudah pernah mendaftar? Cek bukti pendaftaran Anda:</p>
+                <form action="{{ route('rekrutmen.cekNim') }}" method="POST" class="flex flex-col items-center gap-4 md:flex-row md:justify-center">
+                    @csrf
+                    <input type="text" name="nim" placeholder="Masukkan NIM"
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <button type="submit"
+                        class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Cek Bukti Pendaftaran</button>
+                </form>
+            </div>
+        </div>
+    @else
+        <!-- Pendaftaran Dibuka -->
        <div class="p-4 mb-6 text-sm text-blue-900 bg-blue-100 border border-blue-300 rounded-lg">
             <h2 class="mb-2 text-lg font-semibold">Informasi Pendaftaran</h2>
              {{-- <h3>Berikut ini Alur Pendaftaran</h3> --}}
@@ -209,6 +247,7 @@
     </form>
 
     </section>
+    @endif
 </main>
 
 <div class="w-full bg-red-600 h-7"></div>

@@ -62,6 +62,9 @@ Route::middleware(['auth', 'humas_ksr'])->group(function () {
 
     Route::resource('/Rekrutment-anggota', RekrutmentController::class);
     Route::post('/Rekrutment-anggota/{id}/terima', [RekrutmentController::class, 'terima'])->name('Rekrutment-anggota.terima');
+    Route::post('/Rekrutment-anggota/{id}/tolak', [RekrutmentController::class, 'tolak'])->name('Rekrutment-anggota.tolak');
+    Route::post('/Rekrutment-anggota/toggle-status', [RekrutmentController::class, 'toggleStatus'])->name('Rekrutment-anggota.toggle-status');
+    Route::post('/Rekrutment-anggota/update-pengaturan', [RekrutmentController::class, 'updatePengaturan'])->name('Rekrutment-anggota.update-pengaturan');
     
     // Route::get('/rekrutmen', [RekrutmenController::class, 'index'])->name('rekrutmen.index');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Rekrutmen;
 use App\Models\Anggota;
+use App\Models\PengaturanRekrutmen;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class RekrutmentController extends Controller
@@ -12,12 +13,63 @@ class RekrutmentController extends Controller
 
     public function index(){
         $rekrutmen = Rekrutmen::latest()->get();
-        return view('admin.Rekrutment.index', compact('rekrutmen'));
+        $pengaturan = PengaturanRekrutmen::getPengaturan();
+        return view('admin.Rekrutment.index', compact('rekrutmen', 'pengaturan'));
+    }
+
+    /**
+     * Toggle status rekrutmen (buka/tutup)
+     */
+    public function toggleStatus(Request $request)
+    {
+        $pengaturan = PengaturanRekrutmen::getPengaturan();
+        $pengaturan->is_open = !$pengaturan->is_open;
+        $pengaturan->save();
+
+        $status = $pengaturan->is_open ? 'dibuka' : 'ditutup';
+        return back()->with('success', "Pendaftaran rekrutmen berhasil {$status}.");
+    }
+
+    /**
+     * Update pengaturan rekrutmen
+     */
+    public function updatePengaturan(Request $request)
+    {
+        $request->validate([
+            'is_auto' => 'nullable|boolean',
+            'pesan_tutup' => 'nullable|string|max:500',
+            'tanggal_buka' => 'nullable|date',
+            'tanggal_tutup' => 'nullable|date|after_or_equal:tanggal_buka',
+        ]);
+
+        $pengaturan = PengaturanRekrutmen::getPengaturan();
+        
+        // Update is_auto
+        $pengaturan->is_auto = $request->has('is_auto') ? true : false;
+        
+        // Update fields lainnya
+        $pengaturan->pesan_tutup = $request->pesan_tutup;
+        $pengaturan->tanggal_buka = $request->tanggal_buka;
+        $pengaturan->tanggal_tutup = $request->tanggal_tutup;
+        
+        $pengaturan->save();
+
+        // Jika mode auto aktif, langsung cek jadwal
+        if ($pengaturan->is_auto) {
+            $pengaturan->autoCheckStatus();
+        }
+
+        return back()->with('success', 'Pengaturan rekrutmen berhasil diperbarui.');
     }
 
         public function show($id)
     {
         try {
+            // Validasi ID harus integer untuk mencegah SQL injection
+            if (!is_numeric($id)) {
+                abort(404);
+            }
+            
             $rekrutmen = Rekrutmen::findOrFail($id);
             return view('admin.Rekrutment.show', compact('rekrutmen'));
         } catch (\Exception $e) {
@@ -28,6 +80,11 @@ class RekrutmentController extends Controller
         public function terima($id)
     {
         try {
+            // Validasi ID harus integer untuk mencegah SQL injection
+            if (!is_numeric($id)) {
+                abort(404);
+            }
+            
             $rekrut = Rekrutmen::findOrFail($id);
 
             if ($rekrut->anggota_id !== null || $rekrut->status === 'Diterima') {
@@ -61,7 +118,37 @@ class RekrutmentController extends Controller
 
             return back()->with('success', 'Pendaftar berhasil diterima dan ditambahkan sebagai anggota.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan saat menerima pendaftar.');
+            return back()->with('error', 'Terjadi kesalahan saat menerima pendaftar: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Tolak pendaftar
+     */
+    public function tolak($id)
+    {
+        try {
+            // Validasi ID harus integer untuk mencegah SQL injection
+            if (!is_numeric($id)) {
+                abort(404);
+            }
+            
+            $rekrut = Rekrutmen::findOrFail($id);
+
+            if ($rekrut->status === 'Diterima') {
+                return back()->with('error', 'Tidak dapat menolak pendaftar yang sudah diterima.');
+            }
+
+            if ($rekrut->status === 'Ditolak') {
+                return back()->with('error', 'Pendaftar ini sudah ditolak sebelumnya.');
+            }
+
+            $rekrut->status = 'Ditolak';
+            $rekrut->save();
+
+            return back()->with('success', 'Pendaftar berhasil ditolak.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat menolak pendaftar: ' . $e->getMessage());
         }
     }
 
@@ -69,12 +156,21 @@ class RekrutmentController extends Controller
 
 
     public function ViewPage(){
-       return view('LandingPage.rekrutment');
+        $pengaturan = PengaturanRekrutmen::getPengaturan();
+        return view('LandingPage.rekrutment', compact('pengaturan'));
     }
-    
+
  public function cetak($No_pendaftaran)
 {
     try {
+        // Sanitasi input untuk mencegah SQL injection
+        $No_pendaftaran = filter_var($No_pendaftaran, FILTER_SANITIZE_STRING);
+        
+        // Validasi format nomor pendaftaran (hanya angka)
+        if (!preg_match('/^[0-9]+$/', $No_pendaftaran)) {
+            abort(404);
+        }
+        
         $data = Rekrutmen::where('No_pendaftaran', $No_pendaftaran)->firstOrFail();
 
         // Alih-alih generate PDF, langsung render Blade-nya
@@ -85,11 +181,16 @@ class RekrutmentController extends Controller
         return back()->with('error', 'Gagal menampilkan bukti: ' . $e->getMessage());
     }
 }
-  
+
 
  public function store(Request $request)
     {
         try {
+            // Cek apakah rekrutmen sedang dibuka
+            if (!PengaturanRekrutmen::isOpen()) {
+                return back()->with('error', 'Maaf, pendaftaran rekrutmen sedang ditutup.');
+            }
+
             $validated = $request->validate([
                 'nim' => 'required|unique:rekrutmen',
                 'Nama' => 'required',
@@ -130,12 +231,15 @@ class RekrutmentController extends Controller
         }
     }
 
-    
+
         public function cekNim(Request $request)
     {
         try {
-            $request->validate(['nim' => 'required']);
-            $data = Rekrutmen::where('nim', $request->nim)->first();
+            $validated = $request->validate([
+                'nim' => 'required|numeric|digits_between:1,20'
+            ]);
+            
+            $data = Rekrutmen::where('nim', $validated['nim'])->first();
 
             if ($data) {
                 return redirect()->route('rekrutmen.cetak', $data->No_pendaftaran);
@@ -147,15 +251,25 @@ class RekrutmentController extends Controller
             return back()->with('error', 'Gagal melakukan pengecekan: ' . $e->getMessage());
         }
     }
-
 public function destroy($id)
 {
-    $rekrutmen = Rekrutmen::findOrFail($id);
+    try {
+        // Validasi ID harus integer untuk mencegah SQL injection
+        if (!is_numeric($id)) {
+            abort(404);
+        }
+        
+        $rekrutmen = Rekrutmen::findOrFail($id);
+        $rekrutmen->delete();
 
-    $rekrutmen->delete();
-
-    return redirect()
-        ->route('Rekrutment-anggota.index')
-        ->with('success', 'Data pendaftaran berhasil dihapus.');
+        return redirect()
+            ->route('Rekrutment-anggota.index')
+            ->with('success', 'Data pendaftaran berhasil dihapus.');
+    } catch (\Exception $e) {
+        return redirect()
+            ->route('Rekrutment-anggota.index')
+            ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+    }
 }
+
 }

@@ -1,10 +1,15 @@
 /.phpunit.cache
 /node_modules
+/public/index.php
+/public/.htaccess
+/public/robots.txt
+/public/favicon.ico
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/framework
 /vendor
 .env
 .env.backup
@@ -23,7 +28,6 @@ yarn-error.log
 /.zed
 /cluster/.venv
 /build
-/storage/framework/views
 /storage/logs
 !/storage/app/public
 !/storage/app/public/.gitignore
