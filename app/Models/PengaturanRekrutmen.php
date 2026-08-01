@@ -26,14 +26,24 @@ class PengaturanRekrutmen extends Model
 
     /**
      * Get pengaturan rekrutmen (singleton pattern)
+     * Selalu ambil data fresh dari database tanpa cache
      */
     public static function getPengaturan()
     {
-        return self::first() ?? self::create([
+        // Gunakan fresh() untuk bypass cache dan ambil data terbaru
+        $pengaturan = self::first() ?? self::create([
             'is_open' => false,
             'is_auto' => false,
             'pesan_tutup' => 'Pendaftaran anggota baru sedang ditutup. Silakan tunggu informasi selanjutnya.',
         ]);
+        
+        // Jika mode auto aktif, langsung cek jadwal
+        if ($pengaturan->is_auto) {
+            $pengaturan->autoCheckStatus();
+            $pengaturan->refresh(); // Reload data terbaru
+        }
+        
+        return $pengaturan;
     }
 
     /**
@@ -119,5 +129,58 @@ class PengaturanRekrutmen extends Model
         }
 
         return 'Jadwal Belum Diset';
+    }
+
+    /**
+     * Get pesan dan info untuk user di halaman publik saat pendaftaran ditutup
+     * Return array dengan 'pesan', 'info_jadwal', dan 'show_tanggal'
+     */
+    public function getPesanTutupUntukUser()
+    {
+        $now = Carbon::now();
+        $result = [
+            'pesan' => $this->pesan_tutup ?? 'Pendaftaran anggota baru sedang ditutup. Silakan tunggu informasi selanjutnya.',
+            'info_jadwal' => null,
+            'show_tanggal' => false,
+        ];
+
+        // Jika mode manual atau tidak ada jadwal, tampilkan pesan default saja
+        if (!$this->is_auto) {
+            return $result;
+        }
+
+        // Mode otomatis - tentukan pesan berdasarkan kondisi jadwal
+        if ($this->tanggal_buka && $this->tanggal_tutup) {
+            // Ada jadwal buka dan tutup
+            if ($now->lt($this->tanggal_buka)) {
+                // Belum dibuka - tampilkan kapan akan dibuka
+                $result['info_jadwal'] = 'Pendaftaran akan dibuka pada:';
+                $result['show_tanggal'] = $this->tanggal_buka;
+            } elseif ($now->gt($this->tanggal_tutup)) {
+                // Periode sudah selesai
+                $result['pesan'] = 'Periode pendaftaran telah berakhir.';
+                $result['info_jadwal'] = 'Pendaftaran terakhir ditutup pada ' . $this->tanggal_tutup->format('d M Y H:i') . '. Silakan tunggu informasi periode berikutnya.';
+            }
+        } elseif ($this->tanggal_buka && !$this->tanggal_tutup) {
+            // Hanya ada tanggal buka
+            if ($now->lt($this->tanggal_buka)) {
+                // Belum dibuka - tampilkan kapan akan dibuka
+                $result['info_jadwal'] = 'Pendaftaran akan dibuka pada:';
+                $result['show_tanggal'] = $this->tanggal_buka;
+            } else {
+                // Sudah lewat tanggal buka tapi ditutup manual
+                $result['pesan'] = 'Pendaftaran sementara ditutup oleh admin.';
+                $result['info_jadwal'] = 'Silakan tunggu informasi selanjutnya.';
+            }
+        } elseif (!$this->tanggal_buka && $this->tanggal_tutup) {
+            // Hanya ada tanggal tutup (jarang)
+            if ($now->gt($this->tanggal_tutup)) {
+                // Periode sudah selesai
+                $result['pesan'] = 'Periode pendaftaran telah berakhir.';
+                $result['info_jadwal'] = 'Pendaftaran ditutup pada ' . $this->tanggal_tutup->format('d M Y H:i') . '.';
+            }
+        }
+
+        return $result;
     }
 }

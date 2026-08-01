@@ -34,6 +34,10 @@
 
     @if(!$pengaturan->is_open)
         <!-- Pendaftaran Ditutup -->
+        @php
+            $pesanInfo = $pengaturan->getPesanTutupUntukUser();
+        @endphp
+        
         <div class="p-8 text-center bg-white rounded-lg shadow-md">
             <div class="flex justify-center mb-4">
                 <svg class="w-20 h-20 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,12 +45,17 @@
                 </svg>
             </div>
             <h2 class="mb-4 text-2xl font-bold text-red-600">Pendaftaran Ditutup</h2>
-            <p class="mb-4 text-gray-600">{{ $pengaturan->pesan_tutup ?? 'Pendaftaran anggota baru sedang ditutup. Silakan tunggu informasi selanjutnya.' }}</p>
+            <p class="mb-4 text-gray-600">{{ $pesanInfo['pesan'] }}</p>
             
-            @if($pengaturan->tanggal_buka)
-                <p class="text-sm text-gray-500">
-                    Pendaftaran akan dibuka: <strong>{{ $pengaturan->tanggal_buka->format('d M Y H:i') }}</strong>
-                </p>
+            @if($pesanInfo['info_jadwal'])
+                <div class="p-4 mb-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm text-gray-700">{{ $pesanInfo['info_jadwal'] }}</p>
+                    @if($pesanInfo['show_tanggal'])
+                        <p class="mt-2 text-lg font-semibold text-blue-600">
+                            {{ $pesanInfo['show_tanggal']->format('d M Y H:i') }} WIB
+                        </p>
+                    @endif
+                </div>
             @endif
 
             <div class="mt-6">
