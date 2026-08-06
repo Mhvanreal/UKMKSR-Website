@@ -1,79 +1,111 @@
-<div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div @click.away="open = false" class="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
-        <h2 class="mb-4 text-xl font-semibold text-center">Form Pesan Layanan</h2>
+<div x-show="open" x-cloak x-transition.opacity.duration.200ms
+     @keydown.escape.window="open = false"
+     x-init="$watch('open', v => document.body.style.overflow = v ? 'hidden' : '')"
+     class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black bg-opacity-50 sm:p-6">
+    <div @click.away="open = false" role="dialog" aria-modal="true"
+         class="relative flex flex-col w-full max-w-lg max-h-[85vh] bg-white rounded-2xl shadow-2xl">
 
-        <form action="{{ route('pesan_layanan.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        {{-- HEADER --}}
+        <div class="flex items-center justify-between flex-shrink-0 px-6 py-4 border-b border-gray-100">
+            <h2 class="text-lg font-semibold text-gray-800">Form Pesan Layanan</h2>
+            <button type="button" @click="open = false"
+                class="flex items-center justify-center w-8 h-8 text-gray-400 transition rounded-full hover:bg-gray-100 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
 
-            {{-- PILIH LAYANAN --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Pilih Layanan</label>
-                <select name="id_layanan" class="w-full px-4 py-2 border rounded" required>
-                    <option value="">-- Pilih Layanan --</option>
-                    @foreach($layanans as $item)
-                        <option value="{{ $item->id_layanan }}">{{ $item->nama_layanan }}</option>
-                    @endforeach
-                </select>
-            </div>
+        {{-- BODY (scrollable) --}}
+        <div class="min-h-0 px-6 py-5 overflow-y-auto overscroll-contain">
+            <form id="formPesanLayanan" action="{{ route('pesan_layanan.store') }}" method="POST"
+                enctype="multipart/form-data" class="space-y-4">
+                @csrf
 
-            {{-- NAMA --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Nama</label>
-                <input type="text" name="nama" class="w-full px-4 py-2 border rounded" required>
-            </div>
+                {{-- PILIH LAYANAN --}}
+                <div>
+                    <label class="block mb-1.5 text-sm font-medium text-gray-700">Pilih Layanan</label>
+                    <div class="relative">
+                        <select name="id_layanan"
+                            class="w-full px-3.5 py-2.5 pr-10 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm transition appearance-none focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                            required>
+                            <option value="">-- Pilih Layanan --</option>
+                            @foreach($layanans as $item)
+                                <option value="{{ $item->id_layanan }}">{{ $item->nama_layanan }}</option>
+                            @endforeach
+                        </select>
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="text-xs text-gray-400 fas fa-chevron-down"></i>
+                        </span>
+                    </div>
+                </div>
 
-            {{-- ASAL --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Asal</label>
-                <input type="text" name="asal" class="w-full px-4 py-2 border rounded" placeholder="Contoh: HMJ atau UKM" required>
-            </div>
+                {{-- NAMA --}}
+                <div>
+                    <label class="block mb-1.5 text-sm font-medium text-gray-700">Nama</label>
+                    <input type="text" name="nama"
+                        class="w-full px-3.5 py-2.5 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg shadow-sm transition focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                        required>
+                </div>
 
-            {{-- NO HP --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Nomor HP</label>
-                <input type="text" name="no_hp" class="w-full px-4 py-2 border rounded" required>
-            </div>
+                {{-- ASAL --}}
+                <div>
+                    <label class="block mb-1.5 text-sm font-medium text-gray-700">Asal</label>
+                    <input type="text" name="asal"
+                        class="w-full px-3.5 py-2.5 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg shadow-sm transition focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                        placeholder="Contoh: HMJ atau UKM" required>
+                </div>
 
-            {{-- NAMA KEGIATAN --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Nama Kegiatan</label>
-                <input type="text" name="nama_kegiatan" class="w-full px-4 py-2 border rounded" placeholder="Masukkan nama kegiatan" required>
-            </div>
+                {{-- NO HP --}}
+                <div>
+                    <label class="block mb-1.5 text-sm font-medium text-gray-700">Nomor HP</label>
+                    <input type="text" name="no_hp"
+                        class="w-full px-3.5 py-2.5 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg shadow-sm transition focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                        required>
+                </div>
 
-            {{-- DESKRIPSI KEGIATAN --}}
-            {{-- <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Deskripsi Kegiatan</label>
-                <textarea name="deskripsi_kegiatan" rows="3" class="w-full px-4 py-2 border rounded" placeholder="Tuliskan deskripsi kegiatan..."></textarea>
-            </div> --}}
+                {{-- NAMA KEGIATAN --}}
+                <div>
+                    <label class="block mb-1.5 text-sm font-medium text-gray-700">Nama Kegiatan</label>
+                    <input type="text" name="nama_kegiatan"
+                        class="w-full px-3.5 py-2.5 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg shadow-sm transition focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                        placeholder="Masukkan nama kegiatan" required>
+                </div>
 
-            {{-- TANGGAL MULAI --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Tanggal Mulai</label>
-                <input type="date" name="start_kegiatan" class="w-full px-4 py-2 border rounded" required>
-            </div>
+                {{-- TANGGAL --}}
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                        <label class="block mb-1.5 text-sm font-medium text-gray-700">Tanggal Mulai</label>
+                        <input type="date" name="start_kegiatan"
+                            class="w-full px-3.5 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm transition focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block mb-1.5 text-sm font-medium text-gray-700">Tanggal Selesai</label>
+                        <input type="date" name="end_kegiatan"
+                            class="w-full px-3.5 py-2.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm transition focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+                            required>
+                    </div>
+                </div>
 
-            {{-- TANGGAL SELESAI --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Tanggal Selesai</label>
-                <input type="date" name="end_kegiatan" class="w-full px-4 py-2 border rounded" required>
-            </div>
+                {{-- SURAT SPH --}}
+                <div>
+                    <label class="block mb-1.5 text-sm font-medium text-gray-700">Upload Surat SPH</label>
+                    <input type="file" name="surat_sph"
+                        class="block w-full text-sm text-gray-600 file:mr-3 file:px-3.5 file:py-2 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-red-600 cursor-pointer hover:file:bg-red-100 transition">
+                </div>
+            </form>
+        </div>
 
-            {{-- SURAT SPH --}}
-            <div class="mb-4">
-                <label class="block mb-1 text-sm font-bold">Upload Surat SPH</label>
-                <input type="file" name="surat_sph" class="w-full">
-            </div>
-
-            {{-- BUTTON --}}
-            <div class="flex justify-between mt-6">
-                <button type="submit" class="px-4 py-2 font-semibold text-white rounded bg-sky-500 hover:bg-sky-600">
-                    Kirim Permohonan
-                </button>
-                <button type="button" @click="open = false" class="px-4 py-2 font-semibold text-gray-700 bg-gray-200 rounded hover:bg-gray-300">
-                    Batal
-                </button>
-            </div>
-        </form>
+        {{-- FOOTER (aksi selalu terlihat) --}}
+        <div class="flex items-center justify-end gap-3 flex-shrink-0 px-6 py-4 bg-gray-50 border-t border-gray-100 rounded-b-2xl">
+            <button type="button" @click="open = false"
+                class="px-4 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm transition hover:bg-gray-100">
+                Batal
+            </button>
+            <button type="submit" form="formPesanLayanan"
+                class="px-5 py-2.5 text-sm font-semibold text-white rounded-lg shadow-md bg-sky-500 transition hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500/40">
+                Kirim Permohonan
+            </button>
+        </div>
     </div>
 </div>
 

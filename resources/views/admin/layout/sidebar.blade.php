@@ -23,16 +23,16 @@
 
         @php
             $navItems = [
-                ['name' => 'Beranda', 'route' => '/dashboard', 'icon' => 'home.png', 'match' => 'dashboard'],
-                ['name' => 'Anggota', 'route' => route('anggota.index'), 'icon' => 'multi.png', 'match' => 'anggota*'],
+                ['name' => 'Beranda', 'route' => '/dashboard', 'icon' => 'fa-house', 'match' => 'dashboard'],
+                ['name' => 'Anggota', 'route' => route('anggota.index'), 'icon' => 'fa-users', 'match' => 'anggota*'],
 
-                ['name' => 'Permohonan', 'route' => route('pesan-layanan.index'), 'icon' => 'file.png', 'match' => 'pesan-layanan*'],
-                ['name' => 'Kepengurusan', 'route' => route('Kepengurusan.index'), 'icon' => 'pengurus.png', 'match' => 'Kepengurusan*'],
+                ['name' => 'Permohonan', 'route' => route('pesan-layanan.index'), 'icon' => 'fa-file-lines', 'match' => 'pesan-layanan*'],
+                ['name' => 'Kepengurusan', 'route' => route('Kepengurusan.index'), 'icon' => 'fa-user-tie', 'match' => 'Kepengurusan*'],
         
-                ['name' => 'Program Kerja', 'route' => route('Program_kerja.index'), 'icon' => 'program.png', 'match' => 'Program_kerja*'],
-                ['name' => 'Kegiatan', 'route' => route('kegiatan.index'), 'icon' => 'calendar.png', 'match' => 'kegiatan*'],
-                ['name' => 'Layanan', 'route' => route('service.index'), 'icon' => 'heart.png', 'match' => 'service*'],
-                ['name' => 'Rekrutment', 'route' => route('Rekrutment-anggota.index'), 'icon' => 'add.png', 'match' => 'rekrutment-anggota*'],
+                ['name' => 'Program Kerja', 'route' => route('Program_kerja.index'), 'icon' => 'fa-clipboard-list', 'match' => 'Program_kerja*'],
+                ['name' => 'Kegiatan', 'route' => route('kegiatan.index'), 'icon' => 'fa-calendar-days', 'match' => 'kegiatan*'],
+                ['name' => 'Layanan', 'route' => route('service.index'), 'icon' => 'fa-heart', 'match' => 'service*'],
+                ['name' => 'Rekrutment', 'route' => route('Rekrutment-anggota.index'), 'icon' => 'fa-user-plus', 'match' => 'rekrutment-anggota*'],
             ];
         @endphp
 
@@ -41,8 +41,7 @@
             <a href="{{ $item['route'] }}"
                 class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition
                        {{ $active ? 'bg-red-600 text-white shadow-md shadow-red-200' : 'text-gray-600 hover:bg-red-50 hover:text-red-700' }}">
-                <img src="/img/icon/{{ $item['icon'] }}" alt="{{ $item['name'] }} Icon"
-                    class="w-5 h-5 {{ $active ? 'filter invert brightness-0' : 'opacity-90' }}">
+                <i class="w-5 text-base text-center fas {{ $item['icon'] }}"></i>
                 <span>{{ $item['name'] }}</span>
             </a>
         @endforeach
@@ -51,9 +50,9 @@
 
         @php
             $otherItems = [
-                ['name' => 'Blog', 'route' => route('blogadmin.index'), 'icon' => 'writing.png', 'match' => 'blogadmin'],
-                ['name' => 'Galeri', 'route' => route('galeri.index'), 'icon' => 'image-galery.png', 'match' => 'galeri*'],
-                ['name' => 'Tentang', 'route' => route('tentang.index'), 'icon' => 'info.png', 'match' => 'tentang*'],
+                ['name' => 'Blog', 'route' => route('blogadmin.index'), 'icon' => 'fa-pen-nib', 'match' => 'blogadmin'],
+                ['name' => 'Galeri', 'route' => route('galeri.index'), 'icon' => 'fa-images', 'match' => 'galeri*'],
+                ['name' => 'Tentang', 'route' => route('tentang.index'), 'icon' => 'fa-circle-info', 'match' => 'tentang*'],
             ];
         @endphp
 
@@ -62,8 +61,7 @@
             <a href="{{ $item['route'] }}"
                 class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition
                        {{ $active ? 'bg-red-600 text-white shadow-md shadow-red-200' : 'text-gray-600 hover:bg-red-50 hover:text-red-700' }}">
-                <img src="/img/icon/{{ $item['icon'] }}" alt="{{ $item['name'] }} Icon"
-                    class="w-5 h-5 {{ $active ? 'filter invert brightness-0' : 'opacity-90' }}">
+                <i class="w-5 text-base text-center fas {{ $item['icon'] }}"></i>
                 <span>{{ $item['name'] }}</span>
             </a>
         @endforeach
@@ -75,7 +73,7 @@
             @csrf
             <button type="submit"
                 class="flex items-center w-full gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-red-600 transition hover:bg-red-50">
-                <img src="/img/icon/logout.png" alt="Logout Icon" class="w-5 h-5 opacity-90">
+                <i class="w-5 text-base text-center fas fa-right-from-bracket"></i>
                 Keluar
             </button>
         </form>

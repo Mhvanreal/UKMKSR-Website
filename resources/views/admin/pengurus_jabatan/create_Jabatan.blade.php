@@ -1,5 +1,5 @@
 <!-- Modal Jabatan -->
-<div x-show="openJabatan" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+<div x-show="openJabatan" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div @click.away="openJabatan = false" class="w-full max-w-xl p-6 bg-white border border-gray-200 rounded-2xl shadow-lg">
         <h2 class="mb-4 text-xl font-semibold text-gray-800">Tambah Data Jabatan Kepengurusan</h2>
 

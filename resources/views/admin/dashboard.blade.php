@@ -4,11 +4,11 @@
 
 @php
     $statCards = [
-        ['id' => 'total-members', 'label' => 'Seluruh Anggota', 'value' => $jumlah_seluruh_anggota ?? 0, 'icon' => 'multi.png'],
-        ['id' => 'active-members', 'label' => 'Anggota Aktif', 'value' => $jumlah_seluruh_anggota_aktif ?? 0, 'icon' => 'user.png'],
-        ['id' => 'alumni-members', 'label' => 'Anggota Alumni', 'value' => $jumlah_seluruh_anggota_alumni ?? 0, 'icon' => 'group.png'],
-        ['id' => 'event-count', 'label' => 'Kegiatan Aktif', 'value' => $jumlah_kegiatan ?? 0, 'icon' => 'calendar.png'],
-        ['id' => 'service-count', 'label' => 'Layanan Aktif', 'value' => $jumlah_layanan ?? 0, 'icon' => 'heart.png'],
+        ['id' => 'total-members', 'label' => 'Seluruh Anggota', 'value' => $jumlah_seluruh_anggota ?? 0, 'icon' => 'fa-users'],
+        ['id' => 'active-members', 'label' => 'Anggota Aktif', 'value' => $jumlah_seluruh_anggota_aktif ?? 0, 'icon' => 'fa-user-check'],
+        ['id' => 'alumni-members', 'label' => 'Anggota Alumni', 'value' => $jumlah_seluruh_anggota_alumni ?? 0, 'icon' => 'fa-user-graduate'],
+        ['id' => 'event-count', 'label' => 'Kegiatan Aktif', 'value' => $jumlah_kegiatan ?? 0, 'icon' => 'fa-calendar-days'],
+        ['id' => 'service-count', 'label' => 'Layanan Aktif', 'value' => $jumlah_layanan ?? 0, 'icon' => 'fa-heart'],
     ];
 @endphp
 
@@ -31,7 +31,7 @@
             <div class="p-5">
                 <div class="flex items-center gap-4">
                     <div class="flex items-center justify-center w-12 h-12 bg-red-50 rounded-xl border border-red-100">
-                        <img src="/img/icon/{{ $card['icon'] }}" alt="{{ $card['label'] }} Icon" class="w-6 h-6">
+                        <i class="text-xl text-red-600 fas {{ $card['icon'] }}"></i>
                     </div>
                     <div>
                         <p class="text-sm font-medium text-gray-500 leading-tight">{{ $card['label'] }}</p>

@@ -41,7 +41,7 @@
                                 <td class="px-6 py-3">
                                     @if($item->surat_sph)
                                         <a href="{{ asset('storage/' . $item->surat_sph) }}" target="_blank">
-                                            <img src="/img/icon/file.png" alt="Surat Icon" class="inline w-6 h-6">
+                                            <i class="text-lg text-gray-500 transition fas fa-file-lines hover:text-red-600"></i>
                                         </a>
                                     @else
                                         <span class="text-gray-400">Tidak ada file</span>

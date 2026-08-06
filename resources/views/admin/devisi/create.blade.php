@@ -1,5 +1,5 @@
 <!-- Modal Divisi -->
-<div x-show="openDivisi" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+<div x-show="openDivisi" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div @click.away="openDivisi = false" class="w-full max-w-xl p-6 bg-white border border-gray-200 rounded-2xl shadow-lg">
         <h2 class="mb-4 text-xl font-semibold text-gray-800">Tambah Data Divisi</h2>
 

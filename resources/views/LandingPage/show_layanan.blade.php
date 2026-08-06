@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
         <script src="https://unpkg.com/alpinejs" defer></script>
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
 
     </head>
 <body class="flex flex-col min-h-screen bg-white">

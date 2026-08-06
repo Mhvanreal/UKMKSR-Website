@@ -33,6 +33,7 @@
 
     <style>
         body { font-family: 'Inter', 'Poppins', sans-serif; }
+        [x-cloak] { display: none !important; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
@@ -88,7 +89,7 @@
                                 <i class="text-xs text-gray-400 fas fa-chevron-down"></i>
                             </button>
 
-                            <div x-show="open" @click.outside="open = false" x-transition
+                            <div x-show="open" x-cloak @click.outside="open = false" x-transition
                                 class="absolute right-0 z-50 w-56 mt-2 overflow-hidden bg-white border border-gray-200 rounded-xl shadow-lg">
                                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 transition hover:bg-red-50">
                                     <i class="text-red-600 fas fa-user-cog"></i> Profil Saya
