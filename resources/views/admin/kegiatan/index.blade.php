@@ -76,14 +76,14 @@
         </div>
 
         <!-- Box Kegiatan Terkini -->
-        <div class="bg-white shadow-xl rounded-3xl p-6 mt-10">
+        <div class="bg-white border border-gray-200 rounded-2xl p-6 mt-10 shadow-sm">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg font-semibold text-gray-700">Kegiatan Terkini</h2>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm text-left">
-                    <thead class="bg-gray-200 text-gray-700 font-semibold">
+                    <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-semibold">
                         <tr>
                             <th class="px-6 py-3">No.</th>
                             <th class="px-6 py-3">Nama Kegiatan</th>
@@ -93,17 +93,17 @@
                             <th class="px-6 py-3">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-white divide-y divide-gray-100">
                         @forelse ($kegiatan as $key => $item)
                         @if ($item->status === 'aktif')
-                        <tr class="hover:bg-gray-100 transition">
+                        <tr class="transition hover:bg-red-50/40">
                             <td class="px-6 py-3">{{ $key+1 }}</td>
                             <td class="px-6 py-3">{{ $item->nama_kegiatan }}</td>
                             <td class="px-6 py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
                             <td class="px-6 py-3">{{ \Carbon\Carbon::parse($item->start_kegiatan)->format('d M Y') }}</td>
                             <td class="px-6 py-3">{{ \Carbon\Carbon::parse($item->end_kegiatan)->format('d M Y') }}</td>
                             <td class="px-6 py-3 flex items-center space-x-3">
-                                <a href="{{ route('kegiatan.show', $item->id_kegiatan) }}" class="text-blue-500 hover:text-blue-700">
+                                <a href="{{ route('kegiatan.show', $item->id_kegiatan) }}" class="text-gray-500 transition hover:text-red-600">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
                                 <a href="{{ route('kegiatan.edit', $item->id_kegiatan) }}" class="text-yellow-500 hover:text-yellow-700">
@@ -138,18 +138,18 @@
         </div>
 
         <!-- Box Daftar Kegiatan -->
-        <div class="bg-white shadow-xl rounded-3xl p-6 mt-10">
+        <div class="bg-white border border-gray-200 rounded-2xl p-6 mt-10 shadow-sm">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg font-semibold text-gray-700">Daftar Kegiatan</h2>
                 <a href="{{ route('kegiatan.create') }}"
-                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full text-sm shadow-md transition">
+                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-sm shadow-md transition">
                     + Tambah
                 </a>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm text-left">
-                    <thead class="bg-gray-200 text-gray-700 font-semibold">
+                    <thead class="bg-gray-50 text-gray-500 text-xs uppercase font-semibold">
                         <tr>
                             <th class="px-6 py-3">No.</th>
                             <th class="px-6 py-3">Nama Layanan</th>
@@ -159,17 +159,17 @@
                             <th class="px-6 py-3">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-white divide-y divide-gray-100">
                         @forelse ($daftarKegiatan as $key => $item)
                         @if ($item->status === 'tidak')
-                        <tr class="hover:bg-gray-100 transition">
+                        <tr class="transition hover:bg-red-50/40">
                             <td class="px-6 py-3">{{ $key+1 }}</td>
                             <td class="px-6 py-3">{{ $item->nama_kegiatan }}</td>
                             <td class="px-6 py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d M Y') }}</td>
                             <td class="px-6 py-3">{{ \Carbon\Carbon::parse($item->start_kegiatan)->format('d M Y') }}</td>
                             <td class="px-6 py-3">{{ \Carbon\Carbon::parse($item->end_kegiatan)->format('d M Y') }}</td>
                             <td class="px-6 py-3 flex items-center space-x-3">
-                                <a href="{{ route('kegiatan.show', $item->id_kegiatan) }}" class="text-blue-500 hover:text-blue-700"><i class="fas fa-info-circle"></i></a>
+                                <a href="{{ route('kegiatan.show', $item->id_kegiatan) }}" class="text-gray-500 transition hover:text-red-600"><i class="fas fa-info-circle"></i></a>
                                 <a href="{{ route('kegiatan.edit', $item->id_kegiatan) }}" class="text-yellow-500 hover:text-yellow-700"><i class="fas fa-edit"></i></a>
                                 <form action="{{ route('kegiatan.destroy', $item->id_kegiatan) }}" method="POST" style="display:inline;">
                                     @csrf @method('DELETE')

@@ -4,12 +4,12 @@
     <body class="text-gray-800 bg-gray-100">
         <div class="px-4 py-5 mx-auto max-w-7xl">
             <div class="flex items-center justify-between mb-6">
-                <h1 class="text-2xl font-bold">Galeri</h1>
+                <h1 class="text-2xl font-bold text-gray-800">Galeri</h1>
                 <!-- Button Dropdown -->
                 <div class="relative">
-                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="inline-flex items-center gap-2 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Add Data
-                        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <svg class="w-2.5 h-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
                         </svg>
                     </button>
@@ -38,7 +38,7 @@
             {{-- Grid Galeri --}}
             <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 justify-items-center">
                 @foreach ($galeri as $item)
-                <div class="bg-gray-300 rounded-md w-full aspect-[2/1] overflow-hidden shadow">
+                <div class="bg-gray-100 border border-gray-200 rounded-xl w-full aspect-[2/1] overflow-hidden shadow-sm">
                     @if ($item->foto_galeri)
                     <!-- Foto -->
                     <img src="{{ asset('storage/' . $item->foto_galeri) }}" class="object-cover w-full h-full" alt="Foto Galeri">

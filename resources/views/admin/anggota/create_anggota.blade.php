@@ -2,8 +2,8 @@
     @extends('admin.layout.navbar')
     @section('content')
     <div class="container p-8 mx-auto">
-        <h2 class="mb-6 text-2xl font-bold text-gray-700">Tambah Anggota</h2>
-        <form action="{{ route('anggota.store') }}" method="POST" class="p-6 space-y-6 bg-white rounded-lg shadow-md" enctype="multipart/form-data">
+        <h2 class="mb-6 text-2xl font-bold text-gray-800">Tambah Anggota</h2>
+        <form action="{{ route('anggota.store') }}" method="POST" class="p-6 space-y-6 bg-white border border-gray-200 rounded-2xl shadow-sm" enctype="multipart/form-data">
             @csrf
             <div class="flex flex-col space-y-2">
                 <label for="nama" class="font-medium text-gray-700">Nama Lengkap</label>
@@ -11,7 +11,7 @@
                     type="text"
                     id="nama"
                     name="nama"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan nama"
                     required>
             </div>
@@ -21,7 +21,7 @@
                     type="text"
                     id="nama_panggilan"
                     name="nama_panggilan"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan nama panggilan">
             </div>
             <div class="flex flex-col space-y-2">
@@ -30,7 +30,7 @@
                     type="text"
                     id="nim"
                     name="nim"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan NIM"
                     required>
             </div>
@@ -40,7 +40,7 @@
                     type="text"
                     id="tempat_lahir"
                     name="tempat_lahir"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan tempat lahir">
             </div>
             <div class="flex flex-col space-y-2">
@@ -49,7 +49,7 @@
                     type="date"
                     id="tanggal_lahir"
                     name="tanggal_lahir"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Tanggal Lahir"
                     required>
             </div>
@@ -61,7 +61,7 @@
                     type="email"
                     id="email"
                     name="email"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan email">
             </div>
             <div class="flex flex-col space-y-2">
@@ -70,7 +70,7 @@
                     type="text"
                     id="agama"
                     name="agama"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan agama">
             </div>
 
@@ -80,7 +80,7 @@
                     type="text"
                     id="gol_darah"
                     name="gol_darah"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan golongan darah">
             </div>
 
@@ -90,7 +90,7 @@
                     id="organisasi_yg_pernah_diikuti"
                     name="organisasi_yg_pernah_diikuti"
                     rows="3"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Tulis organisasi yang pernah diikuti"></textarea>
             </div>
 
@@ -100,7 +100,7 @@
                     type="text"
                     id="No_tlpn"
                     name="No_tlpn"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan nomor telepon aktif">
             </div>
 
@@ -110,7 +110,7 @@
                     type="text"
                     id="angkatan"
                     name="angkatan"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan angkatan"
                     required>
             </div>
@@ -120,7 +120,7 @@
                     type="text"
                     id="jurusan"
                     name="jurusan"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan jurusan"
                     required>
             </div>
@@ -130,7 +130,7 @@
                     type="text"
                     id="prodi"
                     name="prodi"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan prodi"
                     required>
             </div>
@@ -140,7 +140,7 @@
                     type="text"
                     id="tahun_masuk_kuliah"
                     name="tahun_masuk_kuliah"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan tahun masuk kuliah"
                     required>
             </div>
@@ -148,11 +148,11 @@
                 <label class="font-medium text-gray-700">Jenis Kelamin</label>
                 <div class="flex items-center space-x-4">
                     <label class="flex items-center space-x-2">
-                        <input type="radio" name="jenis_kelamin" value="laki-laki" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                        <input type="radio" name="jenis_kelamin" value="laki-laki" class="w-4 h-4 text-red-600 focus:ring-red-500">
                         <span>Laki-laki</span>
                     </label>
                     <label class="flex items-center space-x-2">
-                        <input type="radio" name="jenis_kelamin" value="perempuan" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                        <input type="radio" name="jenis_kelamin" value="perempuan" class="w-4 h-4 text-red-600 focus:ring-red-500">
                         <span>Perempuan</span>
                     </label>
                 </div>
@@ -162,7 +162,7 @@
                 <select
                     id="status"
                     name="status"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     required>
                     <option value="" disabled selected>Pilih status</option>
                     <option value="Aktif">Aktif</option>
@@ -175,7 +175,7 @@
                     type="text"
                     id="alamat"
                     name="alamat"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan alamat"
                     required>
             </div>
@@ -184,7 +184,7 @@
                 <textarea
                     name="alasan_join"
                     rows="4"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan alasan Bergabung KSR"
                     required></textarea>
 
@@ -195,11 +195,11 @@
                     type="file"
                     id="foto"
                     name="foto"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     accept="image/*">
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="px-6 py-3 text-white bg-green-500 rounded-md hover:bg-green-600">
+                <button type="submit" class="px-6 py-3 text-white bg-red-600 rounded-md hover:bg-red-700">
                     Simpan
                 </button>
             </div>

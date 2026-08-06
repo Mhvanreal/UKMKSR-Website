@@ -2,14 +2,17 @@
     @extends('admin.layout.navbar')
     @section('content')
 
-    <h1 class="mb-4 text-2xl font-bold">Anggota KSR</h1>
-    <div class="container py-8 mx-auto">
+    <div class="flex flex-col gap-1 mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Anggota KSR</h1>
+        <p class="text-sm text-gray-500">Kelola data anggota UKM KSR Palang Merah Indonesia</p>
+    </div>
+    <div class="container py-4 mx-auto">
         <div class="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
 
             <!-- KIRI: Filter + Search -->
             <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:gap-4">
                 <select id="filter"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg sm:w-auto focus:outline-none focus:ring-2 focus:ring-red-400">
                     <option value="">Semua Angkatan</option>
                     @foreach ($angkatanList as $tahun)
                         <option value="{{ $tahun }}" {{ request('angkatan') == $tahun ? 'selected' : '' }}>
@@ -28,42 +31,40 @@
                     <input type="file" name="file" accept=".xlsx,.xls" class="text-sm text-gray-500" required>
 
                     <button type="button"
-                        class="w-full px-4 py-2 text-white bg-green-500 rounded sm:w-auto hover:bg-green-600"
+                        class="flex items-center justify-center w-full px-4 py-2 text-white bg-red-600 rounded sm:w-auto hover:bg-red-700"
                         id="import-btn">
+                        <i class="mr-2 fas fa-file-import"></i>
                         Import Excel
                     </button>
                 </form>
                 <a href="{{ route('anggota.create') }}"
-                    class="flex items-center justify-center w-full px-4 py-2 text-white bg-green-500 rounded sm:w-auto hover:bg-green-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
+                    class="flex items-center justify-center w-full px-4 py-2 text-white bg-red-600 rounded sm:w-auto hover:bg-red-700">
+                    <i class="mr-2 fas fa-plus"></i>
                     Tambah
                 </a>
             </div>
         </div>
 
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="overflow-x-auto bg-white border border-gray-200 rounded-2xl shadow-sm">
         <table class="w-full text-sm text-left text-black rtl:text-right">
-            <thead class="text-xs text-black uppercase bg-white border-b border-gray-200">
+            <thead class="text-xs uppercase bg-gray-50 text-gray-500">
                 <tr>
                     {{-- <th scope="col" class="px-6 py-3">NIM</th> --}}
-                    <th scope="col" class="px-6 py-3">Nama</th>
+                    <th scope="col" class="px-6 py-3 font-semibold">Nama</th>
                     {{-- <th scope="col" class="px-6 py-3">Angkatan</th> --}}
                     {{-- <th scope="col" class="px-6 py-3">Jenis Kelamin</th> --}}
                     {{-- <th scope="col" class="px-6 py-3">Alamat</th> --}}
                     {{-- <th scope="col" class="px-6 py-3">Jurusan</th> --}}
-                    <th scope="col" class="px-6 py-3">Prodi</th>
-                    <th scope="col" class="px-6 py-3">Status</th>
-                    <th scope="col" class="px-6 py-3">Foto</th>
-                    <th scope="col" class="px-6 py-3">Action</th>
+                    <th scope="col" class="px-6 py-3 font-semibold">Prodi</th>
+                    <th scope="col" class="px-6 py-3 font-semibold">Status</th>
+                    <th scope="col" class="px-6 py-3 font-semibold">Foto</th>
+                    <th scope="col" class="px-6 py-3 font-semibold">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($anggotas as $key => $anggota)
-                    <tr class="border-b hover:bg-gray-50">
+                    <tr class="border-b transition hover:bg-red-50/40">
                         {{-- <td class="px-4 py-2 border-r">{{ $anggota->nim }}</td> --}}
                         <td class="px-4 py-2 border-r truncate max-w-[80px] overflow-hidden">{{ $anggota->nama }}</td>
                         {{-- <td class="px-4 py-2 border-r">{{ $anggota->angkatan }}</td> --}}
@@ -83,12 +84,12 @@
                             @endif
                         </td>
                         <td class="flex items-center justify-center px-4 py-2 space-x-2">
-                            <a href="{{ route('anggota.show', $anggota->id) }}" class="text-gray-500">
+                            <a href="{{ route('anggota.show', $anggota->id) }}" class="text-gray-500 transition hover:text-red-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                                     <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z" clip-rule="evenodd" />
                                 </svg>
                             </a>
-                            <a href="{{ route('anggota.edit', $anggota->id) }}" class="text-yellow-500">
+                            <a href="{{ route('anggota.edit', $anggota->id) }}" class="text-yellow-500 transition hover:text-yellow-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                                     <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
                                 </svg>
@@ -96,7 +97,7 @@
                             <form action="{{ route('anggota.destroy', $anggota->id) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus anggota ini?');">
                                 @method('DELETE')
                                 @csrf
-                                <button type="submit" class="text-red-500">
+                                <button type="submit" class="text-red-500 transition hover:text-red-600">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                                         <path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clip-rule="evenodd" />
                                     </svg>

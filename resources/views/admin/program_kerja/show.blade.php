@@ -1,7 +1,7 @@
 @extends('admin.layout.navbar')
 
 @section('content')
-<div class="p-6 bg-white rounded shadow">
+<div class="p-6 bg-white border border-gray-200 rounded-2xl shadow-sm">
     <h2 class="mb-4 text-2xl font-bold text-red-600">
         Program Kerja - {{ $pengurus->anggota->nama ?? 'Pengurus Tidak Ditemukan' }}
     </h2>
@@ -21,7 +21,7 @@
                     <form action="{{ route('Program_kerja.destroy', $program->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus program ini?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="px-4 py-2 font-bold text-gray-700 transition bg-transparent border-2 border-gray-400 rounded-lg hover:border-sky-400 hover:text-sky-400">Hapus</button>
+                        <button type="submit" class="px-4 py-2 font-bold text-gray-700 transition bg-transparent border-2 border-gray-400 rounded-lg hover:border-red-500 hover:text-red-600">Hapus</button>
                     </form>
                 </div>
             </li>
@@ -30,7 +30,7 @@
         @endforelse
     </ul>
 
-    <a href="{{ route('Program_kerja.index') }}" class="inline-block mt-6 text-blue-600 hover:underline">
+    <a href="{{ route('Program_kerja.index') }}" class="inline-block mt-6 text-gray-500 transition hover:text-red-600">
         &larr; Kembali
     </a>
 </div>

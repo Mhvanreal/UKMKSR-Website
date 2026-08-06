@@ -1,8 +1,8 @@
 @extends('admin.layout.navbar')
 
 @section('content')
-<div class="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-md">
-    <h1 class="mb-4 text-2xl font-bold">Tambah Blog Artikel</h1>
+<div class="max-w-4xl p-6 mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm">
+    <h1 class="mb-4 text-2xl font-bold text-gray-800">Tambah Blog Artikel</h1>
 
     {{-- Tampilkan error validasi jika ada --}}
     @if ($errors->any())
@@ -26,7 +26,7 @@
                 id="judul"
                 name="judul"
                 value="{{ old('judul') }}"
-                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                 placeholder="Masukkan Judul"
                 required>
         </div>
@@ -38,7 +38,7 @@
                 id="tanggal"
                 name="tanggal"
                 value="{{ old('tanggal') }}"
-                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                 required>
         </div>
 
@@ -48,7 +48,7 @@
                 type="file"
                 id="gambar"
                 name="gambar"
-                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                 accept="image/*">
         </div>
 
@@ -57,13 +57,13 @@
             <textarea
                 id="summernote"
                 name="deskripsi"
-                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                 required>{{ old('deskripsi') }}</textarea>
         </div>
 
         <div class="flex justify-end gap-4 mt-6">
-            <a href="{{ route('blogadmin.index') }}" class="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600">Batal</a>
-            <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600">Simpan</button>
+            <a href="{{ route('blogadmin.index') }}" class="px-4 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded hover:bg-gray-200">Batal</a>
+            <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">Simpan</button>
         </div>
     </form>
 </div>

@@ -21,8 +21,8 @@
     @extends('admin.layout.navbar')
     @section('content')
 
-    <div class="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-md">
-        <h1 class="mb-4 text-2xl font-bold">Edit Kegiatan</h1>
+    <div class="max-w-4xl p-6 mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm">
+        <h1 class="mb-4 text-2xl font-bold text-gray-800">Edit Pengurus</h1>
 
         <form action="{{ route('Kepengurusan.update', $item->id) }}" method="POST">
             @csrf
@@ -31,7 +31,7 @@
             <div class="mb-4">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Nama Anggota</label>
                 <select name="anggota_id" required
-                    class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm">
+                    class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500">
                     <option disabled selected>-- Pilih Anggota --</option>
                     @foreach($anggota as $a)
                         <option value="{{ $a->id }}" {{ $a->id == $item->anggota_id ? 'selected' : '' }}>{{ $a->nama }}</option>
@@ -42,7 +42,7 @@
             <div class="mb-4">
                 <label for="jabatan_id" class="block text-sm font-medium text-gray-700">Jabatan</label>
                 <select name="jabatan_id" required
-                    class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm">
+                    class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500">
                     <option disabled selected>-- Pilih Jabatan --</option>
                     @foreach($jabatan as $j)
                         <option value="{{ $j->id }}" {{ $j->id == $item->jabatan_id ? 'selected' : '' }}>
@@ -55,7 +55,7 @@
             <div class="mb-4">
                 <label for="periode_id" class="block text-sm font-medium text-gray-700">Periode</label>
                 <select name="periode_id" required
-                    class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm">
+                    class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500">
                     <option disabled selected>-- Pilih Periode --</option>
                     @foreach($periode as $p)
                         <option value="{{ $p->id }}" {{ $p->id == $item->periode_id ? 'selected' : '' }}>
@@ -66,9 +66,9 @@
             </div>
 
             <div class="flex justify-end space-x-2">
-                <a href="{{ route('Kepengurusan.index') }}" class="px-4 py-2 text-white bg-gray-500 rounded">Batal</a>
+                <a href="{{ route('Kepengurusan.index') }}" class="px-4 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded-lg hover:bg-gray-200">Batal</a>
                 <button type="submit"
-                    class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Simpan</button>
+                    class="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700">Simpan</button>
             </div>
         </form>
     </div>

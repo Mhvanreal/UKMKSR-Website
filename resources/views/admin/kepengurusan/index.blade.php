@@ -3,7 +3,10 @@
     @section('content')
 
     <div class="container mx-auto">
-    <h1 class="mb-10 text-2xl font-bold">Struktur Kepengurusan</h1>
+    <div class="flex flex-col gap-1 mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Struktur Kepengurusan</h1>
+        <p class="text-sm text-gray-500">Kelola pengurus, divisi, jabatan, dan periode kepengurusan</p>
+    </div>
     <div class="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:space-x-2">
             {{-- <form action="" method="GET" class="flex flex-col w-full gap-2 sm:flex-row sm:items-center">
@@ -27,7 +30,7 @@
         </div>
     </div>
 
-    <div class="p-6 mt-10 bg-white shadow-xl rounded-2xl">
+    <div class="p-6 mt-4 bg-white border border-gray-200 rounded-2xl shadow-sm">
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-lg font-semibold text-gray-700">Kepengurusan</h2>
 
@@ -39,7 +42,7 @@
 
                 <!-- Tombol Add Data -->
                 <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                    class="flex items-center px-5 py-2.5 text-sm font-medium text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                    class="flex items-center px-5 py-2.5 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300"
                     type="button">
                     Add Data
                     <svg class="w-2.5 h-2.5 ms-3 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +80,7 @@
         <!-- Tabel Kepengurusan -->
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm text-left">
-                <thead class="font-semibold text-gray-700 bg-gray-200">
+                <thead class="text-xs font-semibold uppercase bg-gray-50 text-gray-500">
                     <tr>
                         <th class="px-6 py-3">No.</th>
                         <th class="px-6 py-3">Nama Pengurus</th>
@@ -86,7 +89,7 @@
                         <th class="px-6 py-3">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-100">
                     @foreach($pengurus as $index => $item)
                         <tr>
                             <td class="px-6 py-3">{{ $index + 1 }}</td>
@@ -95,17 +98,17 @@
                             <td class="px-6 py-3">{{ $item->jabatan->nama_jabatan }}</td>
                             <td class="px-6 py-3">{{ $item->periode->nama_periode }}</td>
                             <td class="flex items-center px-6 py-3 space-x-3" x-data="{ openModal: false, detailUrl: '' }">
-                                <a href="{{route('Kepengurusan.show', $item->id)}}" class="text-blue-500 hover:text-blue-700">
+                                <a href="{{route('Kepengurusan.show', $item->id)}}" class="text-gray-500 transition hover:text-red-600">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
                             <div x-data="{ openModal: false }">
-                                <a href="{{route('Kepengurusan.edit', $item->id)}}" class="text-yellow-500 hover:text-yellow-700">
+                                <a href="{{route('Kepengurusan.edit', $item->id)}}" class="text-yellow-500 transition hover:text-yellow-700">
                                     <i class="fas fa-edit"></i>
                                 </a>
                             </div>
                             <form action="{{route('Kepengurusan.destroy', $item->id)}}" method="POST" class="inline">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700">
+                                <button type="submit" class="text-red-500 transition hover:text-red-700">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>

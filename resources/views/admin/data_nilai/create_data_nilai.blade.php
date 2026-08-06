@@ -2,15 +2,15 @@
     @extends('admin.layout.navbar')
     @section('content')
     <div class="container p-8 mx-auto">
-        <h2 class="mb-6 text-2xl font-bold text-gray-700">Tambah Data Nilai Anggota</h2>
-        <form action="{{ route('nilai.store') }}" method="POST" class="p-6 space-y-6 bg-white rounded-lg shadow-md" enctype="multipart/form-data">
+        <h2 class="mb-6 text-2xl font-bold text-gray-800">Tambah Data Nilai Anggota</h2>
+        <form action="{{ route('nilai.store') }}" method="POST" class="p-6 space-y-6 bg-white border border-gray-200 rounded-2xl shadow-sm" enctype="multipart/form-data">
             @csrf
             <div class="flex flex-col space-y-2">
                 <label for="id" class="font-medium text-gray-700">Nama Anggota</label>
                 <select
                     id="id"
                     name="id"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     required>
                     <option value="" disabled selected>Pilih Anggota</option>
                     @foreach($anggotas as $anggota)
@@ -26,7 +26,7 @@
                     name="nilai_kehadiran"
                     min="0"
                     max="100"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan nilai kehadiran antara 0-100">
             </div>
             <div class="flex flex-col space-y-2">
@@ -37,7 +37,7 @@
                     name="nilai_kontribusi"
                     min="0"
                     max="100"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan nilai kontribusi antara 0-100">
             </div>
             <div class="flex flex-col space-y-2">
@@ -48,7 +48,7 @@
                     name="nilai_kompetensi"
                     min="0"
                     max="100"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan nilai kompetensi antara 0-100">
             </div>
             <div class="flex flex-col space-y-2">
@@ -59,11 +59,11 @@
                     name="nilai_etika"
                     min="0"
                     max="100"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan nilai etika antara 0-100">
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="px-6 py-3 text-white bg-green-500 rounded-md hover:bg-green-600">
+                <button type="submit" class="px-6 py-3 text-white bg-red-600 rounded-md hover:bg-red-700">
                     Simpan
                 </button>
             </div>

@@ -22,14 +22,18 @@
 @extends('admin.layout.navbar')
 
 @section('content')
-<div class="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-md">
-    <h1 class="mb-4 text-2xl font-bold">Program Kerja Kepengurusan</h1>
+<div class="max-w-4xl p-6 mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm">
+    <div class="flex flex-col gap-1 mb-4">
+        <h1 class="mb-1 text-2xl font-bold text-gray-800">Program Kerja Kepengurusan</h1>
+        <p class="text-sm text-gray-500">Tambahkan program kerja untuk pengurus</p>
+    </div>
 
     <form action="{{ route('Program_kerja.store') }}" method="POST">
         @csrf
         <div class="mb-4">
+            <label class="block mb-1 text-sm font-medium text-gray-700">Pilih Pengurus</label>
            <select name="pengurus_id" required
-                class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm">
+                class="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500">
                 <option disabled selected>Pilih Pengurus</option>
                 @foreach($pengurus as $p)
                     <option value="{{ $p->id }}">
@@ -40,17 +44,17 @@
         </div>
 
         <div class="mb-4">
-            <label for="nama_program" class="block py-2 mt-3 font-semibold">Nama Program</label>
-            <input type="text" name="nama_program" id="nama_program" class="w-full px-3 py-2 border rounded" required>
+            <label for="nama_program" class="block py-2 mt-3 font-semibold text-gray-700">Nama Program</label>
+            <input type="text" name="nama_program" id="nama_program" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
         </div>
 
         <div class="mb-4">
-            <label class="block py-2 mt-3 font-semibold">Program Kerja</label>
-            <textarea id="summernote" name="deskripsi" class="w-full p-2 border rounded"></textarea>
+            <label class="block py-2 mt-3 font-semibold text-gray-700">Program Kerja</label>
+            <textarea id="summernote" name="deskripsi" class="w-full p-2 border border-gray-300 rounded-lg"></textarea>
         </div>
 
         <div class="flex justify-end">
-            <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Simpan</button>
+            <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700">Simpan</button>
         </div>
     </form>
 </div>

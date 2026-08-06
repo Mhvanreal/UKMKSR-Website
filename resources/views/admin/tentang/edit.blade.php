@@ -1,15 +1,15 @@
 @extends('admin.layout.navbar')
 @section('content')
     <div class="px-6 py-6 mx-auto" style="max-width: 95%;">
-        <div class="p-8 bg-white rounded-lg shadow-md">
+        <div class="p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
             @if ($type == 'tentang')
-                <h1 class="mb-6 text-2xl font-bold">Edit Tentang UKM KSR</h1>
+                <h1 class="mb-6 text-2xl font-bold text-gray-800">Edit Tentang UKM KSR</h1>
             @elseif($type == 'info')
-                <h1 class="mb-6 text-2xl font-bold">Edit Info KSR</h1>
+                <h1 class="mb-6 text-2xl font-bold text-gray-800">Edit Info KSR</h1>
             @elseif($type == 'visimisi')
-                <h1 class="mb-6 text-2xl font-bold">Edit Visi Misi KSR</h1>
+                <h1 class="mb-6 text-2xl font-bold text-gray-800">Edit Visi Misi KSR</h1>
             @elseif($type == 'sejarah')
-                <h1 class="mb-6 text-2xl font-bold">Edit Sejarah KSR</h1>
+                <h1 class="mb-6 text-2xl font-bold text-gray-800">Edit Sejarah KSR</h1>
             @endif
 
             <form
@@ -23,7 +23,7 @@
                     <div class="mb-4">
                         <label class="block mb-2 font-semibold">Link YouTube Info KSR:</label>
                         <input type="text" name="link_yt_info_ksr"
-                            class="w-full min-h-[300px] p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            class="w-full min-h-[300px] p-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none"
                             value="{{ old('link_yt_info_ksr', $data->link_yt_info_ksr) }}" required
                             placeholder="Masukkan link YouTube">
                         @error('link_yt_info_ksr')
@@ -34,7 +34,7 @@
                     <div class="mb-4">
                         <label class="block mb-2 font-semibold">Deskripsi Visi Misi:</label>
                         <textarea id="summernote" name="deskripsi_visi_misi_ksr" required rows="10"
-                            class="w-full min-h-[300px] p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            class="w-full min-h-[300px] p-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
     {{ old('deskripsi_visi_misi_ksr', $data->deskripsi_visi_misi_ksr) }}
     </textarea>
                         @error('deskripsi_visi_misi_ksr')
@@ -44,7 +44,7 @@
                 @else
                     <div class="mb-4">
                         <label class="block mb-2 font-semibold">Deskripsi:</label>
-                        <textarea id="summernote" name="deskripsi_ksr"  class="w-full min-h-[300px] p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" required>{{ old('deskripsi_ksr', 
+                        <textarea id="summernote" name="deskripsi_ksr"  class="w-full min-h-[300px] p-3 border rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none" required>{{ old('deskripsi_ksr', 
 $data->deskripsi_ksr) }}</textarea>
                         @error('deskripsi_ksr')
                             <span class="block mt-1 text-xs text-red-500">{{ $message }}</span>
@@ -54,9 +54,9 @@ $data->deskripsi_ksr) }}</textarea>
 
                 <div class="flex justify-end gap-4 mt-6">
                     <a href="{{ route('tentang.index') }}"
-                        class="px-6 py-2 text-white transition bg-gray-500 rounded-lg hover:bg-gray-600">Kembali</a>
+                        class="px-6 py-2 text-gray-700 transition bg-gray-100 border border-gray-200 rounded-lg hover:bg-gray-200">Kembali</a>
                     <button type="submit"
-                        class="px-6 py-2 text-white transition bg-green-600 rounded-lg hover:bg-green-700">Update</button>
+                        class="px-6 py-2 text-white transition bg-red-600 rounded-lg hover:bg-red-700">Update</button>
                 </div>
             </form>
         </div>

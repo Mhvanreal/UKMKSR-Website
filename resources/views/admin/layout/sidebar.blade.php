@@ -1,47 +1,83 @@
 
-<div class="h-full overflow-y-auto">
-    <div class="p-1 text-center border-b">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 12c2.5 0 4.5-2 4.5-4.5S14.5 3 12 3s-4.5 2-4.5 4.5S9.5 12 12 12zm0 2c-4 0-7 2-7 4v1h14v-1c0-2-3-4-7-4z" />
-        </svg>
-        <h2 class="mt-2 text-lg font-semibold">Humas UKM KSR</h2>
-        <p class="text-sm text-gray-500">Admin Humas</p>
+<div class="flex flex-col h-full overflow-y-auto">
+
+    <!-- Brand -->
+    <div class="relative px-5 py-5 bg-gradient-to-br from-red-600 to-rose-600">
+        <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-white/10"></div>
+        <div class="absolute top-6 right-6 w-16 h-16 rounded-full bg-white/5"></div>
+        <div class="relative flex items-center gap-3">
+            <div class="flex items-center justify-center w-11 h-11 rounded-xl bg-white/20 text-white shadow">
+                <i class="text-2xl fas fa-plus"></i>
+            </div>
+            <div>
+                <h2 class="text-base font-bold text-white leading-tight">UKM KSR</h2>
+                <p class="text-xs text-red-100">Palang Merah Indonesia</p>
+            </div>
+        </div>
     </div>
 
-    <nav class="p-4 space-y-1.5">
+    <!-- Navigation -->
+    <nav class="flex-1 px-3 py-4 space-y-1">
+
+        <p class="px-3 mb-2 text-[11px] font-semibold tracking-wider uppercase text-gray-400">Menu Utama</p>
+
         @php
             $navItems = [
                 ['name' => 'Beranda', 'route' => '/dashboard', 'icon' => 'home.png', 'match' => 'dashboard'],
                 ['name' => 'Anggota', 'route' => route('anggota.index'), 'icon' => 'multi.png', 'match' => 'anggota*'],
-                ['name' => 'Tentang', 'route' => route('tentang.index'), 'icon' => 'info.png', 'match' => 'tentang*'],
+
                 ['name' => 'Permohonan', 'route' => route('pesan-layanan.index'), 'icon' => 'file.png', 'match' => 'pesan-layanan*'],
                 ['name' => 'Kepengurusan', 'route' => route('Kepengurusan.index'), 'icon' => 'pengurus.png', 'match' => 'Kepengurusan*'],
+        
                 ['name' => 'Program Kerja', 'route' => route('Program_kerja.index'), 'icon' => 'program.png', 'match' => 'Program_kerja*'],
                 ['name' => 'Kegiatan', 'route' => route('kegiatan.index'), 'icon' => 'calendar.png', 'match' => 'kegiatan*'],
                 ['name' => 'Layanan', 'route' => route('service.index'), 'icon' => 'heart.png', 'match' => 'service*'],
                 ['name' => 'Rekrutment', 'route' => route('Rekrutment-anggota.index'), 'icon' => 'add.png', 'match' => 'rekrutment-anggota*'],
-                ['name' => 'Blog', 'route' => route('blogadmin.index'), 'icon' => 'writing.png', 'match' => 'blogadmin'],
-                ['name' => 'Galeri', 'route' => route('galeri.index'), 'icon' => 'image-galery.png', 'match' => 'galeri*'],
             ];
         @endphp
 
         @foreach ($navItems as $item)
+            @php $active = request()->is($item['match']); @endphp
             <a href="{{ $item['route'] }}"
-                class="flex items-center p-2 rounded-md {{ request()->is($item['match']) ? 'bg-red-500 text-white' : 'hover:bg-gray-100 text-gray-700' }}">
+                class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition
+                       {{ $active ? 'bg-red-600 text-white shadow-md shadow-red-200' : 'text-gray-600 hover:bg-red-50 hover:text-red-700' }}">
                 <img src="/img/icon/{{ $item['icon'] }}" alt="{{ $item['name'] }} Icon"
-                    class="w-6 h-6 {{ request()->is($item['match']) ? 'filter invert brightness-0' : '' }}">
-                <span class="ml-2 text-xs sidebar-text">{{ $item['name'] }}</span>
+                    class="w-5 h-5 {{ $active ? 'filter invert brightness-0' : 'opacity-90' }}">
+                <span>{{ $item['name'] }}</span>
             </a>
         @endforeach
 
-        <p class="mt-4 text-xs font-semibold text-gray-600">Lainnya</p>
+        <p class="px-3 mt-6 mb-2 text-[11px] font-semibold tracking-wider uppercase text-gray-400">Lainnya</p>
+
+        @php
+            $otherItems = [
+                ['name' => 'Blog', 'route' => route('blogadmin.index'), 'icon' => 'writing.png', 'match' => 'blogadmin'],
+                ['name' => 'Galeri', 'route' => route('galeri.index'), 'icon' => 'image-galery.png', 'match' => 'galeri*'],
+                ['name' => 'Tentang', 'route' => route('tentang.index'), 'icon' => 'info.png', 'match' => 'tentang*'],
+            ];
+        @endphp
+
+        @foreach ($otherItems as $item)
+            @php $active = request()->is($item['match']); @endphp
+            <a href="{{ $item['route'] }}"
+                class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition
+                       {{ $active ? 'bg-red-600 text-white shadow-md shadow-red-200' : 'text-gray-600 hover:bg-red-50 hover:text-red-700' }}">
+                <img src="/img/icon/{{ $item['icon'] }}" alt="{{ $item['name'] }} Icon"
+                    class="w-5 h-5 {{ $active ? 'filter invert brightness-0' : 'opacity-90' }}">
+                <span>{{ $item['name'] }}</span>
+            </a>
+        @endforeach
+    </nav>
+
+    <!-- Logout -->
+    <div class="px-3 py-4 border-t border-red-100">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="flex items-center w-full p-2 mt-2 text-red-500 rounded-md hover:bg-gray-100">
-                <img src="/img/icon/logout.png" alt="Logout Icon" class="w-6 h-6">
-                <span class="ml-2 text-xs font-semibold">Keluar</span>
+            <button type="submit"
+                class="flex items-center w-full gap-3 px-3 py-2.5 text-sm font-medium rounded-lg text-red-600 transition hover:bg-red-50">
+                <img src="/img/icon/logout.png" alt="Logout Icon" class="w-5 h-5 opacity-90">
+                Keluar
             </button>
         </form>
-    </nav>
+    </div>
 </div>

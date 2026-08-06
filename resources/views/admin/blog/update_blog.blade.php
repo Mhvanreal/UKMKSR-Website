@@ -2,8 +2,8 @@
     @extends('admin.layout.navbar')
     @section('content')
     <div class="container p-8 mx-auto">
-        <h2 class="mb-6 text-2xl font-bold text-gray-700">Edit Blog</h2>
-        <form action="{{ route('blogadmin.update', $blog->id) }}" method="POST" class="p-6 space-y-6 bg-white rounded-lg shadow-md" enctype="multipart/form-data">
+        <h2 class="mb-6 text-2xl font-bold text-gray-800">Edit Blog</h2>
+        <form action="{{ route('blogadmin.update', $blog->id) }}" method="POST" class="p-6 space-y-6 bg-white border border-gray-200 rounded-2xl shadow-sm" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="flex flex-col space-y-2">
@@ -13,7 +13,7 @@
                     id="judul"
                     name="judul"
                     value="{{$blog->title}}"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     placeholder="Masukkan Judul"
                     required>
             </div>
@@ -24,7 +24,7 @@
                     id="tanggal"
                     name="tanggal"
                     value="{{$blog->created_at->format('Y-m-d')}}"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     required>
             </div>
             <div class="flex flex-col space-y-2">
@@ -38,7 +38,7 @@
                     type="file"
                     id="gambar"
                     name="gambar"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     accept="image/*">
             </div>
 
@@ -47,11 +47,11 @@
                 <textarea
                     id="summernote"
                     name="deskripsi"
-                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     required>{{ $blog->description }}</textarea>
             </div>
             <div class="flex justify-end">
-                <button type="submit" class="px-6 py-3 text-white bg-green-500 rounded-md hover:bg-green-600">
+                <button type="submit" class="px-6 py-3 text-white bg-red-600 rounded-md hover:bg-red-700">
                     Simpan
                 </button>
             </div>

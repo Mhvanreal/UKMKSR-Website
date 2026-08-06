@@ -10,18 +10,18 @@
         </div>
 
     </div>
-    <div class="p-6 mt-10 bg-white shadow-xl rounded-2xl">
+    <div class="p-6 mt-4 bg-white border border-gray-200 rounded-2xl shadow-sm">
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-lg font-semibold text-gray-700">Program Kepengurusan</h2>
             <a href="{{route('Program_kerja.create')}}"
-            class="px-4 py-2 text-sm text-white transition bg-green-600 rounded-full shadow-md hover:bg-green-700">
+            class="px-4 py-2 text-sm text-white transition bg-red-600 rounded-full shadow-md hover:bg-red-700">
             + Tambah
         </a>
         </div>
 
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm text-left">
-                <thead class="font-semibold text-gray-700 bg-gray-200">
+                <thead class="text-xs font-semibold uppercase bg-gray-50 text-gray-500">
                     <tr>
                         <th class="px-6 py-3">No.</th>
                         <th class="px-6 py-3">Nama Pengurus</th>
@@ -31,7 +31,7 @@
                         <th class="px-6 py-3">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-100">
                     @php $no = 1; @endphp
                     @foreach ($jabatans as $jabatan)
                         @foreach ($jabatan->pengurus as $pengurus)
@@ -43,7 +43,7 @@
                                     <td class="px-6 py-4">{{ $pengurus->periode->nama_periode }}</td>
                                     <td class="px-6 py-4">{{ $pengurus->programKerjas->count() }} Program</td>
                                     <td class="px-6 py-4">
-                                        <a href="{{ route('Program_kerja.detail', $pengurus->id) }}" class="text-blue-500 hover:underline">
+                                        <a href="{{ route('Program_kerja.detail', $pengurus->id) }}" class="text-gray-500 transition hover:text-red-600">
                                             <i class="fas fa-info-circle"></i>
                                         </a>
                                     </td>

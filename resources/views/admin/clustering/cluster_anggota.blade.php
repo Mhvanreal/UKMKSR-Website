@@ -2,12 +2,15 @@
     @extends('admin.layout.navbar')
     @section('content')
 
-    <h1 class="text-2xl font-bold mb-2">Hasil Clustering</h1>
-    <div class="container py-8 mx-auto">
+    <div class="flex flex-col gap-1 mb-4">
+        <h1 class="text-2xl font-bold text-gray-800">Hasil Clustering</h1>
+        <p class="text-sm text-gray-500">Hasil pengelompokan data anggota berdasarkan nilai KSR</p>
+    </div>
+    <div class="container py-4 mx-auto">
     <div class="flex flex-col gap-4 mb-4 md:flex-row md:items-center md:justify-between">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:space-x-2">
                 <select id="filter"
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 sm:w-auto">
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 sm:w-auto">
                     <option value="">Semua Cluster</option>
                     @foreach ($clusters as $cluster)
                     <option value="{{ $cluster }}" {{ request('cluster') == (string)$cluster ? 'selected' : '' }}>
@@ -25,22 +28,22 @@
             </div>
         <div class="flex space-x-2">
             <!-- Print Button -->
-            <a href="/cluster/print" target="_blank" class="flex items-center justify-center px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600" onclick="openPrintTab()">
-                Print
+            <a href="/cluster/print" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 shadow-sm" onclick="openPrintTab()">
+                <i class="fas fa-print"></i> Print
             </a>
 
             <!-- Back Button -->
             <a href="{{route('clustering.index')}}"
-                class="flex items-center justify-center px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600">
-                Kembali
+                class="inline-flex items-center gap-2 px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 shadow-sm">
+                <i class="fas fa-arrow-left"></i> Kembali
             </a>
         </div>
     </div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="overflow-x-auto bg-white border border-gray-200 rounded-2xl shadow-sm">
         @if($anggotas && $anggotas->count() > 0)
         <table class="w-full text-sm text-left text-black rtl:text-right">
-            <thead class="text-xs text-black uppercase bg-white border-b border-gray-200">
+            <thead class="text-xs uppercase bg-gray-50 text-gray-500">
                 <tr>
                     <th scope="col" class="px-6 py-3">NIM</th>
                     <th scope="col" class="px-6 py-3">Nama</th>
@@ -56,7 +59,7 @@
             </thead>
             <tbody>
                 @foreach ($anggotas as $anggota)
-                    <tr class="border-b hover:bg-gray-50">
+                    <tr class="border-b transition hover:bg-red-50/40">
                         <td class="px-4 py-2 border-r">{{ $anggota->anggota->nim }}</td>
                         <td class="px-4 py-2 border-r truncate max-w-[80px] overflow-hidden">{{ $anggota->anggota->nama }}</td>
                         <td class="px-4 py-2 border-r">{{ $anggota->anggota->angkatan }}</td>
@@ -76,7 +79,7 @@
         </div>
         @else
         <table class="w-full text-sm text-left text-black rtl:text-right">
-            <thead class="text-xs text-black uppercase bg-white border-b border-gray-200">
+            <thead class="text-xs uppercase bg-gray-50 text-gray-500">
                 <tr>
                     <th scope="col" class="px-6 py-3">NIM</th>
                     <th scope="col" class="px-6 py-3">Nama</th>
@@ -91,7 +94,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="border-b hover:bg-gray-50">
+                <tr class="border-b transition hover:bg-red-50/40">
                     <td class="border border-gray-300 px-4 py-2 text-center" colspan="10">Tidak Ada Data Anggota</td>
                 </tr>
             </tbody>

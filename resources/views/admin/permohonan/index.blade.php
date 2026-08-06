@@ -8,7 +8,7 @@
         </div>
 
     </div>
-    <div class="p-6 mt-10 bg-white shadow-xl rounded-2xl">
+    <div class="p-6 mt-4 bg-white border border-gray-200 rounded-2xl shadow-sm">
         <div class="flex items-center justify-between mb-6">
             <h2 class="text-lg font-semibold text-gray-700">Surat Permohonan</h2>
 
@@ -16,7 +16,7 @@
 
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm text-left">
-                <thead class="font-semibold text-gray-700 bg-gray-200">
+                <thead class="text-xs font-semibold uppercase bg-gray-50 text-gray-500">
                     <tr>
                         <th class="px-6 py-3">No.</th>
                         <th class="px-6 py-3">Layanan</th>
@@ -29,9 +29,9 @@
                     </tr>
                 </thead>
                @php use Illuminate\Support\Str; @endphp
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="bg-white divide-y divide-gray-100">
                         @foreach ($pesanan as $index => $item)
-                            <tr>
+                            <tr class="transition hover:bg-red-50/40">
                                 <td class="px-6 py-3">{{ $index + 1 }}</td>
                                 <td class="px-6 py-3">{{ $item->layanan->nama_layanan }}</td>
                                 <td class="px-6 py-3">{{ $item->nama }}</td>

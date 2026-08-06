@@ -4,7 +4,7 @@
     <div class="container">
         <h2 class="mb-4 text-xl font-bold">Detail Tentang UKM KSR</h2>
 
-        <div class="p-4 bg-white rounded shadow-md">
+        <div class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm">
             <p class="mb-2 text-gray-700"><strong>Deskripsi:</strong></p>
             <div class="p-3 bg-gray-100 border rounded">
                 {!! nl2br(e($data->deskripsi_ksr)) !!}
@@ -13,7 +13,7 @@
             <p class="mt-4 text-sm text-gray-500">Dibuat pada: {{ $data->created_at->translatedFormat('d F Y') }}</p>
             <p class="text-sm text-gray-500">Diperbarui pada: {{ $data->updated_at->translatedFormat('d F Y') }}</p>
 
-            <a href="{{ route('tentang.index') }}" class="inline-block mt-4 text-indigo-600 hover:underline">← Kembali</a>
+            <a href="{{ route('tentang.index') }}" class="inline-block mt-4 text-gray-500 transition hover:text-red-600">← Kembali</a>
         </div>
     </div>
 

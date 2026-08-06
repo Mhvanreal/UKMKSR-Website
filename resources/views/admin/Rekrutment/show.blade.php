@@ -1,7 +1,7 @@
 @extends('admin.layout.navbar')
 
 @section('content')
-<div class="max-w-3xl p-6 mx-auto bg-white rounded shadow">
+<div class="max-w-3xl p-6 mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm">
     <h2 class="mb-4 text-2xl font-bold text-red-600">
         Detail Pendaftaran - {{ $rekrutmen->Nama ?? 'Data Tidak Ditemukan' }}
     </h2>
@@ -75,7 +75,7 @@
         </tr>
     </table>
 
-    <a href="{{ route('Rekrutment-anggota.index') }}" class="inline-block mt-6 text-blue-600 hover:underline">
+    <a href="{{ route('Rekrutment-anggota.index') }}" class="inline-block mt-6 text-gray-500 transition hover:text-red-600">
         &larr; Kembali ke daftar rekrutmen
     </a>
 </div>

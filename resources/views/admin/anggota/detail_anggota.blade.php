@@ -2,8 +2,8 @@
     @extends('admin.layout.navbar')
     @section('content')
     <div class="container p-8 mx-auto">
-        <h2 class="mb-6 text-2xl font-bold text-gray-700">Detail Anggota</h2>
-        <div class="p-6 space-y-6 bg-white rounded-lg shadow-md">
+        <h2 class="mb-6 text-2xl font-bold text-gray-800">Detail Anggota</h2>
+        <div class="p-6 space-y-6 bg-white border border-gray-200 rounded-2xl shadow-sm">
                 <div class="flex flex-col space-y-2">
                     @if ($data_anggota->foto)
                         <div class="mb-2">
@@ -24,7 +24,7 @@
                         id="nama"
                         name="nama"
                         value="{{$data_anggota->nama}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -35,7 +35,7 @@
                         id="Nama_panggilan"
                         name="Nama_panggilan"
                         value="{{$data_anggota->nama_panggilan}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -46,7 +46,7 @@
                         id="nim"
                         name="nim"
                         value="{{$data_anggota->nim}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -57,7 +57,7 @@
                         id="tempat_lahir"
                         name="tempat_lahir"
                         value="{{$data_anggota->tempat_lahir}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -68,7 +68,7 @@
                         id="tanggal_lahir"
                         name="tanggal_lahir"
                         value="{{ old('tanggal_lahir', \Carbon\Carbon::parse($data_anggota->tanggal_lahir)->format('Y-m-d')) }}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -79,7 +79,7 @@
                         id="angkatan"
                         name="angkatan"
                         value="{{$data_anggota->angkatan}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div><div class="flex flex-col space-y-2">
@@ -89,7 +89,7 @@
                         id="email"
                         name="email"
                         value="{{$data_anggota->email}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -100,7 +100,7 @@
                         id="No_tlpn"
                         name="No_tlpn"
                         value="{{$data_anggota->No_tlpn}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -111,7 +111,7 @@
                         id="Agama"
                         name="Agama"
                         value="{{$data_anggota->agama}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -122,7 +122,7 @@
                         id="jurusan"
                         name="jurusan"
                         value="{{$data_anggota->jurusan}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -135,7 +135,7 @@
                         id="prodi"
                         name="prodi"
                         value="{{$data_anggota->prodi}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -146,7 +146,7 @@
                         id="tahun_masuk_kuliah"
                         name="tahun_masuk_kuliah"
                         value="{{$data_anggota->tahun_masuk_kuliah}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -157,7 +157,7 @@
                         id="prodi"
                         name="prodi"
                         value="{{$data_anggota->jenis_kelamin}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -168,7 +168,7 @@
                         id="Gol_darah"
                         name="Gol_darah"
                         value="{{$data_anggota->gol_darah}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -179,7 +179,7 @@
                         id="prodi"
                         name="prodi"
                         value="{{$data_anggota->status}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -190,7 +190,7 @@
                         id="alamat"
                         name="alamat"
                         value="{{$data_anggota->alamat}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -201,7 +201,7 @@
                         id="organisasi_yg_pernah_diikuti"
                         name="organisasi_yg_pernah_diikuti"
                         value="{{$data_anggota->organisasi_yg_pernah_diikuti}}"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>
                 </div>
@@ -211,12 +211,12 @@
                         id="summernote"
                         name="alasan_join"
                         rows="4"
-                        class="p-3 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        class="p-3 bg-gray-100 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                         onmousedown="return false;" onselectstart="return false;"
                         required>{{ old('alasan_join', $data_anggota->alasan_join) }}</textarea>
                 </div>
             <div class="flex justify-end space-x-2">
-                <a href="{{ route('anggota.index') }}" class="px-6 py-3 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400">
+                <a href="{{ route('anggota.index') }}" class="px-6 py-3 text-gray-700 bg-gray-100 border border-gray-200 rounded-md hover:bg-gray-200">
                     Kembali
                 </a>
                 <a href="{{ route('anggota.edit', $data_anggota->id) }}" class="px-6 py-3 text-white bg-yellow-500 rounded-md hover:bg-yellow-600">

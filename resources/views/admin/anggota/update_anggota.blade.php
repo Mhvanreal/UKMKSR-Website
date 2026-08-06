@@ -1,96 +1,96 @@
 @extends('admin.layout.navbar')
 @section('content')
     <div class="container p-8 mx-auto">
-        <h2 class="mb-6 text-2xl font-bold text-gray-700">Edit Anggota</h2>
+        <h2 class="mb-6 text-2xl font-bold text-gray-800">Edit Anggota</h2>
         <form action="{{ route('anggota.update', $anggota->id) }}" method="POST"
-            class="p-6 space-y-6 bg-white rounded-lg shadow-md" enctype="multipart/form-data">
+            class="p-6 space-y-6 bg-white border border-gray-200 rounded-2xl shadow-sm" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <div class="flex flex-col space-y-2">
                 <label for="nama" class="font-medium text-gray-700">Nama</label>
                 <input type="text" id="nama" name="nama" value="{{ $anggota->nama }}"
-                    class="p-3 border border-gray-300 rounded-md" required>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="nim" class="font-medium text-gray-700">NIM</label>
                 <input type="text" id="nim" name="nim" value="{{ $anggota->nim }}"
-                    class="p-3 border border-gray-300 rounded-md" required>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="email" class="font-medium text-gray-700">Email</label>
                 <input type="email" id="email" name="email" value="{{ $anggota->email }}"
-                    class="p-3 border border-gray-300 rounded-md">
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="Nama_panggilan" class="font-medium text-gray-700">Nama Panggilan</label>
                 <input type="text" id="Nama_panggilan" name="Nama_panggilan" value="{{ $anggota->Nama_panggilan ?? '' }}"
-                    class="p-3 border border-gray-300 rounded-md">
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="tanggal_lahir" class="font-medium text-gray-700">Tanggal Lahir</label>
                 <input type="date" id="tanggal_lahir" name="tanggal_lahir"
                     value="{{ old('tanggal_lahir', \Carbon\Carbon::parse($anggota->tanggal_lahir)->format('Y-m-d')) }}"
-                    class="p-3 border border-gray-300 rounded-md" required>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="tempat_lahir" class="font-medium text-gray-700">Tempat Lahir</label>
                 <input type="text" id="tempat_lahir" name="tempat_lahir" value="{{ $anggota->tempat_lahir ?? '' }}"
-                    class="p-3 border border-gray-300 rounded-md">
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="Agama" class="font-medium text-gray-700">Agama</label>
                 <input type="text" id="Agama" name="Agama" value="{{ $anggota->Agama ?? '' }}"
-                    class="p-3 border border-gray-300 rounded-md">
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="No_tlpn" class="font-medium text-gray-700">No Telepon</label>
                 <input type="text" id="No_tlpn" name="No_tlpn" value="{{ $anggota->No_tlpn }}"
-                    class="p-3 border border-gray-300 rounded-md">
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="Gol_darah" class="font-medium text-gray-700">Golongan Darah</label>
                 <input type="text" id="Gol_darah" name="Gol_darah" value="{{ $anggota->Gol_darah ?? '' }}"
-                    class="p-3 border border-gray-300 rounded-md">
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="organisasi_yg_pernah_diikuti" class="font-medium text-gray-700">Organisasi yang Pernah
                     Diikuti</label>
                 <textarea id="organisasi_yg_pernah_diikuti" name="organisasi_yg_pernah_diikuti"
-                    class="p-3 border border-gray-300 rounded-md">{{ old('organisasi_yg_pernah_diikuti', $anggota->organisasi_yg_pernah_diikuti) }}</textarea>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">{{ old('organisasi_yg_pernah_diikuti', $anggota->organisasi_yg_pernah_diikuti) }}</textarea>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="angkatan" class="font-medium text-gray-700">Angkatan</label>
                 <input type="text" id="angkatan" name="angkatan" value="{{ $anggota->angkatan }}"
-                    class="p-3 border border-gray-300 rounded-md" required>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="jurusan" class="font-medium text-gray-700">Jurusan</label>
                 <input type="text" id="jurusan" name="jurusan" value="{{ $anggota->jurusan }}"
-                    class="p-3 border border-gray-300 rounded-md" required>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="prodi" class="font-medium text-gray-700">Prodi</label>
                 <input type="text" id="prodi" name="prodi" value="{{ $anggota->prodi }}"
-                    class="p-3 border border-gray-300 rounded-md" required>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="tahun_masuk_kuliah" class="font-medium text-gray-700">Tahun Masuk Kuliah</label>
                 <input type="text" id="tahun_masuk_kuliah" name="tahun_masuk_kuliah"
-                    value="{{ $anggota->tahun_masuk_kuliah }}" class="p-3 border border-gray-300 rounded-md" required>
+                    value="{{ $anggota->tahun_masuk_kuliah }}" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
@@ -111,7 +111,7 @@
 
             <div class="flex flex-col space-y-2">
                 <label for="status" class="font-medium text-gray-700">Status</label>
-                <select id="status" name="status" class="p-3 border border-gray-300 rounded-md" required>
+                <select id="status" name="status" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
                     <option value="Aktif" {{ $anggota->status == 'Aktif' ? 'selected' : '' }}>Aktif</option>
                     <option value="Alumni" {{ $anggota->status == 'Alumni' ? 'selected' : '' }}>Alumni</option>
                     {{-- <option value="Inaktif" {{ $anggota->status == 'Inaktif' ? 'selected' : '' }}>Inaktif</option> --}}
@@ -121,12 +121,12 @@
             <div class="flex flex-col space-y-2">
                 <label for="alamat" class="font-medium text-gray-700">Alamat</label>
                 <input type="text" id="alamat" name="alamat" value="{{ $anggota->alamat }}"
-                    class="p-3 border border-gray-300 rounded-md" required>
+                    class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
             </div>
 
             <div class="flex flex-col space-y-2">
                 <label for="alasan_join" class="font-medium text-gray-700">Alasan Bergabung</label>
-                <textarea id="summernote" name="alasan_join" rows="4" class="p-3 border border-gray-300 rounded-md">{{ old('alasan_join', $anggota->alasan_join) }}</textarea>
+                <textarea id="summernote" name="alasan_join" rows="4" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">{{ old('alasan_join', $anggota->alasan_join) }}</textarea>
             </div>
 
 
@@ -138,15 +138,15 @@
                             class="w-32 h-32 rounded-md">
                     </div>
                 @endif
-                <input type="file" id="foto" name="foto" class="p-3 border border-gray-300 rounded-md"
+                <input type="file" id="foto" name="foto" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
                     accept="image/*">
             </div>
 
             <div class="flex justify-end space-x-2">
                 <a href="{{ route('anggota.index') }}"
-                    class="px-6 py-3 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400">Kembali</a>
+                    class="px-6 py-3 text-gray-700 bg-gray-100 border border-gray-200 rounded-md hover:bg-gray-200">Kembali</a>
                 <button type="submit"
-                    class="px-6 py-3 text-white bg-green-500 rounded-md hover:bg-green-600">Simpan</button>
+                    class="px-6 py-3 text-white bg-red-600 rounded-md hover:bg-red-700">Simpan</button>
             </div>
         </form>
     </div>

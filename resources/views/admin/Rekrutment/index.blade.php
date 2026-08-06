@@ -10,7 +10,7 @@
     </div>
 
     <!-- Pengaturan Rekrutmen -->
-    <div class="p-6 mb-6 bg-white shadow-xl rounded-2xl">
+    <div class="p-6 mb-6 bg-white border border-gray-200 rounded-2xl shadow-sm">
         <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div class="flex flex-col gap-2">
                 <div class="flex items-center gap-4">
@@ -43,21 +43,21 @@
                 @csrf
                 
                 <!-- Mode Otomatis -->
-                <div class="p-4 mb-4 border border-blue-200 rounded-lg bg-blue-50">
+                <div class="p-4 mb-4 border border-red-200 rounded-lg bg-red-50">
                     <div class="flex items-start gap-3">
                         <input type="checkbox" name="is_auto" id="is_auto" value="1" 
                             {{ $pengaturan->is_auto ? 'checked' : '' }}
-                            class="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                            class="mt-1 w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500"
                             onchange="toggleAutoMode(this.checked)">
                         <div class="flex-1">
-                            <label for="is_auto" class="block text-sm font-semibold text-blue-900 cursor-pointer">
+                            <label for="is_auto" class="block text-sm font-semibold text-red-900 cursor-pointer">
                                 Mode Otomatis
                             </label>
-                            <p class="mt-1 text-xs text-blue-700">
+                            <p class="mt-1 text-xs text-red-700">
                                 Pendaftaran akan otomatis dibuka/ditutup berdasarkan tanggal & waktu yang ditentukan.
                             </p>
                             @if($pengaturan->is_auto)
-                                <div class="mt-2 px-3 py-2 text-xs bg-white rounded border border-blue-200">
+                                <div class="mt-2 px-3 py-2 text-xs bg-white rounded border border-red-200">
                                     <strong>Status:</strong> {{ $pengaturan->status_jadwal }}
                                 </div>
                             @endif
@@ -75,7 +75,7 @@
                     <div>
                         <label for="tanggal_buka" class="block mb-2 text-sm font-medium text-gray-700">
                             Tanggal Buka 
-                            <span id="label-auto-buka" class="text-xs text-blue-600 {{ $pengaturan->is_auto ? '' : 'hidden' }}">(Wajib jika mode auto)</span>
+                            <span id="label-auto-buka" class="text-xs text-red-600 {{ $pengaturan->is_auto ? '' : 'hidden' }}">(Wajib jika mode auto)</span>
                         </label>
                         <input type="datetime-local" name="tanggal_buka" id="tanggal_buka" 
                             value="{{ $pengaturan->tanggal_buka ? $pengaturan->tanggal_buka->format('Y-m-d\TH:i') : '' }}"
@@ -84,7 +84,7 @@
                     <div>
                         <label for="tanggal_tutup" class="block mb-2 text-sm font-medium text-gray-700">
                             Tanggal Tutup 
-                            <span id="label-auto-tutup" class="text-xs text-blue-600 {{ $pengaturan->is_auto ? '' : 'hidden' }}">(Opsional)</span>
+                            <span id="label-auto-tutup" class="text-xs text-red-600 {{ $pengaturan->is_auto ? '' : 'hidden' }}">(Opsional)</span>
                         </label>
                         <input type="datetime-local" name="tanggal_tutup" id="tanggal_tutup" 
                             value="{{ $pengaturan->tanggal_tutup ? $pengaturan->tanggal_tutup->format('Y-m-d\TH:i') : '' }}"
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <button type="button" onclick="confirmUpdateSettings()" class="px-6 py-2 text-sm font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                    <button type="button" onclick="confirmUpdateSettings()" class="px-6 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700">
                         Simpan Pengaturan
                     </button>
                 </div>
@@ -100,10 +100,10 @@
         </div>
     </div>
 
-    <div class="p-6 mt-10 bg-white shadow-xl rounded-2xl">
+    <div class="p-6 mt-4 bg-white border border-gray-200 rounded-2xl shadow-sm">
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm text-left">
-                <thead class="font-semibold text-gray-700 bg-gray-200">
+                <thead class="text-xs font-semibold uppercase bg-gray-50 text-gray-500">
                     <tr>
                         <th class="px-6 py-3">No.</th>
                         <th class="px-6 py-3">Nama Lengkap</th>
@@ -113,7 +113,7 @@
                         <th class="px-6 py-3">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+                <tbody class="bg-white divide-y divide-gray-100">
                     @php $no = 1; @endphp
                     @foreach ($rekrutmen as $item)
                         <tr>
@@ -140,7 +140,7 @@
                                 <div class="flex flex-col gap-2 md:flex-row">
                                     <!-- Tombol Detail -->
                                     <a href="{{ route('Rekrutment-anggota.show', $item->id) }}"
-                                        class="inline-flex items-center justify-center px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600">
+                                        class="inline-flex items-center justify-center px-4 py-2 text-sm text-white bg-red-600 rounded-md hover:bg-red-700">
                                         <i class="mr-2 fas fa-info-circle"></i> Detail
                                     </a>
 
