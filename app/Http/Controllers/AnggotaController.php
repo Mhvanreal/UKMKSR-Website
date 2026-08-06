@@ -293,10 +293,10 @@ public function search(Request $request)
                     'tahun_masuk_kuliah' => $row[9] ?? null,
                     'jenis_kelamin' => $row[10] ?? null,
                     'email' => $row[11] ?? null,
-                    'Nama_panggilan' => $row[12] ?? null,
+                    'nama_panggilan' => $row[12] ?? null,
                     'tempat_lahir' => $row[13] ?? null,
-                    'Agama' => $row[14] ?? null,
-                    'Gol_darah' => $row[15] ?? null,
+                    'agama' => $row[14] ?? null,
+                    'gol_darah' => $row[15] ?? null,
                     'organisasi_yg_pernah_diikuti' => $row[16] ?? null,
                     'No_tlpn' => $row[17] ?? null,
                 ]);

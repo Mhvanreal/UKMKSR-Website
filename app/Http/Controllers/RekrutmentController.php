@@ -90,13 +90,18 @@ class RekrutmentController extends Controller
         }
     }
 
-        public function terima($id)
+        public function terima(Request $request, $id)
     {
         try {
             // Validasi ID harus integer untuk mencegah SQL injection
             if (!is_numeric($id)) {
                 abort(404);
             }
+
+            // Angkatan wajib diisi karena atribut ini belum dimiliki data rekrutmen
+            $request->validate([
+                'angkatan' => 'required|integer',
+            ]);
             
             $rekrut = Rekrutmen::findOrFail($id);
 
@@ -113,7 +118,7 @@ class RekrutmentController extends Controller
                 'tempat_lahir'               => $rekrut->tempat_lahir,
                 'alamat'                     => $rekrut->alamat,
                 'alasan_join'                => $rekrut->alasan_join,
-                'angkatan'                   => $rekrut->angkatan,
+                'angkatan'                   => $request->angkatan,
                 'foto'                       => $rekrut->foto,
                 'jurusan'                    => $rekrut->jurusan,
                 'prodi'                      => $rekrut->prodi,

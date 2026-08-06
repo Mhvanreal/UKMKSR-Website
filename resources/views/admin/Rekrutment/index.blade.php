@@ -179,6 +179,7 @@
                                 <!-- Hidden Forms -->
                                 <form id="form-terima-{{ $item->id }}" action="{{ route('Rekrutment-anggota.terima', $item->id) }}" method="POST" class="hidden">
                                     @csrf
+                                    <input type="hidden" name="angkatan" id="angkatan-terima-{{ $item->id }}">
                                 </form>
                                 <form id="form-tolak-{{ $item->id }}" action="{{ route('Rekrutment-anggota.tolak', $item->id) }}" method="POST" class="hidden">
                                     @csrf
@@ -273,15 +274,28 @@
         function confirmTerima(id) {
             Swal.fire({
                 title: 'Terima Pendaftar',
-                text: 'Apakah Anda yakin ingin menerima pendaftar ini sebagai anggota?',
-                icon: 'question',
+                html: 'Lengkapi data keanggotaan sebelum menerima pendaftar ini sebagai anggota.',
+                input: 'number',
+                inputLabel: 'Angkatan',
+                inputPlaceholder: 'Contoh: 2023',
+                inputAttributes: {
+                    min: '1900',
+                    max: '2100',
+                    step: '1'
+                },
                 showCancelButton: true,
                 confirmButtonColor: '#10b981',
                 cancelButtonColor: '#6b7280',
                 confirmButtonText: 'Ya, Terima',
-                cancelButtonText: 'Batal'
+                cancelButtonText: 'Batal',
+                inputValidator: (value) => {
+                    if (!value || value.trim() === '') {
+                        return 'Angkatan wajib diisi!';
+                    }
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
+                    document.getElementById('angkatan-terima-' + id).value = result.value;
                     document.getElementById('form-terima-' + id).submit();
                 }
             });

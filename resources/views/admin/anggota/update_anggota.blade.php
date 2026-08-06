@@ -26,8 +26,8 @@
             </div>
 
             <div class="flex flex-col space-y-2">
-                <label for="Nama_panggilan" class="font-medium text-gray-700">Nama Panggilan</label>
-                <input type="text" id="Nama_panggilan" name="Nama_panggilan" value="{{ $anggota->Nama_panggilan ?? '' }}"
+                <label for="nama_panggilan" class="font-medium text-gray-700">Nama Panggilan</label>
+                <input type="text" id="nama_panggilan" name="nama_panggilan" value="{{ $anggota->nama_panggilan ?? '' }}"
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
@@ -45,8 +45,8 @@
             </div>
 
             <div class="flex flex-col space-y-2">
-                <label for="Agama" class="font-medium text-gray-700">Agama</label>
-                <input type="text" id="Agama" name="Agama" value="{{ $anggota->Agama ?? '' }}"
+                <label for="agama" class="font-medium text-gray-700">Agama</label>
+                <input type="text" id="agama" name="agama" value="{{ $anggota->agama ?? '' }}"
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
@@ -57,8 +57,8 @@
             </div>
 
             <div class="flex flex-col space-y-2">
-                <label for="Gol_darah" class="font-medium text-gray-700">Golongan Darah</label>
-                <input type="text" id="Gol_darah" name="Gol_darah" value="{{ $anggota->Gol_darah ?? '' }}"
+                <label for="gol_darah" class="font-medium text-gray-700">Golongan Darah</label>
+                <input type="text" id="gol_darah" name="gol_darah" value="{{ $anggota->gol_darah ?? '' }}"
                     class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
             </div>
 
