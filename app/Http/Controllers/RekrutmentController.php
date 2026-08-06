@@ -218,7 +218,7 @@ class RekrutmentController extends Controller
                 'No_tlpn' => 'required',
                 'Gol_darah' => 'required',
                 'jenis_kelamin' => 'required|in:laki-laki,perempuan',
-                'organisasi_yg_pernah_diikuti' => 'nullable',
+                'organisasi_yg_pernah_diikuti' => 'required',
                 'tahun_masuk_kuliah' => 'required|digits:4',
                 'alasan_join' => 'required',
                 'foto' => 'nullable|mimes:jpg,jpeg,png|max:10240',
