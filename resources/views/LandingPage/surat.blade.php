@@ -111,10 +111,19 @@
             .btn-group {
                 display: none !important;
             }
+            .info-banner {
+                display: none !important;
+            }
         }
     </style>
 </head>
 <body>
+
+@if(session('info'))
+<div class="info-banner" style="max-width: 210mm; margin: 10px auto; padding: 12px 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; color: #1e40af; font-size: 13px;">
+    {{ session('info') }}
+</div>
+@endif
 
 <div class="page" id="print-area">
     <div class="timestamp">
@@ -122,7 +131,7 @@
     </div>
 
     <div class="header">
-        <img src="{{ asset('storage/img2/logo_poli.png') }}" alt="Logo Kiri">
+        <img src="{{ asset('img/logo_poli.png') }}" alt="Logo Kiri">
         <div class="kop">
             <h3>POLITEKNIK NEGERI JEMBER</h3>
             KELUARGA MAHASISWA<br>
@@ -131,7 +140,7 @@
             <small>Jalan Mastrip Kotak Pos 164 Jember 68121<br>
                 Hp.0821-3965-8194 | Email: ukm.ksr@polije.ac.id</small>
         </div>
-        <img src="{{ asset('storage/img2/Lambang.png') }}" alt="Logo Kanan">
+        <img src="{{ asset('img/Lambang.png') }}" alt="Logo Kanan">
     </div>
 
     <hr>

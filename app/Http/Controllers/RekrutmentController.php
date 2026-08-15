@@ -181,9 +181,6 @@ class RekrutmentController extends Controller
  public function cetak($No_pendaftaran)
 {
     try {
-        // Sanitasi input untuk mencegah SQL injection
-        $No_pendaftaran = filter_var($No_pendaftaran, FILTER_SANITIZE_STRING);
-        
         // Validasi format nomor pendaftaran (hanya angka)
         if (!preg_match('/^[0-9]+$/', $No_pendaftaran)) {
             abort(404);
@@ -209,6 +206,15 @@ class RekrutmentController extends Controller
                 return back()->with('error', 'Maaf, pendaftaran rekrutmen sedang ditutup.');
             }
 
+            // Jika NIM sudah pernah terdaftar (misal koneksi tidak stabil saat pendaftaran
+            // sebelumnya sehingga halaman sukses tidak tampil), tampilkan bukti yang sudah ada
+            $existing = Rekrutmen::whereRaw('TRIM(nim) = ?', [trim($request->nim)])->first();
+            if ($existing) {
+                return redirect()
+                    ->route('rekrutmen.cetak', $existing->No_pendaftaran)
+                    ->with('info', 'NIM ini sudah pernah terdaftar sebelumnya. Berikut bukti pendaftaran Anda.');
+            }
+
             $validated = $request->validate([
                 'nim' => 'required|unique:rekrutmen',
                 'Nama' => 'required',
@@ -229,7 +235,12 @@ class RekrutmentController extends Controller
                 'foto' => 'nullable|mimes:jpg,jpeg,png|max:10240',
             ]);
 
-            $validated['No_pendaftaran'] = '07' . now()->format('YmdHis') . rand(10,99);
+            // Generate No_pendaftaran unik (hindari tabrakan saat 2 pendaftar submit di detik yang sama)
+            do {
+                $noPendaftaran = '07' . now()->format('YmdHis') . rand(10, 99);
+            } while (Rekrutmen::where('No_pendaftaran', $noPendaftaran)->exists());
+
+            $validated['No_pendaftaran'] = $noPendaftaran;
 
             if ($request->hasFile('foto')) {
                 $validated['foto'] = $request->file('foto')->store('foto_rekrutmen', 'public');
@@ -245,7 +256,7 @@ class RekrutmentController extends Controller
     ]);
         } catch (\Exception $e) {
             \Log::error('Error saat menyimpan rekrutmen: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
         }
     }
 
@@ -254,10 +265,12 @@ class RekrutmentController extends Controller
     {
         try {
             $validated = $request->validate([
-                'nim' => 'required|numeric|digits_between:1,20'
+                'nim' => 'required|string|max:20'
             ]);
             
-            $data = Rekrutmen::where('nim', $validated['nim'])->first();
+            $nim = trim($validated['nim']);
+
+            $data = Rekrutmen::whereRaw('TRIM(nim) = ?', [$nim])->first();
 
             if ($data) {
                 return redirect()->route('rekrutmen.cetak', $data->No_pendaftaran);
