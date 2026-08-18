@@ -232,7 +232,7 @@ class RekrutmentController extends Controller
                 'organisasi_yg_pernah_diikuti' => 'required',
                 'tahun_masuk_kuliah' => 'required|digits:4',
                 'alasan_join' => 'required',
-                'foto' => 'nullable|mimes:jpg,jpeg,png|max:10240',
+                'foto' => 'required|mimes:jpg,jpeg,png|max:10240',
             ]);
 
             // Generate No_pendaftaran unik (hindari tabrakan saat 2 pendaftar submit di detik yang sama)

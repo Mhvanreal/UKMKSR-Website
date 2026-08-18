@@ -242,7 +242,7 @@
             {{-- Foto --}}
             <div class="md:col-span-2">
                 <label class="block mb-2 font-bold">Foto</label>
-                <input type="file" name="foto" class="w-full">
+                <input type="file" name="foto" class="w-full" required>
                 @error('foto') <small class="text-red-500">{{ $message }}</small> @enderror
             </div>
         </div>
