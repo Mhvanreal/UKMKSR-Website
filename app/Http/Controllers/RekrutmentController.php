@@ -242,9 +242,8 @@ class RekrutmentController extends Controller
 
             $validated['No_pendaftaran'] = $noPendaftaran;
 
-            if ($request->hasFile('foto')) {
-                $validated['foto'] = $request->file('foto')->store('foto_rekrutmen', 'public');
-            }
+            // Upload foto (wajib karena sudah required di validasi)
+            $validated['foto'] = $request->file('foto')->store('foto_rekrutmen', 'public');
 
             $rekrutmen = Rekrutmen::create($validated);
 
